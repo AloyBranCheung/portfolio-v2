@@ -84,6 +84,28 @@ const seedExperience = async () => {
       `,
       company: getCompanyId('Toronto General Hospital'),
     },
+    {
+      title: 'Simulation Laboratory Assistant',
+      employmentType: getEmploymentTypeId('Casual / On-call'),
+      isCurrentRole: false,
+      startDate: generateDate('2020-01-01'),
+      endDate: generateDate('2021-06-01'),
+      location: getLocationId('Toronto, Canada'),
+      workType: getWorkTypeId('On-site'),
+      description: 'Set-up, management and clean-up of simulation scenarios/skills labs for nursing students at the University of Toronto. Worked independently and collaboratively with co-workers and professors and provided feedback to instructors for a quality learning environment.',
+      company: getCompanyId('University of Toronto Faculty of Nursing'),
+    },
+    {
+      title: 'Clinical Research Assistant',
+      employmentType: getEmploymentTypeId('Permanent Full-time'),
+      isCurrentRole: false,
+      startDate: generateDate('2018-09-01'),
+      endDate: generateDate('2019-08-01'),
+      location: getLocationId('Toronto, Canada'),
+      workType: getWorkTypeId('On-site'),
+      description: 'Compared conventional pulmonary function tests with oscillometry (Osc) in the PFT lab at the Toronto General Hospital. Helped collect and analyse data from double-lung transplant patients and bone marrow transplant patients. Compared scores between cPFT and Osc using statistical tools to analyse whether Osc provides earlier detection of acute rejection compared to cPFT.',
+      company: getCompanyId('University Health Network'),
+    },
   ]
   const tasks = []
 

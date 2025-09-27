@@ -6,6 +6,8 @@ const seedCompany = async () => {
     { name: 'University of Toronto' },
     { name: 'Toronto General Hospital' },
     { name: 'ClearBlue Markets' },
+    { name: 'University of Toronto Faculty of Nursing' },
+    { name: 'University Health Network' },
   ]
 
   for (const company of companies) {
