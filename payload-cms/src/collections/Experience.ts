@@ -42,7 +42,8 @@ export const Experience: CollectionConfig = {
     {
       name: 'location',
       label: 'Location (e.g. Toronto, Canada)',
-      type: 'text',
+      type: 'select',
+      options: ['Toronto, Canada', 'Remote'].sort(),
     },
     {
       name: 'workType',
