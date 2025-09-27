@@ -10,6 +10,10 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Experience } from './collections/Experience'
+import { Company } from './collections/Company'
+import { EmploymentType } from './collections/EmploymentType'
+import { Location } from './collections/Location'
+import { WorkType } from './collections/WorkType'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -21,7 +25,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Experience].sort((a, b) => a.slug.localeCompare(b.slug)),
+  collections: [Users, Media, Experience, Company, EmploymentType, Location, WorkType].sort((a, b) => a.slug.localeCompare(b.slug)),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

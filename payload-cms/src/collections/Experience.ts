@@ -11,16 +11,18 @@ export const Experience: CollectionConfig = {
       required: true,
     },
     {
+      name: 'company',
+      label: 'Company',
+      type: 'relationship',
+      relationTo: 'company',
+      required: true,
+    },
+    {
       name: 'employmentType',
       label: 'Employment Type',
-      type: 'select',
+      type: 'relationship',
+      relationTo: 'employment-type',
       required: true,
-      options: [
-        'Permanent Full-time',
-        'Contract Full-time',
-        'Casual / On-call',
-        'Contract Part-time',
-      ].sort(),
     },
     {
       name: 'startDate',
@@ -41,20 +43,24 @@ export const Experience: CollectionConfig = {
     },
     {
       name: 'location',
-      label: 'Location (e.g. Toronto, Canada)',
-      type: 'select',
-      options: ['Toronto, Canada', 'Remote'].sort(),
+      label: 'Location',
+      type: 'relationship',
+      relationTo: 'location',
     },
     {
       name: 'workType',
       label: 'Work Type',
-      type: 'select',
-      options: ['On-site', 'Remote', 'Hybrid'].sort(),
+      type: 'relationship',
+      relationTo: 'work-type',
     },
     {
       name: 'description',
       label: 'Description',
       type: 'textarea',
+      admin: {
+        description: "Use '-' as a separator for bullet points.",
+        rows: 8,
+      },
     },
   ],
 }

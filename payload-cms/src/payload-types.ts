@@ -67,18 +67,26 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    company: Company;
+    'employment-type': EmploymentType;
     experience: Experience;
+    location: Location;
     media: Media;
     users: User;
+    'work-type': WorkType;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
+    company: CompanySelect<false> | CompanySelect<true>;
+    'employment-type': EmploymentTypeSelect<false> | EmploymentTypeSelect<true>;
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
+    location: LocationSelect<false> | LocationSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'work-type': WorkTypeSelect<false> | WorkTypeSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -117,18 +125,62 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company".
+ */
+export interface Company {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "employment-type".
+ */
+export interface EmploymentType {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "experience".
  */
 export interface Experience {
   id: string;
   title: string;
-  employmentType: 'Casual / On-call' | 'Contract Full-time' | 'Contract Part-time' | 'Permanent Full-time';
+  company: string | Company;
+  employmentType: string | EmploymentType;
   startDate: string;
   isCurrentRole: boolean;
   endDate?: string | null;
-  location?: ('Remote' | 'Toronto, Canada') | null;
-  workType?: ('Hybrid' | 'On-site' | 'Remote') | null;
+  location?: (string | null) | Location;
+  workType?: (string | null) | WorkType;
+  /**
+   * Use '-' as a separator for bullet points.
+   */
   description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "location".
+ */
+export interface Location {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "work-type".
+ */
+export interface WorkType {
+  id: string;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -183,8 +235,20 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
+        relationTo: 'company';
+        value: string | Company;
+      } | null)
+    | ({
+        relationTo: 'employment-type';
+        value: string | EmploymentType;
+      } | null)
+    | ({
         relationTo: 'experience';
         value: string | Experience;
+      } | null)
+    | ({
+        relationTo: 'location';
+        value: string | Location;
       } | null)
     | ({
         relationTo: 'media';
@@ -193,6 +257,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'users';
         value: string | User;
+      } | null)
+    | ({
+        relationTo: 'work-type';
+        value: string | WorkType;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -238,10 +306,29 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "company_select".
+ */
+export interface CompanySelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "employment-type_select".
+ */
+export interface EmploymentTypeSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "experience_select".
  */
 export interface ExperienceSelect<T extends boolean = true> {
   title?: T;
+  company?: T;
   employmentType?: T;
   startDate?: T;
   isCurrentRole?: T;
@@ -249,6 +336,15 @@ export interface ExperienceSelect<T extends boolean = true> {
   location?: T;
   workType?: T;
   description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "location_select".
+ */
+export interface LocationSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -291,6 +387,15 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "work-type_select".
+ */
+export interface WorkTypeSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
