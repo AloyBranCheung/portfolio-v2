@@ -24,7 +24,7 @@ services:
       - postgres
     environment:
       - DATABASE_URI=postgres://local:local@postgres:5432/local
-      - PAYLOAD_SECRET=44632985494f2c30d88b7ee4
+      - PAYLOAD_SECRET=secret
     env_file:
       - .env
 

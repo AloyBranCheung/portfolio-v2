@@ -13,6 +13,13 @@ cp .env.example .env
 npm run dev
 ```
 
-Next.js Frontend - localhost:3000
-Payload CMS - localhost:3001
-Postgres - localhost:5432
+## Seeding Data
+
+**Seed Once:**
+Setup the envs targeting the correct database and run `npm run seed`
+
+## Config
+
+- Next.js Frontend - localhost:3000
+- Payload CMS - localhost:3001
+- Postgres - localhost:5432
