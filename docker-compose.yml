@@ -10,21 +10,16 @@ services:
       - 5432:5432
     volumes:
       - ./data/db:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U local"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   payload:
     image: node:18-alpine
     ports:
-      - 3000:3000
+      - 3001:3001
     volumes:
       - ./payload-cms:/home/node/app
       - /home/node/app/node_modules
     working_dir: /home/node/app
-    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev"
+    command: sh -c "corepack enable && corepack prepare pnpm@latest --activate && pnpm install && pnpm dev --port 3001"
     depends_on:
       postgres:
         condition: service_healthy
@@ -33,3 +28,15 @@ services:
       - PAYLOAD_SECRET=44632985494f2c30d88b7ee4
     env_file:
       - .env
+
+  frontend:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./frontend
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules

@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "workspaces": [
-    "payload-cms"
+    "payload-cms",
+    "frontend"
   ],
   "scripts": {
+    "dev": "docker compose up -d",
     "dev:cms": "npm run dev --workspace=payload-cms",
+    "dev:frontend": "npm run dev --workspace=frontend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
