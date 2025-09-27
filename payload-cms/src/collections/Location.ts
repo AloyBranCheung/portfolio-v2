@@ -11,4 +11,7 @@ export const Location: CollectionConfig = {
       unique: true,
     },
   ],
+  admin: {
+    useAsTitle: 'name',
+  },
 }

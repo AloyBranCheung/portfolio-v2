@@ -11,4 +11,7 @@ export const Company: CollectionConfig = {
       unique: true,
     },
   ],
+  admin: {
+    useAsTitle: 'name',
+  },
 }

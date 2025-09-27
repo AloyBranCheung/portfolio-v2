@@ -11,4 +11,7 @@ export const WorkType: CollectionConfig = {
       unique: true,
     },
   ],
+  admin: {
+    useAsTitle: 'name',
+  },
 }

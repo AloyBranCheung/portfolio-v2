@@ -11,4 +11,7 @@ export const EmploymentType: CollectionConfig = {
       unique: true,
     },
   ],
+  admin: {
+    useAsTitle: 'name',
+  },
 }
