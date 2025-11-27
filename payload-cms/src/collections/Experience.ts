@@ -62,5 +62,12 @@ export const Experience: CollectionConfig = {
         rows: 8,
       },
     },
+    {
+      name: 'technologies',
+      label: 'Technologies Used',
+      type: 'relationship',
+      relationTo: 'technologies',
+      hasMany: true,
+    },
   ],
 }
