@@ -72,6 +72,7 @@ export interface Config {
     experience: Experience;
     location: Location;
     media: Media;
+    technologies: Technology;
     users: User;
     'work-type': WorkType;
     'payload-locked-documents': PayloadLockedDocument;
@@ -85,6 +86,7 @@ export interface Config {
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
     location: LocationSelect<false> | LocationSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    technologies: TechnologiesSelect<false> | TechnologiesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'work-type': WorkTypeSelect<false> | WorkTypeSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -161,6 +163,7 @@ export interface Experience {
    * Use '-' as a separator for bullet points.
    */
   description?: string | null;
+  technologies?: (string | Technology)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -179,6 +182,16 @@ export interface Location {
  * via the `definition` "work-type".
  */
 export interface WorkType {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "technologies".
+ */
+export interface Technology {
   id: string;
   name: string;
   updatedAt: string;
@@ -253,6 +266,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'technologies';
+        value: string | Technology;
       } | null)
     | ({
         relationTo: 'users';
@@ -336,6 +353,7 @@ export interface ExperienceSelect<T extends boolean = true> {
   location?: T;
   workType?: T;
   description?: T;
+  technologies?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -365,6 +383,15 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "technologies_select".
+ */
+export interface TechnologiesSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

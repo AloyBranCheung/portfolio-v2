@@ -10,12 +10,14 @@ const seedExperience = async () => {
   const employmentTypes = await payload.find({ collection: 'employment-type' })
   const locations = await payload.find({ collection: 'location' })
   const workTypes = await payload.find({ collection: 'work-type' })
+  const technologies = await payload.find({ collection: 'technologies', limit: 0 })
 
   const getCompanyId = (name: string) => companies.docs.find((c) => c.name === name)?.id!
   const getEmploymentTypeId = (name: string) =>
     employmentTypes.docs.find((e) => e.name === name)?.id!
   const getLocationId = (name: string) => locations.docs.find((l) => l.name === name)?.id!
   const getWorkTypeId = (name: string) => workTypes.docs.find((w) => w.name === name)?.id!
+  const getTechnologyId = (name: string) => technologies.docs.find((t) => t.name === name)?.id!
 
   const experiences = [
     {
@@ -27,6 +29,12 @@ const seedExperience = async () => {
       workType: getWorkTypeId('Hybrid'),
       description: 'Full-stack Development for the University of Toronto Libraries.',
       company: getCompanyId('University of Toronto'),
+      technologies: [
+        getTechnologyId('Next.js'),
+        getTechnologyId('Drupal CMS'),
+        getTechnologyId('PHP'),
+        getTechnologyId('TypeScript'),
+      ],
     },
     {
       title: 'Full-stack Developer',
@@ -45,6 +53,16 @@ const seedExperience = async () => {
       - Developed and maintained core API service using FastAPI and Python
 `.trim(),
       company: getCompanyId('ClearBlue Markets'),
+      technologies: [
+        getTechnologyId('Next.js'),
+        getTechnologyId('TypeScript'),
+        getTechnologyId('Python'),
+        getTechnologyId('FastAPI'),
+        getTechnologyId('PostgreSQL'),
+        getTechnologyId('SQLAlchemy'),
+        getTechnologyId('AWS'),
+        getTechnologyId('Strapi CMS'),
+      ],
     },
     {
       title: 'Frontend Developer',
@@ -64,6 +82,16 @@ const seedExperience = async () => {
         testing, linting, and container deployment/uploading to registry
 `.trim(),
       company: getCompanyId('ClearBlue Markets'),
+      technologies: [
+        getTechnologyId('Next.js'),
+        getTechnologyId('TypeScript'),
+        getTechnologyId('Python'),
+        getTechnologyId('FastAPI'),
+        getTechnologyId('PostgreSQL'),
+        getTechnologyId('SQLAlchemy'),
+        getTechnologyId('AWS'),
+        getTechnologyId('Strapi CMS'),
+      ],
     },
     {
       title: 'Registered Nurse',
@@ -92,7 +120,8 @@ const seedExperience = async () => {
       endDate: generateDate('2021-06-01'),
       location: getLocationId('Toronto, Canada'),
       workType: getWorkTypeId('On-site'),
-      description: 'Set-up, management and clean-up of simulation scenarios/skills labs for nursing students at the University of Toronto. Worked independently and collaboratively with co-workers and professors and provided feedback to instructors for a quality learning environment.',
+      description:
+        'Set-up, management and clean-up of simulation scenarios/skills labs for nursing students at the University of Toronto. Worked independently and collaboratively with co-workers and professors and provided feedback to instructors for a quality learning environment.',
       company: getCompanyId('University of Toronto Faculty of Nursing'),
     },
     {
@@ -103,7 +132,8 @@ const seedExperience = async () => {
       endDate: generateDate('2019-08-01'),
       location: getLocationId('Toronto, Canada'),
       workType: getWorkTypeId('On-site'),
-      description: 'Compared conventional pulmonary function tests with oscillometry (Osc) in the PFT lab at the Toronto General Hospital. Helped collect and analyse data from double-lung transplant patients and bone marrow transplant patients. Compared scores between cPFT and Osc using statistical tools to analyse whether Osc provides earlier detection of acute rejection compared to cPFT.',
+      description:
+        'Compared conventional pulmonary function tests with oscillometry (Osc) in the PFT lab at the Toronto General Hospital. Helped collect and analyse data from double-lung transplant patients and bone marrow transplant patients. Compared scores between cPFT and Osc using statistical tools to analyse whether Osc provides earlier detection of acute rejection compared to cPFT.',
       company: getCompanyId('University Health Network'),
     },
   ]
