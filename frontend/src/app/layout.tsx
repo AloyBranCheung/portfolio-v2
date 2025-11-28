@@ -21,8 +21,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${jetBrainsMono} antialiased`}>
         <div className="w-full flex justify-center">
-          <div className="container bg-red-500 p-2">
-            <div className="flex flex-col">
+          <div className="container py-4 px-2">
+            <div className="flex flex-col items-center w-full bg-red-500">
               <Navbar />
               {children}
             </div>
