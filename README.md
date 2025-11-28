@@ -13,6 +13,9 @@ cp .env.example .env
 npm run dev
 ```
 
+> [!NOTE]  
+> PayloadCMS v3.57.0 does not currently support Next.js 16. So will not be running it as one app as it was intended (e.g. local api).
+
 ## Seeding Data
 
 **Seed Once:**
