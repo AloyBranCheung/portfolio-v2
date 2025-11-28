@@ -16,6 +16,8 @@ import { Location } from './collections/Location'
 import { WorkType } from './collections/WorkType'
 import { Technologies } from './collections/Technologies'
 
+import { AboutMe } from './globals/AboutMe'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -36,6 +38,7 @@ export default buildConfig({
     WorkType,
     Technologies,
   ].sort((a, b) => a.slug.localeCompare(b.slug)),
+  globals: [AboutMe].sort((a, b) => a.slug.localeCompare(b.slug)),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
