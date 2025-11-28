@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { HamburgerIcon } from "lucide-react";
 import { useState } from "react";
-
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   NavigationMenu,

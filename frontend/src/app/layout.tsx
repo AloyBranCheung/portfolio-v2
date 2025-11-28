@@ -26,8 +26,8 @@ export default function RootLayout({
           <header className="w-full">
             <Navbar />
           </header>
-          <main className="w-full">{children}</main>
-          <footer>footer here</footer>
+          <main className="w-full px-4">{children}</main>
+          <footer className="px-4">footer here</footer>
         </div>
       </body>
     </html>
