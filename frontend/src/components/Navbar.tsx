@@ -23,7 +23,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/", label: "Home" },
+  { href: "/", label: "About" },
   { href: "/#experience", label: "Experience" },
   { href: "/#projects", label: "Projects" },
 ];
