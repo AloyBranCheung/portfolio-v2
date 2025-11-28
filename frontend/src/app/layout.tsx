@@ -19,14 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${jetBrainsMono} antialiased`}>
-        <div className="w-full flex justify-center">
-          <div className="container py-4 px-2">
-            <div className="flex flex-col items-center w-full bg-red-500">
-              <Navbar />
-              {children}
-            </div>
-          </div>
+      <body
+        className={`${jetBrainsMono} antialiased w-full flex justify-center`}
+      >
+        <div className="container py-4 px-2 flex flex-col w-full gap-2">
+          <header className="w-full">
+            <Navbar />
+          </header>
+          <main className="w-full">{children}</main>
+          <footer>footer here</footer>
         </div>
       </body>
     </html>

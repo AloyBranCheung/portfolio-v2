@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { HamburgerIcon } from "lucide-react";
 import { useState } from "react";
 
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -23,8 +23,9 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/", label: "About" },
-  { href: "/resume", label: "Resume" },
+  { href: "/", label: "Home" },
+  { href: "/experience", label: "Experience" },
+  { href: "/projects", label: "Projects" },
 ];
 
 export default function Navbar() {
@@ -34,15 +35,15 @@ export default function Navbar() {
   return (
     <NavigationMenu className="z-5 w-full max-w-none">
       <div className="flex w-full items-center justify-between px-4">
-        <div>
+        <Link href="/" className="block cursor-pointer">
           <h1 className="text-base">Brandon Cheung</h1>
           <p className="text-sm">Software Developer</p>
-        </div>
+        </Link>
         {isMobile ? (
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="default" size="icon">
-                <Menu className="h-5 w-5" />
+                <HamburgerIcon className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
