@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { HamburgerIcon } from "lucide-react";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   NavigationMenu,
@@ -30,6 +31,7 @@ const navItems = [
 export default function Navbar() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <NavigationMenu className="z-5 w-full max-w-none bg-white border-2 border-black shadow-[4px_4px_0px_0px_black] p-4">
@@ -70,6 +72,7 @@ export default function Navbar() {
               <NavigationMenuItem key={item.href}>
                 <NavigationMenuLink
                   className={navigationMenuTriggerStyle()}
+                  isActive={pathname === item.href}
                   asChild
                 >
                   <Link href={item.href}>{item.label}</Link>

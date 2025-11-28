@@ -3,6 +3,7 @@
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
 
 import * as React from "react";
 
@@ -62,7 +63,7 @@ function NavigationMenuItem({
 }
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-10 w-max items-center justify-center text-black rounded-base bg-white border-2 border-black shadow-[2px_2px_0px_0px_black] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_black] px-4 py-2 text-sm font-heading transition-all focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+  "inline-flex h-10 w-max items-center justify-center text-black rounded-base px-4 py-2 text-sm font-heading"
 );
 
 function NavigationMenuTrigger({
@@ -104,17 +105,52 @@ function NavigationMenuContent({
 
 function NavigationMenuLink({
   className,
+  isActive,
+  asChild,
+  children,
   ...props
-}: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {
+}: React.ComponentProps<typeof NavigationMenuPrimitive.Link> & {
+  isActive?: boolean;
+  asChild?: boolean;
+}) {
+  if (asChild) {
+    return (
+      <NavigationMenuPrimitive.Link
+        data-slot="navigation-menu-link"
+        className={cn(
+          "relative block select-none space-y-1 rounded-base p-2 leading-none no-underline outline-none transition-colors focus-visible:ring-4 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+          className
+        )}
+        asChild
+        {...props}
+      >
+        <div className="relative">
+          {children}
+          {isActive && (
+            <motion.div
+              layoutId="underline"
+              className="absolute bottom-0 left-0 right-0 h-0.5 bg-black"
+            />
+          )}
+        </div>
+      </NavigationMenuPrimitive.Link>
+    );
+  }
+
   return (
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "block select-none space-y-1 rounded-base p-2 leading-none no-underline outline-none transition-colors focus-visible:ring-4 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
+        "relative block select-none space-y-1 rounded-base p-2 leading-none no-underline outline-none transition-colors focus-visible:ring-4 focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}
-    />
+    >
+      {children}
+      {isActive && (
+        <motion.div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" />
+      )}
+    </NavigationMenuPrimitive.Link>
   );
 }
 
