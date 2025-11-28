@@ -24,14 +24,26 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/experience", label: "Experience" },
-  { href: "/projects", label: "Projects" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#projects", label: "Projects" },
 ];
 
 export default function Navbar() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const [hash, setHash] = useState(
+    typeof window !== "undefined" ? window.location.hash : ""
+  );
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/" && !hash;
+    if (href.includes("#")) {
+      const hrefHash = href.split("#")[1];
+      return pathname === "/" && hash === `#${hrefHash}`;
+    }
+    return pathname === href;
+  };
 
   return (
     <NavigationMenu className="z-5 w-full max-w-none bg-white border-2 border-black shadow-[4px_4px_0px_0px_black] p-4">
@@ -57,7 +69,14 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false);
+                      if (item.href.includes("#")) {
+                        setHash(`#${item.href.split("#")[1]}`);
+                      } else {
+                        setHash("");
+                      }
+                    }}
                     className="text-lg"
                   >
                     {item.label}
@@ -72,10 +91,21 @@ export default function Navbar() {
               <NavigationMenuItem key={item.href}>
                 <NavigationMenuLink
                   className={navigationMenuTriggerStyle()}
-                  isActive={pathname === item.href}
+                  isActive={isActive(item.href)}
                   asChild
                 >
-                  <Link href={item.href}>{item.label}</Link>
+                  <Link
+                    href={item.href}
+                    onClick={() => {
+                      if (item.href.includes("#")) {
+                        setHash(`#${item.href.split("#")[1]}`);
+                      } else {
+                        setHash("");
+                      }
+                    }}
+                  >
+                    {item.label}
+                  </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
