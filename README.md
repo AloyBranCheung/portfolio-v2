@@ -21,6 +21,18 @@ npm run dev
 **Seed Once:**
 Setup the envs targeting the correct database and run `npm run seed`
 
+## Test prod build locally
+
+```bash
+# make sure payload cms is running locally
+
+# then run, see Dockerfile.prod for more details n.b. sentry arg left out since running prod locally
+docker compose up -d frontend-prod --build
+
+# visit
+http://localhost:8080
+```
+
 ## Config
 
 - Next.js Frontend - localhost:3000

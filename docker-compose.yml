@@ -48,6 +48,20 @@ services:
     networks:
       - default
 
+  frontend-prod:
+    build:
+      dockerfile: ./Dockerfile.prod
+      context: ./frontend
+      network: host
+    ports:
+      - 8080:3000
+    env_file:
+      - .env
+    networks:
+      - default
+    depends_on:
+      - payload
+
 networks:
   default:
     name: portfolio-v2-network
