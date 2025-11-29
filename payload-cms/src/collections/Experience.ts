@@ -69,6 +69,11 @@ export const Experience: CollectionConfig = {
       relationTo: 'technologies',
       hasMany: true,
     },
+    {
+      name: 'companyUrl',
+      label: 'Company Website URL',
+      type: 'text',
+    },
   ],
   access: {
     read: () => true,

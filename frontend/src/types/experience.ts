@@ -45,6 +45,7 @@ export interface Experience {
   workType: WorkType;
   description: string;
   technologies: Technology[];
+  companyUrl?: string;
   updatedAt: string;
   createdAt: string;
 }

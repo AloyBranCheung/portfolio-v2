@@ -168,6 +168,7 @@ export interface Experience {
    */
   description?: string | null;
   technologies?: (string | Technology)[] | null;
+  companyUrl?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -358,6 +359,7 @@ export interface ExperienceSelect<T extends boolean = true> {
   workType?: T;
   description?: T;
   technologies?: T;
+  companyUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }

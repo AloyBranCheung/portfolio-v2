@@ -35,6 +35,7 @@ const seedExperience = async () => {
         getTechnologyId('PHP'),
         getTechnologyId('TypeScript'),
       ],
+      companyUrl: 'https://library.utoronto.ca/',
     },
     {
       title: 'Full-stack Developer',
@@ -57,6 +58,7 @@ const seedExperience = async () => {
         getTechnologyId('AWS'),
         getTechnologyId('Strapi CMS'),
       ],
+      companyUrl: 'https://www.clearbluemarkets.com/',
     },
     {
       title: 'Frontend Developer',
@@ -79,6 +81,7 @@ const seedExperience = async () => {
         getTechnologyId('AWS'),
         getTechnologyId('Strapi CMS'),
       ],
+      companyUrl: 'https://www.clearbluemarkets.com/',
     },
     {
       title: 'Registered Nurse',
@@ -91,6 +94,7 @@ const seedExperience = async () => {
       description:
         'Cardiovascular Surgery/Cardiac Short Stay unit providing pre/post-operative care for electrophysiology, cardiovascular, and vascular surgery patients including CABG, valve procedures, LVAD assistance, and various cardiac interventions. Managed medical devices including temporary pacemakers, tracheostomies, and chest tubes, performed IV procedures and medication administration in high-pressure acute care situations. Provided teaching and mentorship to nursing students through clinical training and one-to-one preceptorship.',
       company: getCompanyId('Toronto General Hospital'),
+      companyUrl: 'https://www.uhn.ca/PMCC/Inpatient_Units/Cardiovascular_Surgery',
     },
     {
       title: 'Simulation Laboratory Assistant',
@@ -103,6 +107,7 @@ const seedExperience = async () => {
       description:
         'Set-up, management and clean-up of simulation scenarios/skills labs for nursing students at the University of Toronto. Worked independently and collaboratively with co-workers and professors and provided feedback to instructors for a quality learning environment.',
       company: getCompanyId('University of Toronto Faculty of Nursing'),
+      companyUrl: 'https://bloomberg.nursing.utoronto.ca/',
     },
     {
       title: 'Clinical Research Assistant',
@@ -115,6 +120,7 @@ const seedExperience = async () => {
       description:
         'Compared conventional pulmonary function tests with oscillometry (Osc) in the PFT lab at the Toronto General Hospital. Helped collect and analyse data from double-lung transplant patients and bone marrow transplant patients. Compared scores between cPFT and Osc using statistical tools to analyse whether Osc provides earlier detection of acute rejection compared to cPFT.',
       company: getCompanyId('University Health Network'),
+      companyUrl: 'https://chowlab.wordpress.com/',
     },
   ]
   const tasks = []
