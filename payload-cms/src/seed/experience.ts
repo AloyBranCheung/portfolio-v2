@@ -44,14 +44,8 @@ const seedExperience = async () => {
       endDate: generateDate('2025-04-01'),
       location: getLocationId('Toronto, Canada'),
       workType: getWorkTypeId('Hybrid'),
-      description: `
-      - Merged two Postgres databases into one and transitioned codebase to utilize
-        SQLAlchemy ORM, resulting in the decommissioning of a middleman service and
-        speeding up requests by 40%
-      - Developed a new custom CMS solution using React/Vite and RTKQuery
-      - Utilized Python/FastAPI/Postgres to develop the backend service for the new CMS
-      - Developed and maintained core API service using FastAPI and Python
-`.trim(),
+      description:
+        'Database optimization through merging two Postgres databases and implementing SQLAlchemy ORM, eliminating a middleman service and improving request performance by 40%. Full-stack CMS development using React/Vite frontend with RTKQuery and Python/FastAPI/Postgres backend. Core API service development and maintenance using FastAPI and Python.',
       company: getCompanyId('ClearBlue Markets'),
       technologies: [
         getTechnologyId('Next.js'),
@@ -72,15 +66,8 @@ const seedExperience = async () => {
       endDate: generateDate('2023-07-01'),
       location: getLocationId('Toronto, Canada'),
       workType: getWorkTypeId('Hybrid'),
-      description: `
-      - Designed, developed, and maintained the v2 frontend of the company’s market analysis
-        web application using Next.js/Typescript, as part of the migration from v1 to v2
-      - Managed end-to-end development, including frontend, backend, and infrastructure, for
-        the company’s file hosting and emailing service on AWS using Typescript, Python and
-        Terraform
-      - Deployed CI/CD pipeline using GitHub Actions to automate processes such as
-        testing, linting, and container deployment/uploading to registry
-`.trim(),
+      description:
+        'Frontend development of v2 market analysis web application using Next.js/TypeScript during v1 to v2 migration. Full-stack development of AWS-based file hosting and emailing service using TypeScript, Python, and Terraform for infrastructure. CI/CD pipeline implementation with GitHub Actions for automated testing, linting, and container deployment.',
       company: getCompanyId('ClearBlue Markets'),
       technologies: [
         getTechnologyId('Next.js'),
@@ -101,15 +88,8 @@ const seedExperience = async () => {
       endDate: generateDate('2022-08-01'),
       location: getLocationId('Toronto, Canada'),
       workType: getWorkTypeId('On-site'),
-      description: `
-      TGH 4PMB Cardiovascular Surgery/Cardiac Short Stay
-
-      Pre/Post-op management of electrophysiology, cardiovascular and vascular surgery patients who had: CABG, Valve repair/replacement, TAAA, TAVI, PPM implant/explant, arrhythmia ablation, PCIs, congenital heart defects, and amputations. Involved in assisting care of LVAD patients. 
-
-      Management of temporary pacemakers, tracheostomies, chest tubes, able to do IV bloodwork/insertions/medication administration, able to work well under pressure as a team with good communication in high pressure acute situations.
-
-      Teaching/Mentoring: Teaching/Training clinical group students and one-to-one preceptorship with consolidation nursing students to be new graduate entry level nurses.
-      `,
+      description:
+        'Cardiovascular Surgery/Cardiac Short Stay unit providing pre/post-operative care for electrophysiology, cardiovascular, and vascular surgery patients including CABG, valve procedures, LVAD assistance, and various cardiac interventions. Managed medical devices including temporary pacemakers, tracheostomies, and chest tubes, performed IV procedures and medication administration in high-pressure acute care situations. Provided teaching and mentorship to nursing students through clinical training and one-to-one preceptorship.',
       company: getCompanyId('Toronto General Hospital'),
     },
     {
