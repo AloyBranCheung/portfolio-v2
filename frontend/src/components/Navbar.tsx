@@ -48,7 +48,7 @@ export default function Navbar() {
       <div className="flex w-full items-center justify-between">
         <Link href="/" className="block cursor-pointer">
           <h1 className="text-base">Brandon Cheung</h1>
-          <p className="text-sm">Software Developer</p>
+          <h2 className="text-sm">Software Developer</h2>
         </Link>
         {isMobile ? (
           <Sheet open={open} onOpenChange={setOpen}>

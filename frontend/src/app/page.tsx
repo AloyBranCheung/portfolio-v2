@@ -1,20 +1,17 @@
 import Hero from "@/components/Hero";
-import axios from "@/lib/axios";
-import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import Experience from "@/components/Experience";
+import { fetchHero, fetchExperience } from "@/utils/fetch-hompage";
 
 export default async function Home() {
-  let data: SerializedEditorState | null = null;
-  try {
-    const res = await axios.get("/globals/about-me");
-    data = res.data.description;
-  } catch (error) {
-    // TODO: sentry logging
-    console.error("Error fetching About Me global:", error);
-  }
+  const [heroData, experienceData] = await Promise.all([
+    fetchHero(),
+    fetchExperience(),
+  ]);
 
   return (
     <div>
-      <Hero data={data} />
+      <Hero data={heroData} />
+      <Experience data={experienceData} />
     </div>
   );
 }
