@@ -4,8 +4,6 @@
 name: Test & Lint Frontend
 
 on:
-    push:
-        branches: ["main"]
     pull_request:
         branches: ["main"]
 
