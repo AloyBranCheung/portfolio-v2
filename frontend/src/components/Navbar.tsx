@@ -43,7 +43,7 @@ export default function Navbar() {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.8 }
     );
 
     navItems.forEach((item) => {
@@ -89,9 +89,14 @@ export default function Navbar() {
                       const element = document.getElementById(id);
                       if (element) {
                         const offset = 100;
-                        const elementPosition = element.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.scrollY - offset;
-                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                        const elementPosition =
+                          element.getBoundingClientRect().top;
+                        const offsetPosition =
+                          elementPosition + window.scrollY - offset;
+                        window.scrollTo({
+                          top: offsetPosition,
+                          behavior: "smooth",
+                        });
                       }
                     }, 300);
                   };
@@ -135,8 +140,12 @@ export default function Navbar() {
                   if (element) {
                     const offset = 100;
                     const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.scrollY - offset;
-                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                    const offsetPosition =
+                      elementPosition + window.scrollY - offset;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth",
+                    });
                   }
                 }, 300);
               };
