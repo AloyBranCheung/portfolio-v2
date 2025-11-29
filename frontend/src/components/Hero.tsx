@@ -12,7 +12,7 @@ export default function Hero({ data }: HeroProps) {
   return (
     <section
       className="py-4 flex flex-col md:flex-row justify-between gap-2"
-      id="#about"
+      id="about"
     >
       <div className="w-full mb-4 md:mb-0 flex items-center">
         {data ? <RichText data={data} /> : <ErrorMsg />}

@@ -13,7 +13,7 @@ export default function Experience({ data }: ExperienceProps) {
   }
 
   return (
-    <section id="#experience" className="flex flex-col gap-4">
+    <section id="experience" className="flex flex-col gap-4">
       {data.map((exp) => (
         <div key={exp.id} className={`${neobrutalist()} p-2`}>
           <header>
@@ -22,7 +22,7 @@ export default function Experience({ data }: ExperienceProps) {
           </header>
           <div>
             <h3>{`${exp.title} · ${exp.company.name}`}</h3>
-            <pre>{exp.description}</pre>
+            {/* <pre>{exp.description}</pre> */}
           </div>
         </div>
       ))}

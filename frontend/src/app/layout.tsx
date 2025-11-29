@@ -22,7 +22,7 @@ export default function RootLayout({
       <body
         className={`${jetBrainsMono} antialiased w-full flex justify-center`}
       >
-        <div className="container py-4 px-2 flex flex-col w-full gap-2">
+        <div className="container max-w-5xl py-4 px-2 flex flex-col w-full gap-2">
           <header className="w-full">
             <Navbar />
           </header>
