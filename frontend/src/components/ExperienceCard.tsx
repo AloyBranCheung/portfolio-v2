@@ -22,7 +22,7 @@ export default function ExperienceCard({ exp }: ExperienceCardProps) {
       className={`${neobrutalist()} p-4`}
     >
       <div className="flex items-center justify-between mb-2">
-        <header>
+        <header suppressHydrationWarning>
           {dayjs(exp.startDate).format("MMM YYYY")} -{" "}
           {exp.endDate ? dayjs(exp.endDate).format("MMM YYYY") : "Present"}
         </header>
