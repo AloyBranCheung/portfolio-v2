@@ -86,9 +86,13 @@ export default function Navbar() {
                     const id = item.href.split("#")[1];
                     setActiveSection(id);
                     setTimeout(() => {
-                      document
-                        .getElementById(id)
-                        ?.scrollIntoView({ behavior: "smooth" });
+                      const element = document.getElementById(id);
+                      if (element) {
+                        const offset = 100;
+                        const elementPosition = element.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.scrollY - offset;
+                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                      }
                     }, 300);
                   };
                   if (item.href.includes("#")) {
@@ -127,9 +131,13 @@ export default function Navbar() {
 
                 setActiveSection(id);
                 setTimeout(() => {
-                  document
-                    .getElementById(id)
-                    ?.scrollIntoView({ behavior: "smooth" });
+                  const element = document.getElementById(id);
+                  if (element) {
+                    const offset = 100;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - offset;
+                    window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                  }
                 }, 300);
               };
 
