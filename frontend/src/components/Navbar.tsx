@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { HamburgerIcon } from "lucide-react";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   NavigationMenu,
@@ -31,17 +30,32 @@ const navItems = [
 export default function Navbar() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const [hash, setHash] = useState("");
+  const [activeSection, setActiveSection] = useState(
+    navItems[0].href.split("#")[1]
+  );
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/" && !hash;
-    if (href.includes("#")) {
-      const hrefHash = href.split("#")[1];
-      return pathname === "/" && hash === `#${hrefHash}`;
-    }
-    return pathname === href;
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    navItems.forEach((item) => {
+      if (item.href.includes("#")) {
+        const id = item.href.split("#")[1];
+        const element = document.getElementById(id);
+        if (element) observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <NavigationMenu className="w-full max-w-none bg-white border-2 border-black shadow-[4px_4px_0px_0px_black] p-4">
@@ -64,27 +78,25 @@ export default function Navbar() {
               </VisuallyHidden>
               <NavigationMenuList className="flex flex-col gap-4 mt-8 px-4 py-2">
                 {navItems.map((item) => {
-                  const handleClick = (e: React.MouseEvent) => {
+                  const handleClick = (
+                    e: React.MouseEvent<HTMLAnchorElement>
+                  ) => {
+                    e.preventDefault();
                     setOpen(false);
-                    if (item.href.includes("#")) {
-                      e.preventDefault();
-                      const id = item.href.split("#")[1];
-                      setHash(`#${id}`);
-                      setTimeout(() => {
-                        document
-                          .getElementById(id)
-                          ?.scrollIntoView({ behavior: "smooth" });
-                      }, 300);
-                    } else {
-                      setHash("");
-                    }
+                    const id = item.href.split("#")[1];
+                    setActiveSection(id);
+                    setTimeout(() => {
+                      document
+                        .getElementById(id)
+                        ?.scrollIntoView({ behavior: "smooth" });
+                    }, 300);
                   };
                   if (item.href.includes("#")) {
                     return (
                       <a
+                        onClick={handleClick}
                         key={item.href}
                         href={item.href}
-                        onClick={handleClick}
                         className="text-lg"
                       >
                         {item.label}
@@ -94,9 +106,9 @@ export default function Navbar() {
 
                   return (
                     <Link
+                      onClick={handleClick}
                       key={item.href}
                       href={item.href}
-                      onClick={handleClick}
                       className="text-lg"
                     >
                       {item.label}
@@ -109,25 +121,23 @@ export default function Navbar() {
         ) : (
           <NavigationMenuList>
             {navItems.map((item) => {
-              const handleClick = (e: React.MouseEvent) => {
-                if (item.href.includes("#")) {
-                  e.preventDefault();
-                  const id = item.href.split("#")[1];
-                  setHash(`#${id}`);
-                  setTimeout(() => {
-                    document
-                      .getElementById(id)
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }, 300);
-                } else {
-                  setHash("");
-                }
+              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                e.preventDefault();
+                const id = item.href.split("#")[1];
+
+                setActiveSection(id);
+                setTimeout(() => {
+                  document
+                    .getElementById(id)
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }, 300);
               };
+
               return (
                 <NavigationMenuItem key={item.href}>
                   <NavigationMenuLink
                     className={navigationMenuTriggerStyle()}
-                    isActive={isActive(item.href)}
+                    isActive={activeSection === item.href.split("#")[1]}
                     asChild
                   >
                     {item.href.includes("#") ? (
