@@ -23,7 +23,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { href: "/", label: "About" },
+  { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
   { href: "/#projects", label: "Projects" },
 ];
@@ -32,9 +32,7 @@ export default function Navbar() {
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const [hash, setHash] = useState(
-    typeof window !== "undefined" ? window.location.hash : ""
-  );
+  const [hash, setHash] = useState("");
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/" && !hash;
