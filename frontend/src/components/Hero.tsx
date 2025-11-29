@@ -16,23 +16,29 @@ export default function Hero({ data }: HeroProps) {
       id="about"
     >
       <div className="w-full mb-4 md:mb-0 flex justify-center flex-col">
-        <TypingText
-          text={[
-            "Hi, I'm Brandon.",
-            "Let's build something beautiful together :)",
-          ]}
-          typingSpeed={150}
-          pauseDuration={1500}
-          showCursor={true}
-          cursorCharacter="|"
-          className="font-bold text-lg"
-          textColors={["black"]}
-          variableSpeed={{ min: 50, max: 120 }}
-        />
-        <p>
-          <br />
-        </p>
-        {data ? <RichText data={data} /> : <ErrorMsg />}
+        {data ? (
+          <>
+            <TypingText
+              text={[
+                "Hi, I'm Brandon.",
+                "Let's build something beautiful together :)",
+              ]}
+              typingSpeed={150}
+              pauseDuration={1500}
+              showCursor={true}
+              cursorCharacter="|"
+              className="font-bold text-lg"
+              textColors={["black"]}
+              variableSpeed={{ min: 50, max: 120 }}
+            />
+            <p>
+              <br />
+            </p>
+            <RichText data={data} />
+          </>
+        ) : (
+          <ErrorMsg />
+        )}
       </div>
       <div className="flex items-center justify-center">
         <div className={neobrutalist()}>
