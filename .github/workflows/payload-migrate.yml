@@ -14,6 +14,8 @@ jobs:
             PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
         runs-on: ubuntu-latest
 
+        timeout-minutes: 5
+
         strategy:
             matrix:
                 node-version: [22.x]
