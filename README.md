@@ -1,5 +1,10 @@
 # Portfolio V2
 
+## Statuses
+
+[![Payload Migration](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/payload-migrate.yml/badge.svg)](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/payload-migrate.yml)
+[![Test & Lint Frontend](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/test-lint.yml/badge.svg)](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/test-lint.yml)
+
 ## Getting Started
 
 ```bash
