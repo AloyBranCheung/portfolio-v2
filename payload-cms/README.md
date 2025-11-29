@@ -2,11 +2,6 @@
 
 This template comes configured with the bare minimum to get started on anything you need.
 
-## Statuses
-
-[![Payload Migration](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/payload-migrate.yml/badge.svg)](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/payload-migrate.yml)
-[![Test & Lint Frontend](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/test-lint.yml/badge.svg)](https://github.com/AloyBranCheung/portfolio-v2/actions/workflows/test-lint.yml)
-
 ## Quick start
 
 This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
