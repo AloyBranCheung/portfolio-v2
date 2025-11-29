@@ -6,6 +6,14 @@ const seedAboutMe = async () => {
   await payload.updateGlobal({
     slug: 'about-me',
     data: {
+      'typing-text': [
+        {
+          text: "Hi, I'm Brandon.",
+        },
+        {
+          text: "Let's build something beautiful together :)",
+        },
+      ],
       description: {
         root: {
           type: 'root',

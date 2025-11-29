@@ -168,6 +168,7 @@ export interface Experience {
    */
   description?: string | null;
   technologies?: (string | Technology)[] | null;
+  companyUrl?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -358,6 +359,7 @@ export interface ExperienceSelect<T extends boolean = true> {
   workType?: T;
   description?: T;
   technologies?: T;
+  companyUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -481,6 +483,12 @@ export interface AboutMe {
     };
     [k: string]: unknown;
   } | null;
+  'typing-text'?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -490,6 +498,12 @@ export interface AboutMe {
  */
 export interface AboutMeSelect<T extends boolean = true> {
   description?: T;
+  'typing-text'?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
