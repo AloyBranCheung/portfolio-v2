@@ -25,7 +25,7 @@ import { Button } from "@/components/ui/button";
 const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  { href: "/#projects", label: "Projects" },
+  // { href: "/#projects", label: "Projects" },
 ];
 
 export default function Navbar() {
@@ -64,10 +64,17 @@ export default function Navbar() {
               </VisuallyHidden>
               <NavigationMenuList className="flex flex-col gap-4 mt-8 px-4 py-2">
                 {navItems.map((item) => {
-                  const handleClick = () => {
+                  const handleClick = (e: React.MouseEvent) => {
                     setOpen(false);
                     if (item.href.includes("#")) {
-                      setHash(`#${item.href.split("#")[1]}`);
+                      e.preventDefault();
+                      const id = item.href.split("#")[1];
+                      setHash(`#${id}`);
+                      setTimeout(() => {
+                        document
+                          .getElementById(id)
+                          ?.scrollIntoView({ behavior: "smooth" });
+                      }, 300);
                     } else {
                       setHash("");
                     }
@@ -102,9 +109,16 @@ export default function Navbar() {
         ) : (
           <NavigationMenuList>
             {navItems.map((item) => {
-              const handleClick = () => {
+              const handleClick = (e: React.MouseEvent) => {
                 if (item.href.includes("#")) {
-                  setHash(`#${item.href.split("#")[1]}`);
+                  e.preventDefault();
+                  const id = item.href.split("#")[1];
+                  setHash(`#${id}`);
+                  setTimeout(() => {
+                    document
+                      .getElementById(id)
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }, 300);
                 } else {
                   setHash("");
                 }
