@@ -61,13 +61,13 @@
   --shadow-shadow: var(--shadow);
   --font-weight-base: 500;
   --font-weight-heading: 700;
-  --font-family-mono: 'JetBrains Mono', monospace;
+  --font-family-mono: "JetBrains Mono", monospace;
 }
 
 @layer base {
   body {
     @apply text-foreground bg-background;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 
   h1,
@@ -76,7 +76,7 @@
   h4,
   h5,
   h6 {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
     font-weight: 700;
   }
 }
