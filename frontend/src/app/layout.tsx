@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const jetBrainsMono = localFont({
   src: "../../public/fonts/JetBrainsMono-Regular.woff2",
@@ -27,7 +28,7 @@ export default function RootLayout({
             <Navbar />
           </header>
           <main className="w-full px-4">{children}</main>
-          <footer className="px-4">footer here</footer>
+          <Footer />
         </div>
       </body>
     </html>

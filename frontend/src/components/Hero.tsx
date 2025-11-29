@@ -21,11 +21,11 @@ export default function Hero({ data }: HeroProps) {
             "Hi, I'm Brandon.",
             "Let's build something beautiful together :)",
           ]}
-          typingSpeed={75}
+          typingSpeed={150}
           pauseDuration={1500}
           showCursor={true}
           cursorCharacter="|"
-          className="font-bold"
+          className="font-bold text-lg"
           textColors={["black"]}
           variableSpeed={{ min: 50, max: 120 }}
         />

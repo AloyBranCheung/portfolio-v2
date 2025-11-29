@@ -21,12 +21,12 @@ export default function Experience({ data }: ExperienceProps) {
             {exp.endDate ? dayjs(exp.endDate).format("MMM YYYY") : "Present"}
           </header>
           <div>
-            <h3>{`${exp.title} · ${exp.company.name}`}</h3>
-            <p className="mt-4">{exp.description}</p>
+            <h3 className="text-lg">{`${exp.title} · ${exp.company.name}`}</h3>
+            <p className="mt-4 text-sm">{exp.description}</p>
           </div>
           <ul className="flex flex-wrap gap-2 mt-4">
             {exp.technologies.map((tech) => (
-              <li key={tech.id} className={`${neobrutalist()} p-2`}>
+              <li key={tech.id} className={`${neobrutalist()} p-2 text-xs`}>
                 {tech.name}
               </li>
             ))}
