@@ -6,7 +6,10 @@ import ErrorMsg from "./ErrorMsg";
 import TypingText from "./ui/shadcn-io/typing-text";
 
 interface HeroProps {
-  data: SerializedEditorState | null;
+  data: {
+    richText: SerializedEditorState;
+    typingText: { text: string }[];
+  } | null;
 }
 
 export default function Hero({ data }: HeroProps) {
@@ -19,10 +22,7 @@ export default function Hero({ data }: HeroProps) {
         {data ? (
           <>
             <TypingText
-              text={[
-                "Hi, I'm Brandon.",
-                "Let's build something beautiful together :)",
-              ]}
+              text={data.typingText.map((item) => item.text)}
               typingSpeed={150}
               pauseDuration={1500}
               showCursor={true}
@@ -34,7 +34,7 @@ export default function Hero({ data }: HeroProps) {
             <p>
               <br />
             </p>
-            <RichText data={data} />
+            <RichText data={data.richText} />
           </>
         ) : (
           <ErrorMsg />

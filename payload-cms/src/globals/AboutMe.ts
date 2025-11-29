@@ -8,6 +8,20 @@ export const AboutMe: GlobalConfig = {
       label: 'Description',
       type: 'richText',
     },
+    {
+      name: 'typing-text',
+      label: 'Typing Text',
+      type: 'array',
+      fields: [
+        {
+          name: 'text',
+          label: 'Text',
+          type: 'text',
+          required: true,
+          unique: true,
+        },
+      ],
+    },
   ],
   access: {
     read: () => true,

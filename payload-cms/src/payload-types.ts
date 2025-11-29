@@ -481,6 +481,12 @@ export interface AboutMe {
     };
     [k: string]: unknown;
   } | null;
+  'typing-text'?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -490,6 +496,12 @@ export interface AboutMe {
  */
 export interface AboutMeSelect<T extends boolean = true> {
   description?: T;
+  'typing-text'?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

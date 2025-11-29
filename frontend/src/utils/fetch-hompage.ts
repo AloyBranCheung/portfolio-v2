@@ -2,16 +2,17 @@ import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import axios from "@/lib/axios";
 import { Experience } from "@/types/experience";
 
-export const fetchHero = async () => {
-  let data: SerializedEditorState | null = null;
+export const fetchHero = async (): Promise<{
+  richText: SerializedEditorState;
+  typingText: { text: string }[];
+} | null> => {
   try {
     const res = await axios.get("/globals/about-me");
-    data = res.data.description;
-    return data;
+    return { richText: res.data.description, typingText: res.data["typing-text"] };
   } catch (error) {
     // TODO: sentry logging
     console.error("Error fetching About Me global:", error);
-    return data;
+    return null;
   }
 };
 
