@@ -23,7 +23,7 @@ export default function RootLayout({
         className={`${jetBrainsMono} antialiased w-full flex justify-center`}
       >
         <div className="container max-w-5xl py-4 px-2 flex flex-col w-full gap-2">
-          <header className="w-full">
+          <header className="sticky top-2 z-50 w-full">
             <Navbar />
           </header>
           <main className="w-full px-4">{children}</main>
