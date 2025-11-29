@@ -63,50 +63,72 @@ export default function Navbar() {
                 <SheetDescription>Site navigation links</SheetDescription>
               </VisuallyHidden>
               <NavigationMenuList className="flex flex-col gap-4 mt-8 px-4 py-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => {
-                      setOpen(false);
-                      if (item.href.includes("#")) {
-                        setHash(`#${item.href.split("#")[1]}`);
-                      } else {
-                        setHash("");
-                      }
-                    }}
-                    className="text-lg"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                {navItems.map((item) => {
+                  const handleClick = () => {
+                    setOpen(false);
+                    if (item.href.includes("#")) {
+                      setHash(`#${item.href.split("#")[1]}`);
+                    } else {
+                      setHash("");
+                    }
+                  };
+                  if (item.href.includes("#")) {
+                    return (
+                      <a
+                        key={item.href}
+                        href={item.href}
+                        onClick={handleClick}
+                        className="text-lg"
+                      >
+                        {item.label}
+                      </a>
+                    );
+                  }
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={handleClick}
+                      className="text-lg"
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </NavigationMenuList>
             </SheetContent>
           </Sheet>
         ) : (
           <NavigationMenuList>
-            {navItems.map((item) => (
-              <NavigationMenuItem key={item.href}>
-                <NavigationMenuLink
-                  className={navigationMenuTriggerStyle()}
-                  isActive={isActive(item.href)}
-                  asChild
-                >
-                  <Link
-                    href={item.href}
-                    onClick={() => {
-                      if (item.href.includes("#")) {
-                        setHash(`#${item.href.split("#")[1]}`);
-                      } else {
-                        setHash("");
-                      }
-                    }}
+            {navItems.map((item) => {
+              const handleClick = () => {
+                if (item.href.includes("#")) {
+                  setHash(`#${item.href.split("#")[1]}`);
+                } else {
+                  setHash("");
+                }
+              };
+              return (
+                <NavigationMenuItem key={item.href}>
+                  <NavigationMenuLink
+                    className={navigationMenuTriggerStyle()}
+                    isActive={isActive(item.href)}
+                    asChild
                   >
-                    {item.label}
-                  </Link>
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-            ))}
+                    {item.href.includes("#") ? (
+                      <a href={item.href} onClick={handleClick}>
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link href={item.href} onClick={handleClick}>
+                        {item.label}
+                      </Link>
+                    )}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              );
+            })}
           </NavigationMenuList>
         )}
       </div>
