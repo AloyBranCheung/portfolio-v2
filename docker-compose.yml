@@ -10,6 +10,8 @@ services:
       - 5432:5432
     volumes:
       - ./data/db:/var/lib/postgresql/data
+    networks:
+      - default
 
   payload:
     image: node:18-alpine
@@ -27,6 +29,8 @@ services:
       - PAYLOAD_SECRET=secret
     env_file:
       - .env
+    networks:
+      - default
 
   frontend:
     build:
@@ -41,3 +45,9 @@ services:
       - /app/node_modules
     depends_on:
       - payload
+    networks:
+      - default
+
+networks:
+  default:
+    name: portfolio-v2-network

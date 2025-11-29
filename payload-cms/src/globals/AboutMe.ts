@@ -9,4 +9,7 @@ export const AboutMe: GlobalConfig = {
       type: 'richText',
     },
   ],
+  access: {
+    read: () => true,
+  },
 }

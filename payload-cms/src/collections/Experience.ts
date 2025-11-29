@@ -70,4 +70,7 @@ export const Experience: CollectionConfig = {
       hasMany: true,
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
