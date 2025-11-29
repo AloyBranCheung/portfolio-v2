@@ -14,4 +14,7 @@ export const Company: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
+  access: {
+    read: () => true,
+  },
 }

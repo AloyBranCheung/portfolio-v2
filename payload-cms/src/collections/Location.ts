@@ -14,4 +14,7 @@ export const Location: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
+  access: {
+    read: () => true,
+  },
 }

@@ -14,4 +14,7 @@ export const EmploymentType: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
+  access: {
+    read: () => true,
+  },
 }
