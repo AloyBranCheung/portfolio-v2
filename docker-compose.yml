@@ -54,7 +54,7 @@ services:
       context: ./frontend
       network: host
     ports:
-      - 8080:3000
+      - 8000:8000
     env_file:
       - .env
     networks:
