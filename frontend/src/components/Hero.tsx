@@ -14,7 +14,8 @@ interface HeroProps {
 
 export default function Hero({ data }: HeroProps) {
   return (
-    <section
+    // Warning: Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections, or else use a div element instead for any cases where no heading is needed.
+    <div
       className="py-4 flex flex-col md:flex-row justify-between gap-2"
       id="about"
     >
@@ -43,7 +44,7 @@ export default function Hero({ data }: HeroProps) {
       <div className="flex items-center justify-center">
         <div className={neobrutalist()}>
           <Image
-            alt="Portrait of Brandon in business casual attire"
+            alt="Portrait of Brandon in Japan"
             src="/images/hero.avif"
             width={400}
             height={400}
@@ -52,6 +53,6 @@ export default function Hero({ data }: HeroProps) {
           />
         </div>
       </div>
-    </section>
+    </div>
   );
 }

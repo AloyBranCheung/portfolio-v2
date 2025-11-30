@@ -7,6 +7,7 @@ export default function Footer() {
         target="_blank"
         href="https://github.com/AloyBranCheung"
         rel="noopener noreferrer"
+        aria-label="Visit my GitHub profile"
       >
         <Github />
       </a>
@@ -14,6 +15,7 @@ export default function Footer() {
         target="_blank"
         href="https://www.linkedin.com/in/aloysiuscheung/"
         rel="noopener noreferrer"
+        aria-label="Visit my LinkedIn profile"
       >
         <Linkedin />
       </a>

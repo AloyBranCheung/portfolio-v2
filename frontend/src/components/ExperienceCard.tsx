@@ -4,7 +4,8 @@ import dayjs from "@/lib/dayjs";
 import { neobrutalist } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";
 import { Experience as IExperience } from "@/types/experience";
-import { motion } from "framer-motion";
+import * as motion from "motion/react-client";
+import { interactAnimation } from "@/utils/interact-animation";
 
 interface ExperienceCardProps {
   exp: IExperience;
@@ -13,13 +14,12 @@ interface ExperienceCardProps {
 export default function ExperienceCard({ exp }: ExperienceCardProps) {
   return (
     <motion.a
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
       href={exp.companyUrl}
       target="_blank"
       rel="noopener noreferrer"
       key={exp.id}
       className={`${neobrutalist()} p-4`}
+      {...interactAnimation}
     >
       <div className="flex items-center justify-between mb-2">
         <header suppressHydrationWarning>
