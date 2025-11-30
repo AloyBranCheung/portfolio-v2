@@ -55,4 +55,13 @@ export default buildConfig({
     payloadCloudPlugin(),
     // storage-adapter-placeholder
   ],
+  endpoints: [
+    {
+      path: '/health',
+      method: 'get',
+      handler: async (req) => {
+        return Response.json({ status: 'ok' }, { status: 200 })
+      },
+    },
+  ],
 })
