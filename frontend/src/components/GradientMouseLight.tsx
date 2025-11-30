@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import * as motion from "motion/react-client";
 
-const CONTAINER_SIZE = 250;
+const CONTAINER_SIZE = 700;
 const SMALL_SQUARE_SIZE = 20;
-const NUM_SQUARES = 40;
+const NUM_SQUARES = 60;
 
 const getRandomPosition = () => ({
   x: Math.random() * (CONTAINER_SIZE - SMALL_SQUARE_SIZE),
@@ -40,13 +40,13 @@ export default function GradientMouseLight() {
     <div
       className="fixed inset-0 -z-10"
       style={{
-        background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #d3d3d3, white 25%)`,
+        background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #e7e7e7, white 25%)`,
       }}
     >
       <div
-        className="absolute"
+        className="absolute rounded-full overflow-hidden"
         style={{
-          background: "red",
+          //   background: "red",
           width: CONTAINER_SIZE,
           height: CONTAINER_SIZE,
           left: mousePosition.x - CONTAINER_SIZE / 2,
@@ -57,7 +57,7 @@ export default function GradientMouseLight() {
         {squares.map((square, index) => (
           <motion.div
             key={`${square.id}-${square.x}-${square.y}`}
-            className="absolute bg-gray-200"
+            className="absolute bg-gray-400"
             style={{
               width: SMALL_SQUARE_SIZE,
               left: square.x,
