@@ -43,7 +43,7 @@ export default function Hero({ data }: HeroProps) {
       <div className="flex items-center justify-center">
         <div className={neobrutalist()}>
           <Image
-            alt="Portrait of Brandon in business casual attire"
+            alt="Portrait of Brandon in Japan"
             src="/images/hero.avif"
             width={400}
             height={400}
