@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { DotBackground } from "@/components/DotBackground";
 import { ThemeProvider } from "next-themes";
+import GradientMouseLight from "@/components/GradientMouseLight";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const jetBrainsMono = localFont({
@@ -25,8 +26,9 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body
-        className={`${jetBrainsMono} antialiased w-full flex justify-center`}
+        className={`${jetBrainsMono.className} antialiased w-full flex justify-center relative`}
       >
+        <GradientMouseLight />
         <div className="container max-w-5xl py-4 px-2 flex flex-col w-full gap-2">
           <ThemeProvider defaultTheme="light">
             <header className="sticky top-2 z-50 w-full">
