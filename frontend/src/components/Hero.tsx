@@ -14,7 +14,8 @@ interface HeroProps {
 
 export default function Hero({ data }: HeroProps) {
   return (
-    <section
+    // Warning: Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections, or else use a div element instead for any cases where no heading is needed.
+    <div
       className="py-4 flex flex-col md:flex-row justify-between gap-2"
       id="about"
     >
@@ -52,6 +53,6 @@ export default function Hero({ data }: HeroProps) {
           />
         </div>
       </div>
-    </section>
+    </div>
   );
 }

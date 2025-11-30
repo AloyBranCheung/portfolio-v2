@@ -21,7 +21,8 @@ export async function GET(request: Request) {
   return new NextResponse(fileBuffer, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": 'inline; filename="resume.pdf"',
+      "Content-Disposition":
+        'inline; filename="Brandon Cheung - Software Developer Resume.pdf"',
     },
   });
 }

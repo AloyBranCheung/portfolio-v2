@@ -1,7 +1,6 @@
 import { Experience as IExperience } from "@/types/experience";
 import ErrorMsg from "./ErrorMsg";
 import ExperienceCard from "./ExperienceCard";
-
 interface ExperienceProps {
   data: IExperience[] | null;
 }
