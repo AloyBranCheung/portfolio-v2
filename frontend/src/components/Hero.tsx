@@ -3,7 +3,7 @@ import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import Image from "next/image";
 import ErrorMsg from "./ErrorMsg";
-import TypingText from "./ui/shadcn-io/typing-text";
+import TypingTextWrapper from "./TypingTextWrapper";
 
 interface HeroProps {
   data: {
@@ -22,16 +22,7 @@ export default function Hero({ data }: HeroProps) {
       <div className="w-full mb-4 md:mb-0 flex justify-center flex-col">
         {data ? (
           <>
-            <TypingText
-              text={data.typingText.map((item) => item.text)}
-              typingSpeed={150}
-              pauseDuration={1500}
-              showCursor={true}
-              cursorCharacter="█"
-              className="font-bold text-lg dark:text-white"
-              textColors={["black"]}
-              variableSpeed={{ min: 50, max: 120 }}
-            />
+            <TypingTextWrapper typingText={data.typingText} />
             <p>
               <br />
             </p>
