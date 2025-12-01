@@ -18,7 +18,7 @@ export default function ExperienceCard({ exp }: ExperienceCardProps) {
       target="_blank"
       rel="noopener noreferrer"
       key={exp.id}
-      className={`${neobrutalist()} p-4`}
+      className={`${neobrutalist()} p-4 bg-white`}
       {...interactAnimation}
     >
       <div className="flex items-center justify-between mb-2">
