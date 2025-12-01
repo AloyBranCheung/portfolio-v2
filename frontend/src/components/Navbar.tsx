@@ -69,7 +69,7 @@ export default function Navbar() {
           <h2 className="text-sm">Software Developer</h2>
         </Link>
         <div className="flex items-center gap-2">
-          {isMobile ? (
+          <div className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button variant="default" size="icon">
@@ -135,62 +135,60 @@ export default function Navbar() {
                 </NavigationMenuList>
               </SheetContent>
             </Sheet>
-          ) : (
-            <NavigationMenuList>
-              {navItems.map((item) => {
-                const handleClick = (
-                  e: React.MouseEvent<HTMLAnchorElement>
-                ) => {
-                  e.preventDefault();
-                  const id = item.href.split("#")[1];
+          </div>
 
-                  setActiveSection(id);
-                  setTimeout(() => {
-                    const element = document.getElementById(id);
-                    if (element) {
-                      const offset = 100;
-                      const elementPosition =
-                        element.getBoundingClientRect().top;
-                      const offsetPosition =
-                        elementPosition + window.scrollY - offset;
-                      window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth",
-                      });
-                    }
-                  }, 300);
-                };
+          <NavigationMenuList className="hidden md:flex">
+            {navItems.map((item) => {
+              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                e.preventDefault();
+                const id = item.href.split("#")[1];
 
-                return (
-                  <NavigationMenuItem key={item.href}>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                      isActive={activeSection === item.href.split("#")[1]}
-                      asChild
-                    >
-                      {item.href.includes("#") ? (
-                        <a
-                          href={item.href}
-                          onClick={handleClick}
-                          className="dark:text-white"
-                        >
-                          {item.label}
-                        </a>
-                      ) : (
-                        <Link
-                          href={item.href}
-                          onClick={handleClick}
-                          className="dark:text-white"
-                        >
-                          {item.label}
-                        </Link>
-                      )}
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                );
-              })}
-            </NavigationMenuList>
-          )}
+                setActiveSection(id);
+                setTimeout(() => {
+                  const element = document.getElementById(id);
+                  if (element) {
+                    const offset = 100;
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition =
+                      elementPosition + window.scrollY - offset;
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth",
+                    });
+                  }
+                }, 300);
+              };
+
+              return (
+                <NavigationMenuItem key={item.href}>
+                  <NavigationMenuLink
+                    className={navigationMenuTriggerStyle()}
+                    isActive={activeSection === item.href.split("#")[1]}
+                    asChild
+                  >
+                    {item.href.includes("#") ? (
+                      <a
+                        href={item.href}
+                        onClick={handleClick}
+                        className="dark:text-white"
+                      >
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={handleClick}
+                        className="dark:text-white"
+                      >
+                        {item.label}
+                      </Link>
+                    )}
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              );
+            })}
+          </NavigationMenuList>
+
           <Button
             className="cursor-pointer"
             size="icon"
