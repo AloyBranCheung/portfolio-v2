@@ -3,7 +3,7 @@ import { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import Image from "next/image";
 import ErrorMsg from "./ErrorMsg";
-import TypingText from "./ui/shadcn-io/typing-text";
+import TypingTextWrapper from "./TypingTextWrapper";
 
 interface HeroProps {
   data: {
@@ -16,22 +16,13 @@ export default function Hero({ data }: HeroProps) {
   return (
     // Warning: Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections, or else use a div element instead for any cases where no heading is needed.
     <div
-      className="py-4 flex flex-col md:flex-row justify-between gap-2"
+      className="py-4 flex flex-col md:flex-row justify-between gap-2 dark:text-white"
       id="about"
     >
       <div className="w-full mb-4 md:mb-0 flex justify-center flex-col">
         {data ? (
           <>
-            <TypingText
-              text={data.typingText.map((item) => item.text)}
-              typingSpeed={150}
-              pauseDuration={1500}
-              showCursor={true}
-              cursorCharacter="|"
-              className="font-bold text-lg"
-              textColors={["black"]}
-              variableSpeed={{ min: 50, max: 120 }}
-            />
+            <TypingTextWrapper typingText={data.typingText} />
             <p>
               <br />
             </p>
