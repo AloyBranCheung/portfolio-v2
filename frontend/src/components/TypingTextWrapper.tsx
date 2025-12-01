@@ -22,6 +22,7 @@ export default function TypingTextWrapper({
       showCursor={true}
       cursorCharacter="█"
       className="font-bold text-lg dark:text-white"
+      // have to do it this way with use client, dynamic import ssr false and useTheme since cannot set tailwind classes for text color
       textColors={[theme === "dark" ? "white" : "black"]}
       variableSpeed={{ min: 50, max: 120 }}
     />
