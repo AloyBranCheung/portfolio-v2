@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { DotBackground } from "@/components/DotBackground";
 import { ThemeProvider } from "next-themes";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const jetBrainsMono = localFont({
   src: "../../public/fonts/JetBrainsMono-Regular.woff2",
@@ -37,6 +38,7 @@ export default function RootLayout({
         </div>
         {process.env.NODE_ENV !== "development" && <Analytics />}
         <DotBackground />
+        <SpeedInsights />
       </body>
     </html>
   );
