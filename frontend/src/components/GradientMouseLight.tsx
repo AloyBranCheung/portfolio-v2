@@ -11,6 +11,8 @@ const getRandomPosition = () => ({
   y: Math.random() * (CONTAINER_SIZE - SMALL_SQUARE_SIZE),
 });
 
+// TODO: adjust contrast and only use this in dark mode
+
 export default function GradientMouseLight() {
   const squareId = useRef(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -58,26 +60,24 @@ export default function GradientMouseLight() {
     <div
       className="fixed inset-0 -z-10"
       style={{
-        background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #e7e7e7, white 25%)`,
+        background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, #ececec, white 25%)`,
       }}
     >
       {squares.map((square) => (
         <motion.div
           key={square.id}
-          className="absolute bg-gray-400"
+          className="absolute bg-gray-300 rounded-base"
           style={{
             width: SMALL_SQUARE_SIZE,
+            height: SMALL_SQUARE_SIZE,
             left: square.centerX - CONTAINER_SIZE / 2 + square.x,
-            top:
-              square.centerY -
-              CONTAINER_SIZE / 2 +
-              square.y +
-              SMALL_SQUARE_SIZE / 2,
+            top: square.centerY - CONTAINER_SIZE / 2 + square.y,
           }}
-          initial={{ height: 0 }}
-          animate={{ height: [0, SMALL_SQUARE_SIZE, 0] }}
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: [0, 1, 0] }}
           transition={{
-            duration: 1,
+            duration: 2,
+            ease: "easeInOut",
           }}
           onAnimationComplete={() => {
             setSquares((prev) => prev.filter((s) => s.id !== square.id));
