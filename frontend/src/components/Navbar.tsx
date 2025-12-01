@@ -21,6 +21,7 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "@/components/ui/button";
 import { LucideSun, LucideMoon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const navItems = [
   { href: "/#about", label: "About" },
@@ -29,9 +30,7 @@ const navItems = [
 ];
 
 export default function Navbar() {
-  const [themeMode, setThemeMode] = useState(
-    typeof window !== "undefined" && localStorage.getItem("themeMode")
-  );
+  const { theme, setTheme } = useTheme();
   const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(
@@ -183,19 +182,14 @@ export default function Navbar() {
           <Button
             size="icon"
             onClick={() => {
-              const html = document.querySelector("html");
-              if (themeMode === "dark") {
-                html?.classList.remove("dark");
-                localStorage.setItem("themeMode", "light");
-                setThemeMode("light");
+              if (theme === "dark") {
+                setTheme("light");
               } else {
-                html?.classList.add("dark");
-                localStorage.setItem("themeMode", "dark");
-                setThemeMode("dark");
+                setTheme("dark");
               }
             }}
           >
-            {themeMode === "dark" ? (
+            {theme === "dark" ? (
               <LucideMoon className="h-5 w-5" />
             ) : (
               <LucideSun className="h-5 w-5" />
