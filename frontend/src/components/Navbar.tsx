@@ -189,11 +189,8 @@ export default function Navbar() {
               }
             }}
           >
-            {theme === "dark" ? (
-              <LucideMoon className="h-5 w-5" />
-            ) : (
-              <LucideSun className="h-5 w-5" />
-            )}
+            <LucideMoon className="h-5 w-5 dark:hidden" />
+            <LucideSun className="h-5 w-5 hidden dark:inline" />
             <span className="sr-only">Toggle Theme</span>
           </Button>
         </div>
