@@ -2,7 +2,7 @@ import { Github, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="px-4 py-4 mt-2 flex items-center justify-center gap-4">
+    <footer className="px-4 py-4 mt-2 flex items-center justify-center gap-4 dark:text-white">
       <a
         target="_blank"
         href="https://github.com/AloyBranCheung"

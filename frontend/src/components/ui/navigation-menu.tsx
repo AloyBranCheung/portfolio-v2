@@ -129,7 +129,7 @@ function NavigationMenuLink({
           {isActive && (
             <motion.div
               layoutId="underline"
-              className="absolute bottom-0 left-0 right-0 h-0.5 bg-black"
+              className="absolute bottom-0 left-0 right-0 h-0.5 bg-black dark:bg-white"
             />
           )}
         </div>

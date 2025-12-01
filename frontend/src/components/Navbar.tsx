@@ -22,6 +22,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "@/components/ui/button";
 import { LucideSun, LucideMoon } from "lucide-react";
 import { useTheme } from "next-themes";
+import { cn, neobrutalist } from "@/lib/utils";
 
 const navItems = [
   { href: "/#about", label: "About" },
@@ -61,7 +62,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <NavigationMenu className="w-full max-w-none bg-white border-2 border-black shadow-[4px_4px_0px_0px_black] p-4">
+    <NavigationMenu className={cn(["w-full max-w-none p-4", neobrutalist()])}>
       <div className="flex w-full items-center justify-between">
         <Link href="/" className="block cursor-pointer">
           <h1 className="text-base">Brandon Cheung</h1>
@@ -75,7 +76,10 @@ export default function Navbar() {
                   <HamburgerIcon aria-label="menu" className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right">
+              <SheetContent
+                side="right"
+                className="dark:bg-black dark:text-white"
+              >
                 <VisuallyHidden>
                   <SheetTitle>Navigation Menu</SheetTitle>
                   <SheetDescription>Site navigation links</SheetDescription>
@@ -165,11 +169,19 @@ export default function Navbar() {
                       asChild
                     >
                       {item.href.includes("#") ? (
-                        <a href={item.href} onClick={handleClick}>
+                        <a
+                          href={item.href}
+                          onClick={handleClick}
+                          className="dark:text-white"
+                        >
                           {item.label}
                         </a>
                       ) : (
-                        <Link href={item.href} onClick={handleClick}>
+                        <Link
+                          href={item.href}
+                          onClick={handleClick}
+                          className="dark:text-white"
+                        >
                           {item.label}
                         </Link>
                       )}
@@ -180,6 +192,7 @@ export default function Navbar() {
             </NavigationMenuList>
           )}
           <Button
+            className="cursor-pointer"
             size="icon"
             onClick={() => {
               if (theme === "dark") {
