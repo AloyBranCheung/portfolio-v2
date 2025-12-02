@@ -40,7 +40,7 @@ export default function RootLayout({
         </div>
         {process.env.NODE_ENV !== "development" && <Analytics />}
         <DotBackground />
-        <SpeedInsights />
+        {process.env.NODE_ENV !== "development" && <SpeedInsights />}
       </body>
     </html>
   );

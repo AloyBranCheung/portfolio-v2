@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import axios from "@/lib/axios";
 import * as Sentry from "@sentry/nextjs";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const res = await axios.get("/media", {
       params: {

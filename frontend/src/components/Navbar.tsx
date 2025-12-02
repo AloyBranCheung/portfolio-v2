@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { HamburgerIcon } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -32,7 +31,6 @@ const navItems = [
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
-  const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(
     navItems[0].href.split("#")[1]
