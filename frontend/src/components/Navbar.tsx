@@ -22,6 +22,7 @@ import { LucideSun, LucideMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn, neobrutalist } from "@/lib/utils";
 import * as motion from "motion/react-client";
+import { initMixpanel } from "@/lib/mixpanel";
 
 const navItems = [
   { href: "/#about", label: "About" },
@@ -57,6 +58,10 @@ export default function Navbar() {
     });
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    initMixpanel(); // Initialize Mixpanel
   }, []);
 
   return (
