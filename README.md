@@ -9,7 +9,7 @@
 
 ```bash
 # install dependencies for project development
-npm install
+npm install --force
 
 # setup envs based on .env.example
 cp .env.example .env
@@ -19,7 +19,7 @@ npm run dev
 ```
 
 > [!NOTE]  
-> PayloadCMS v3.57.0 does not currently support Next.js 16. So will not be running it as one app as it was intended (e.g. local api).
+> PayloadCMS v3.57.0 does not currently support Next.js 16. So will not be running it as one app as it was intended (e.g. local api). Also, because of this, `npm install` will use `--force` in the images.
 
 ## Installing new packages from root directory
 
@@ -30,8 +30,15 @@ npm i package/here --workspace=frontend # or whatever workspace
 
 ## Seeding Data
 
+### Run the seed script (from before I deployed the db)
+
 **Seed Once:**
 Setup the envs targeting the correct database and run `npm run seed`
+
+### Or Cloning DB
+
+1. `pg_dump` the `.sql` from the deployed database
+2. `psql -d <the connection string> -f <the .sql file>` to the local db
 
 ## Test prod build locally
 
