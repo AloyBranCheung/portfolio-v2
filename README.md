@@ -38,6 +38,12 @@ Setup the envs targeting the correct database and run `npm run seed`
 ### Or Cloning DB
 
 1. `pg_dump` the `.sql` from the deployed database
+
+```bash
+# e.g.
+pg_dump -d postgresql://user:password@host:port/database > db.sql
+```
+
 2. `psql -d <the connection string> -f <the .sql file>` to the local db
 
 ## Test prod build locally
