@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <body
-        className={`${jetBrainsMono} antialiased w-full flex justify-center`}
+        className={`${jetBrainsMono.className} antialiased w-full flex justify-center relative`}
       >
         <div className="container max-w-5xl py-4 px-2 flex flex-col w-full gap-2">
           <ThemeProvider defaultTheme="light">
@@ -38,7 +38,7 @@ export default function RootLayout({
         </div>
         {process.env.NODE_ENV !== "development" && <Analytics />}
         <DotBackground />
-        <SpeedInsights />
+        {process.env.NODE_ENV !== "development" && <SpeedInsights />}
       </body>
     </html>
   );

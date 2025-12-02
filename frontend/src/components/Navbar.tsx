@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { HamburgerIcon } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -19,10 +18,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Button } from "@/components/ui/button";
 import { LucideSun, LucideMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn, neobrutalist } from "@/lib/utils";
+import * as motion from "motion/react-client";
+import { initMixpanel } from "@/lib/mixpanel";
 
 const navItems = [
   { href: "/#about", label: "About" },
@@ -32,7 +32,6 @@ const navItems = [
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
-  const isMobile = useIsMobile();
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(
     navItems[0].href.split("#")[1]
@@ -61,6 +60,10 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    initMixpanel(); // Initialize Mixpanel
+  }, []);
+
   return (
     <NavigationMenu className={cn(["w-full max-w-none p-4", neobrutalist()])}>
       <div className="flex w-full items-center justify-between">
@@ -72,9 +75,13 @@ export default function Navbar() {
           <div className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="default" size="icon">
+                <motion.button
+                  className={`${neobrutalist()} p-2 cursor-pointer`}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
                   <HamburgerIcon aria-label="menu" className="h-5 w-5" />
-                </Button>
+                </motion.button>
               </SheetTrigger>
               <SheetContent
                 side="right"
@@ -189,9 +196,10 @@ export default function Navbar() {
             })}
           </NavigationMenuList>
 
-          <Button
-            className="cursor-pointer"
-            size="icon"
+          <motion.button
+            className={`${neobrutalist()} p-2 cursor-pointer`}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => {
               if (theme === "dark") {
                 setTheme("light");
@@ -203,7 +211,7 @@ export default function Navbar() {
             <LucideMoon className="h-5 w-5 dark:hidden" />
             <LucideSun className="h-5 w-5 hidden dark:inline" />
             <span className="sr-only">Toggle Theme</span>
-          </Button>
+          </motion.button>
         </div>
       </div>
     </NavigationMenu>
