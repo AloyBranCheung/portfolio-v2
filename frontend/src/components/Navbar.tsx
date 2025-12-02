@@ -18,10 +18,10 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Button } from "@/components/ui/button";
 import { LucideSun, LucideMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn, neobrutalist } from "@/lib/utils";
+import * as motion from "motion/react-client";
 
 const navItems = [
   { href: "/#about", label: "About" },
@@ -70,9 +70,13 @@ export default function Navbar() {
           <div className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="default" size="icon">
+                <motion.button
+                  className={`${neobrutalist()} p-2 cursor-pointer`}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
                   <HamburgerIcon aria-label="menu" className="h-5 w-5" />
-                </Button>
+                </motion.button>
               </SheetTrigger>
               <SheetContent
                 side="right"
@@ -187,9 +191,10 @@ export default function Navbar() {
             })}
           </NavigationMenuList>
 
-          <Button
-            className="cursor-pointer"
-            size="icon"
+          <motion.button
+            className={`${neobrutalist()} p-2 cursor-pointer`}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
             onClick={() => {
               if (theme === "dark") {
                 setTheme("light");
@@ -201,7 +206,7 @@ export default function Navbar() {
             <LucideMoon className="h-5 w-5 dark:hidden" />
             <LucideSun className="h-5 w-5 hidden dark:inline" />
             <span className="sr-only">Toggle Theme</span>
-          </Button>
+          </motion.button>
         </div>
       </div>
     </NavigationMenu>
