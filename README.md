@@ -9,7 +9,7 @@
 
 ```bash
 # install dependencies for project development
-npm install --force
+npm install
 
 # setup envs based on .env.example
 cp .env.example .env
