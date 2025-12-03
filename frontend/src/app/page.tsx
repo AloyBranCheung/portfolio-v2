@@ -11,6 +11,7 @@ export default async function Home() {
     fetchHero(),
     fetchExperience(),
   ]);
+  throw new Error("error");
 
   return (
     <div>
