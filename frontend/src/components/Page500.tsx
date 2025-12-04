@@ -1,8 +1,6 @@
 "use client";
 
 import { neobrutalist } from "@/lib/utils";
-import Five from "./assets/Five";
-import Zero from "./assets/Zero";
 import { useEffect, useRef } from "react";
 import Matter, { Runner } from "matter-js";
 
@@ -34,7 +32,30 @@ export default function Page500() {
     });
 
     // bodies
-    const boxB = Bodies.rectangle(425, 0, 80, 80);
+    const worldObjects = [];
+    const five = Bodies.rectangle(325, 0, 237.3, 359.1, {
+      render: {
+        sprite: {
+          texture: "/assets/5.svg",
+          xScale: 10,
+          yScale: 10,
+        },
+      },
+    });
+    worldObjects.push(five);
+    const createZero = (x: number) =>
+      Bodies.rectangle(x, 0, 237.3, 359.1, {
+        render: {
+          sprite: {
+            texture: "/assets/0.svg",
+            xScale: 10,
+            yScale: 10,
+          },
+        },
+      });
+
+    worldObjects.push(createZero(425));
+    worldObjects.push(createZero(525));
 
     // container
     const leftWall = Bodies.rectangle(
@@ -46,6 +67,7 @@ export default function Page500() {
         isStatic: true,
       }
     );
+    worldObjects.push(leftWall);
     const rightWall = Bodies.rectangle(
       width + WALL_THICKNESS / 2,
       height / 2,
@@ -55,6 +77,7 @@ export default function Page500() {
         isStatic: true,
       }
     );
+    worldObjects.push(rightWall);
     const floor = Bodies.rectangle(
       width / 2,
       height,
@@ -64,9 +87,10 @@ export default function Page500() {
         isStatic: true,
       }
     );
+    worldObjects.push(floor);
 
     // Add bodies to world
-    Composite.add(engine.world, [floor, leftWall, rightWall, boxB]);
+    Composite.add(engine.world, worldObjects);
 
     // run renderer
     Render.run(render);
