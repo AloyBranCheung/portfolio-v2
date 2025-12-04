@@ -14,10 +14,7 @@ export default function Page500() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const { left, top, right, bottom, width, height } =
-      containerRef.current.getBoundingClientRect();
-
-    console.log({ left, top, right, bottom, width, height });
+    const { width, height } = containerRef.current.getBoundingClientRect();
 
     const Engine = Matter.Engine;
     const Render = Matter.Render; // for debugging
@@ -40,13 +37,36 @@ export default function Page500() {
     const boxB = Bodies.rectangle(425, 0, 80, 80);
 
     // container
-    const leftWall = Bodies.rectangle(left, bottom, 10, height);
-    const floor = Bodies.rectangle(width / 2, height, width, WALL_THICKNESS, {
-      isStatic: true,
-    });
+    const leftWall = Bodies.rectangle(
+      0 - WALL_THICKNESS / 2,
+      height / 2,
+      WALL_THICKNESS,
+      height,
+      {
+        isStatic: true,
+      }
+    );
+    const rightWall = Bodies.rectangle(
+      width + WALL_THICKNESS / 2,
+      height / 2,
+      WALL_THICKNESS,
+      height,
+      {
+        isStatic: true,
+      }
+    );
+    const floor = Bodies.rectangle(
+      width / 2,
+      height,
+      width,
+      WALL_THICKNESS / 2,
+      {
+        isStatic: true,
+      }
+    );
 
     // Add bodies to world
-    Composite.add(engine.world, [floor, leftWall, boxB]);
+    Composite.add(engine.world, [floor, leftWall, rightWall, boxB]);
 
     // run renderer
     Render.run(render);
