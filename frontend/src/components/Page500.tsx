@@ -51,37 +51,37 @@ export default function Page500() {
 
     if (theme === "dark") render.canvas.style.filter = "invert(1)";
 
-    const random = (min: number, max: number) =>
-      Math.random() * (max - min) + min;
     const numWidth = 237.3 * scale;
+    const numHeight = 359.1 * scale;
 
-    const createNumber = (texture: string) =>
-      Bodies.rectangle(
-        random(numWidth / 2, width - numWidth / 2),
-        random(-400, -200),
-        numWidth,
-        359.1 * scale,
-        {
-          render: {
-            sprite: { texture, xScale: 10 * scale, yScale: 10 * scale },
-          },
-        }
-      );
+    const createNumber = (texture: string, x: number, y: number) =>
+      Bodies.rectangle(x, y, numWidth, numHeight, {
+        render: {
+          sprite: { texture, xScale: 10 * scale, yScale: 10 * scale },
+        },
+      });
 
     const createWall = (x: number, y: number, w: number, h: number) =>
-      Bodies.rectangle(x, y, w, h, { isStatic: true });
+      Bodies.rectangle(x, y, w, h, {
+        isStatic: true,
+        render: { visible: false },
+      });
+
+    const five = createNumber("/assets/5.svg", width * 0.25, -numHeight / 2);
+    const zero1 = createNumber("/assets/0.svg", width * 0.5, -numHeight / 2);
+    const zero2 = createNumber("/assets/0.svg", width * 0.75, -numHeight / 2);
 
     const oopsMsg = Bodies.rectangle(
-      random(oopsMsgRect.width / 2, width - oopsMsgRect.width / 2),
-      random(-400, -200),
+      width / 2,
+      -numHeight - 100,
       oopsMsgRect.width,
       oopsMsgRect.height,
       { render: { visible: false } }
     );
 
     const homeBtn = Bodies.rectangle(
-      random(homeBtnRect.width / 2, width - homeBtnRect.width / 2),
-      random(-400, -200),
+      width / 2,
+      -numHeight - 200,
       homeBtnRect.width,
       homeBtnRect.height,
       { render: { visible: false } }
@@ -89,13 +89,13 @@ export default function Page500() {
 
     const wallHeight = height + 800;
     Composite.add(engine.world, [
-      createNumber("/assets/5.svg"),
-      createNumber("/assets/0.svg"),
-      createNumber("/assets/0.svg"),
+      five,
+      zero1,
+      zero2,
       oopsMsg,
       homeBtn,
-      createWall(-WALL_THICKNESS, 0, WALL_THICKNESS, wallHeight), // left wall
-      createWall(width + WALL_THICKNESS, 0, WALL_THICKNESS, wallHeight), // right wall
+      createWall(-WALL_THICKNESS + 20, 0, WALL_THICKNESS, wallHeight), // left wall
+      createWall(width + WALL_THICKNESS - 20, 0, WALL_THICKNESS, wallHeight), // right wall
       createWall(width / 2, height + 90, width, WALL_THICKNESS + 100), // floor
     ]);
 
