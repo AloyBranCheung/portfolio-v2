@@ -1,7 +1,7 @@
 "use client";
 
 import { neobrutalist } from "@/lib/utils";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Matter, { Runner } from "matter-js";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
@@ -13,8 +13,15 @@ export default function Page500() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const oopsMsgRef = useRef<HTMLDivElement | null>(null);
   const homeBtnWrapperRef = useRef<HTMLDivElement | null>(null);
+  const [resize, setResize] = useState(0);
 
   const { theme } = useTheme();
+
+  useEffect(() => {
+    const handleResize = () => setResize((prev) => prev + 1);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (
@@ -113,7 +120,7 @@ export default function Page500() {
       Engine.clear(engine);
       render.canvas.remove();
     };
-  }, [theme]);
+  }, [theme, resize]);
 
   return (
     <div className="relative">
