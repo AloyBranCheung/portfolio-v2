@@ -19,7 +19,7 @@ npm run dev
 ```
 
 > [!NOTE]  
-> PayloadCMS v3.57.0 does not currently support Next.js 16. So will not be running it as one app as it was intended (e.g. local api). Also, because of this, `npm install` will use `--force` in the images.
+> PayloadCMS v3.65.0 does not currently support Next.js 16. So will not be running it as one app as it was intended (e.g. local api). Also, because of this, `npm install` will use `--force` in the images.
 
 ## Installing new packages from root directory
 

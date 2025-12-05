@@ -72,7 +72,7 @@ export default function Navbar() {
           <h2 className="text-sm">Software Developer</h2>
         </Link>
         <div className="flex items-center gap-2">
-          <div className="md:hidden">
+          <div suppressHydrationWarning className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <motion.button

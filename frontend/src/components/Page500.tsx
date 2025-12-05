@@ -51,7 +51,8 @@ export default function Page500() {
 
     if (theme === "dark") render.canvas.style.filter = "invert(1)";
     if (oopsMsgRef.current) oopsMsgRef.current.style.visibility = "visible";
-    if (homeBtnWrapperRef.current) homeBtnWrapperRef.current.style.visibility = "visible";
+    if (homeBtnWrapperRef.current)
+      homeBtnWrapperRef.current.style.visibility = "visible";
 
     const numWidth = 237.3 * scale;
     const numHeight = 359.1 * scale;
@@ -83,7 +84,7 @@ export default function Page500() {
 
     const homeBtn = Bodies.rectangle(
       width / 2,
-      -numHeight - 90,
+      -numHeight - 80,
       homeBtnRect.width,
       homeBtnRect.height,
       { render: { visible: false } }
@@ -100,21 +101,6 @@ export default function Page500() {
       createWall(width + WALL_THICKNESS - 20, 0, WALL_THICKNESS, wallHeight), // right wall
       createWall(width / 2, height + 70, width, WALL_THICKNESS + 100), // floor
     ]);
-
-    Events.on(engine, "afterUpdate", () => {
-      if (oopsMsgRef.current) {
-        const { x, y } = oopsMsg.position;
-        oopsMsgRef.current.style.transform = `translate(${x - oopsMsgRect.width / 2}px, ${y - oopsMsgRect.height / 2}px) rotate(${oopsMsg.angle}rad)`;
-      }
-      if (homeBtnWrapperRef.current) {
-        const { x, y } = homeBtn.position;
-        homeBtnWrapperRef.current.style.transform = `translate(${x - homeBtnRect.width / 2}px, ${y - homeBtnRect.height / 2}px) rotate(${homeBtn.angle}rad)`;
-      }
-    });
-
-    Render.run(render);
-    const runner = Runner.create();
-    Runner.run(runner, engine);
 
     const colors = [
       "#FF6B6B",
@@ -143,6 +129,21 @@ export default function Page500() {
     };
 
     const interval = setInterval(spawnBall, 300);
+
+    Events.on(engine, "afterUpdate", () => {
+      if (oopsMsgRef.current) {
+        const { x, y } = oopsMsg.position;
+        oopsMsgRef.current.style.transform = `translate(${x - oopsMsgRect.width / 2}px, ${y - oopsMsgRect.height / 2}px) rotate(${oopsMsg.angle}rad)`;
+      }
+      if (homeBtnWrapperRef.current) {
+        const { x, y } = homeBtn.position;
+        homeBtnWrapperRef.current.style.transform = `translate(${x - homeBtnRect.width / 2}px, ${y - homeBtnRect.height / 2}px) rotate(${homeBtn.angle}rad)`;
+      }
+    });
+
+    Render.run(render);
+    const runner = Runner.create();
+    Runner.run(runner, engine);
 
     return () => {
       clearInterval(interval);
