@@ -5,8 +5,6 @@ import { useEffect, useRef } from "react";
 import Matter, { Runner } from "matter-js";
 
 const WALL_THICKNESS = 10;
-const SVG_TEXT_WIDTH = 237.3;
-const SVG_TEXT_HEIGHT = 359.1;
 
 export default function Page500() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -14,6 +12,11 @@ export default function Page500() {
 
   useEffect(() => {
     if (!containerRef.current || !oopsMsgRef.current) return;
+
+    const isMobile = window.innerWidth < 768;
+    const scale = isMobile ? 0.4 : 1;
+    const SVG_TEXT_WIDTH = 237.3 * scale;
+    const SVG_TEXT_HEIGHT = 359.1 * scale;
 
     // container dimensions
     const { left, width, height } =
@@ -30,7 +33,7 @@ export default function Page500() {
 
     const engine = Engine.create({
       gravity: {
-        scale: 0.008,
+        scale: isMobile ? 0.005 : 0.008,
       },
     });
     const render = Render.create({
@@ -47,7 +50,7 @@ export default function Page500() {
     // bodies
     const worldObjects = [];
     const five = Bodies.rectangle(
-      left + 10,
+      isMobile ? width * 0.2 : left + 10,
       0 - SVG_TEXT_HEIGHT / 2,
       SVG_TEXT_WIDTH,
       SVG_TEXT_HEIGHT,
@@ -55,11 +58,10 @@ export default function Page500() {
         render: {
           sprite: {
             texture: "/assets/5.svg",
-            xScale: 10,
-            yScale: 10,
+            xScale: 10 * scale,
+            yScale: 10 * scale,
           },
         },
-        // isSleeping: true,
       }
     );
     worldObjects.push(five);
@@ -73,11 +75,10 @@ export default function Page500() {
           render: {
             sprite: {
               texture: "/assets/0.svg",
-              xScale: 10,
-              yScale: 10,
+              xScale: 10 * scale,
+              yScale: 10 * scale,
             },
           },
-          // isSleeping: true,
         }
       );
 
@@ -88,7 +89,7 @@ export default function Page500() {
     worldObjects.push(zero2);
 
     const oopsMsg = Bodies.rectangle(
-      450,
+      isMobile ? width / 2 : 450,
       -400,
       oopsMsgRect.width,
       oopsMsgRect.height,
@@ -149,6 +150,14 @@ export default function Page500() {
     // run engine
     const runner = Runner.create();
     Runner.run(runner, engine);
+
+    // cleanup
+    return () => {
+      Render.stop(render);
+      Runner.stop(runner);
+      Engine.clear(engine);
+      render.canvas.remove();
+    };
   }, []);
 
   return (
@@ -157,7 +166,7 @@ export default function Page500() {
         ref={containerRef}
         className={`${neobrutalist()} h-[calc(100vh-195px)] mt-2 relative`}
       />
-      <p ref={oopsMsgRef} className="absolute top-0 left-0 text-2xl font-bold">
+      <p ref={oopsMsgRef} className="absolute top-0 left-0 text-sm sm:text-2xl font-bold whitespace-nowrap">
         Oops, looks like you broke my site.
       </p>
     </div>
