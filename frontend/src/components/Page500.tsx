@@ -119,7 +119,7 @@ export default function Page500() {
       homeBtn,
       createWall(-WALL_THICKNESS + 20, 0, WALL_THICKNESS, wallHeight), // left wall
       createWall(width + WALL_THICKNESS - 20, 0, WALL_THICKNESS, wallHeight), // right wall
-      createWall(width / 2, height + 70, width, WALL_THICKNESS + 100), // floor
+      createWall(width / 2, height + 70, 1920, WALL_THICKNESS + 100), // floor
     ]);
 
     const colors = [
