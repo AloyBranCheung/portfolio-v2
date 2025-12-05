@@ -3,12 +3,14 @@
 import { neobrutalist } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import Matter, { Runner } from "matter-js";
+import { useTheme } from "next-themes";
 
 const WALL_THICKNESS = 10;
 
 export default function Page500() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const oopsMsgRef = useRef<HTMLDivElement | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!containerRef.current || !oopsMsgRef.current) return;
@@ -46,6 +48,11 @@ export default function Page500() {
         background: "transparent",
       },
     });
+
+    // Apply dark mode filter
+    if (theme === "dark") {
+      render.canvas.style.filter = "invert(1)";
+    }
 
     // bodies
     const worldObjects = [];
@@ -158,7 +165,7 @@ export default function Page500() {
       Engine.clear(engine);
       render.canvas.remove();
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div className="relative">
@@ -166,7 +173,10 @@ export default function Page500() {
         ref={containerRef}
         className={`${neobrutalist()} h-[calc(100vh-195px)] mt-2 relative`}
       />
-      <p ref={oopsMsgRef} className="absolute top-0 left-0 text-sm sm:text-2xl font-bold whitespace-nowrap">
+      <p
+        ref={oopsMsgRef}
+        className="absolute top-0 left-0 text-sm sm:text-2xl font-bold whitespace-nowrap dark:text-white"
+      >
         Oops, looks like you broke my site.
       </p>
     </div>
