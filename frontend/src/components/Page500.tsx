@@ -15,150 +15,71 @@ export default function Page500() {
   useEffect(() => {
     if (!containerRef.current || !oopsMsgRef.current) return;
 
+    const { Engine, Render, Bodies, Composite, Events } = Matter;
+
     const isMobile = window.innerWidth < 768;
     const scale = isMobile ? 0.4 : 1;
-    const SVG_TEXT_WIDTH = 237.3 * scale;
-    const SVG_TEXT_HEIGHT = 359.1 * scale;
 
-    // container dimensions
     const { left, width, height } =
       containerRef.current.getBoundingClientRect();
-
-    // oopsMsg dimensions
     const oopsMsgRect = oopsMsgRef.current.getBoundingClientRect();
 
-    const Engine = Matter.Engine;
-    const Render = Matter.Render; // for debugging
-    const Bodies = Matter.Bodies;
-    const Composite = Matter.Composite;
-    const Events = Matter.Events;
-
     const engine = Engine.create({
-      gravity: {
-        scale: isMobile ? 0.005 : 0.008,
-      },
+      gravity: { scale: isMobile ? 0.005 : 0.008 },
     });
     const render = Render.create({
       element: containerRef.current,
-      engine: engine,
-      options: {
-        width,
-        height,
-        wireframes: false,
-        background: "transparent",
-      },
+      engine,
+      options: { width, height, wireframes: false, background: "transparent" },
     });
 
-    // Apply dark mode filter
-    if (theme === "dark") {
-      render.canvas.style.filter = "invert(1)";
-    }
+    if (theme === "dark") render.canvas.style.filter = "invert(1)";
 
-    // bodies
-    const worldObjects = [];
-    const five = Bodies.rectangle(
-      isMobile ? width * 0.2 : left + 10,
-      0 - SVG_TEXT_HEIGHT / 2,
-      SVG_TEXT_WIDTH,
-      SVG_TEXT_HEIGHT,
-      {
-        render: {
-          sprite: {
-            texture: "/assets/5.svg",
-            xScale: 10 * scale,
-            yScale: 10 * scale,
-          },
-        },
-      }
-    );
-    worldObjects.push(five);
-    const createZero = (x: number) =>
-      Bodies.rectangle(
-        x,
-        0 - SVG_TEXT_HEIGHT / 2,
-        SVG_TEXT_WIDTH,
-        SVG_TEXT_HEIGHT,
-        {
-          render: {
-            sprite: {
-              texture: "/assets/0.svg",
-              xScale: 10 * scale,
-              yScale: 10 * scale,
-            },
-          },
-        }
-      );
+    const createNumber = (texture: string, x: number) =>
+      Bodies.rectangle(x, -179.55 * scale, 237.3 * scale, 359.1 * scale, {
+        render: { sprite: { texture, xScale: 10 * scale, yScale: 10 * scale } },
+      });
 
-    const zero1 = createZero(width / 2);
-    worldObjects.push(zero1);
-
-    const zero2 = createZero(width - width / 8);
-    worldObjects.push(zero2);
+    const createWall = (x: number, y: number, w: number, h: number) =>
+      Bodies.rectangle(x, y, w, h, { isStatic: true });
 
     const oopsMsg = Bodies.rectangle(
       isMobile ? width / 2 : 450,
       -400,
       oopsMsgRect.width,
       oopsMsgRect.height,
-      {
-        render: {
-          visible: false,
-        },
-      }
+      { render: { visible: false } }
     );
-    worldObjects.push(oopsMsg);
 
-    // container
-    const leftWall = Bodies.rectangle(
-      0 - WALL_THICKNESS / 2,
-      height / 2,
-      WALL_THICKNESS,
-      height,
-      {
-        isStatic: true,
-      }
-    );
-    worldObjects.push(leftWall);
-    const rightWall = Bodies.rectangle(
-      width + WALL_THICKNESS / 2,
-      height / 2,
-      WALL_THICKNESS,
-      height,
-      {
-        isStatic: true,
-      }
-    );
-    worldObjects.push(rightWall);
+    Composite.add(engine.world, [
+      createNumber("/assets/5.svg", isMobile ? width * 0.2 : left + 10),
+      createNumber("/assets/0.svg", width / 2),
+      createNumber("/assets/0.svg", width - width / 8),
+      oopsMsg,
+      // left wall
+      createWall(-WALL_THICKNESS / 2, height / 2, WALL_THICKNESS, height),
+      // right wall
+      createWall(
+        width + WALL_THICKNESS / 2,
+        height / 2,
+        WALL_THICKNESS,
+        height
+      ),
+      // floor
+      createWall(width / 2, height + 50, width, WALL_THICKNESS + 100),
+    ]);
 
-    const floor = Bodies.rectangle(
-      width / 2,
-      height + 50,
-      width,
-      WALL_THICKNESS + 100,
-      {
-        isStatic: true,
-      }
-    );
-    worldObjects.push(floor);
-
-    // Animate Divs
     Events.on(engine, "afterUpdate", () => {
       if (oopsMsgRef.current) {
-        oopsMsgRef.current.style.transform = `translate(${oopsMsg.position.x - oopsMsgRect.width / 2}px, ${oopsMsg.position.y - oopsMsgRect.height / 2}px) rotate(${oopsMsg.angle}rad)`;
+        const { x, y } = oopsMsg.position;
+        oopsMsgRef.current.style.transform = `translate(${x - oopsMsgRect.width / 2}px, ${y - oopsMsgRect.height / 2}px) rotate(${oopsMsg.angle}rad)`;
       }
     });
 
-    // Add bodies to world
-    Composite.add(engine.world, worldObjects);
-
-    // run renderer
     Render.run(render);
-
-    // run engine
     const runner = Runner.create();
     Runner.run(runner, engine);
 
-    // cleanup
     return () => {
       Render.stop(render);
       Runner.stop(runner);
