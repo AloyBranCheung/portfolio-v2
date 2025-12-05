@@ -5,16 +5,22 @@ import { useEffect, useRef } from "react";
 import Matter, { Runner } from "matter-js";
 
 const WALL_THICKNESS = 10;
+const SVG_TEXT_WIDTH = 237.3;
 const SVG_TEXT_HEIGHT = 359.1;
 
 export default function Page500() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const oopsMsgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !oopsMsgRef.current) return;
 
+    // container dimensions
     const { left, width, height } =
       containerRef.current.getBoundingClientRect();
+
+    // oopsMsg dimensions
+    const oopsMsgRect = oopsMsgRef.current.getBoundingClientRect();
 
     const Engine = Matter.Engine;
     const Render = Matter.Render; // for debugging
@@ -43,7 +49,7 @@ export default function Page500() {
     const five = Bodies.rectangle(
       left + 10,
       0 - SVG_TEXT_HEIGHT / 2,
-      237.3,
+      SVG_TEXT_WIDTH,
       SVG_TEXT_HEIGHT,
       {
         render: {
@@ -58,22 +64,41 @@ export default function Page500() {
     );
     worldObjects.push(five);
     const createZero = (x: number) =>
-      Bodies.rectangle(x, 0 - SVG_TEXT_HEIGHT / 2, 237.3, SVG_TEXT_HEIGHT, {
-        render: {
-          sprite: {
-            texture: "/assets/0.svg",
-            xScale: 10,
-            yScale: 10,
+      Bodies.rectangle(
+        x,
+        0 - SVG_TEXT_HEIGHT / 2,
+        SVG_TEXT_WIDTH,
+        SVG_TEXT_HEIGHT,
+        {
+          render: {
+            sprite: {
+              texture: "/assets/0.svg",
+              xScale: 10,
+              yScale: 10,
+            },
           },
-        },
-        // isSleeping: true,
-      });
+          // isSleeping: true,
+        }
+      );
 
     const zero1 = createZero(width / 2);
     worldObjects.push(zero1);
 
     const zero2 = createZero(width - width / 8);
     worldObjects.push(zero2);
+
+    const oopsMsg = Bodies.rectangle(
+      450,
+      -400,
+      oopsMsgRect.width,
+      oopsMsgRect.height,
+      {
+        render: {
+          visible: false,
+        },
+      }
+    );
+    worldObjects.push(oopsMsg);
 
     // container
     const leftWall = Bodies.rectangle(
@@ -96,24 +121,24 @@ export default function Page500() {
       }
     );
     worldObjects.push(rightWall);
+
     const floor = Bodies.rectangle(
       width / 2,
-      height,
+      height + 50,
       width,
-      WALL_THICKNESS / 2,
+      WALL_THICKNESS + 100,
       {
         isStatic: true,
       }
     );
     worldObjects.push(floor);
 
-    const test = Bodies.rectangle(0, 0, 100, 100, {
-      render: { visible: false },
-    });
-    worldObjects.push(test);
-
     // Animate Divs
-    Events.on(test, "beforeUpdate", (e) => {});
+    Events.on(engine, "afterUpdate", () => {
+      if (oopsMsgRef.current) {
+        oopsMsgRef.current.style.transform = `translate(${oopsMsg.position.x - oopsMsgRect.width / 2}px, ${oopsMsg.position.y - oopsMsgRect.height / 2}px) rotate(${oopsMsg.angle}rad)`;
+      }
+    });
 
     // Add bodies to world
     Composite.add(engine.world, worldObjects);
@@ -132,7 +157,9 @@ export default function Page500() {
         ref={containerRef}
         className={`${neobrutalist()} h-[calc(100vh-195px)] mt-2 relative`}
       />
-      <div className="absolute top-0 left-0">absolute</div>
+      <p ref={oopsMsgRef} className="absolute top-0 left-0 text-2xl font-bold">
+        Oops, looks like you broke my site.
+      </p>
     </div>
   );
 }
