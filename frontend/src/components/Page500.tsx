@@ -50,6 +50,8 @@ export default function Page500() {
     });
 
     if (theme === "dark") render.canvas.style.filter = "invert(1)";
+    if (oopsMsgRef.current) oopsMsgRef.current.style.visibility = "visible";
+    if (homeBtnWrapperRef.current) homeBtnWrapperRef.current.style.visibility = "visible";
 
     const numWidth = 237.3 * scale;
     const numHeight = 359.1 * scale;
@@ -114,13 +116,28 @@ export default function Page500() {
     const runner = Runner.create();
     Runner.run(runner, engine);
 
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'];
+    const colors = [
+      "#FF6B6B",
+      "#4ECDC4",
+      "#45B7D1",
+      "#FFA07A",
+      "#98D8C8",
+      "#F7DC6F",
+      "#BB8FCE",
+      "#85C1E2",
+      "#F8B739",
+      "#52B788",
+    ];
     const spawnBall = () => {
       const ball = Bodies.circle(
         Math.random() * (width - 100) + 50,
         -30,
         Math.random() * 20 + 15,
-        { render: { fillStyle: colors[Math.floor(Math.random() * colors.length)] } }
+        {
+          render: {
+            fillStyle: colors[Math.floor(Math.random() * colors.length)],
+          },
+        }
       );
       Composite.add(engine.world, ball);
     };
@@ -144,11 +161,11 @@ export default function Page500() {
       />
       <p
         ref={oopsMsgRef}
-        className="absolute top-0 left-0 text-sm sm:text-2xl font-bold whitespace-nowrap dark:text-white pointer-events-none"
+        className="invisible absolute top-0 left-0 text-sm sm:text-2xl font-bold whitespace-nowrap dark:text-white pointer-events-none"
       >
         Oops, looks like you broke my site.
       </p>
-      <div ref={homeBtnWrapperRef} className="absolute top-0 left-0">
+      <div ref={homeBtnWrapperRef} className="invisible absolute top-0 left-0">
         <Button asChild className="font-bold pointer-events-auto">
           <Link href="/">Click here to home</Link>
         </Button>
