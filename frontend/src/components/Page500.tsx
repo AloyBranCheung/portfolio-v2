@@ -14,11 +14,31 @@ export default function Page500() {
   const oopsMsgRef = useRef<HTMLDivElement | null>(null);
   const homeBtnWrapperRef = useRef<HTMLDivElement | null>(null);
   const [resize, setResize] = useState(0);
+  const lastSizeRef = useRef({ width: 0, height: 0 });
 
   const { theme } = useTheme();
 
   useEffect(() => {
-    const handleResize = () => setResize((prev) => prev + 1);
+    lastSizeRef.current = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+
+    const handleResize = () => {
+      const widthDiff = Math.abs(window.innerWidth - lastSizeRef.current.width);
+      const heightDiff = Math.abs(
+        window.innerHeight - lastSizeRef.current.height
+      );
+
+      if (widthDiff > 200 || heightDiff > 200) {
+        lastSizeRef.current = {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+        setResize((prev) => prev + 1);
+      }
+    };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
