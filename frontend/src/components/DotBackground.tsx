@@ -4,7 +4,7 @@ export function DotBackground() {
     <>
       <div
         aria-hidden="true"
-        className="fixed inset-0 h-screen w-screen -z-10 bg-[radial-gradient(#d4d4d4_1px,transparent_1px)] bg-size-[20px_20px] dark:bg-black dark:bg-[radial-gradient(#2b2b2b_1px,transparent_1px)]"
+        className="fixed inset-0 h-screen w-screen -z-10 bg-[radial-gradient(#c4c4c4_1px,transparent_1px)] bg-size-[20px_20px] dark:bg-black dark:bg-[radial-gradient(#3b3b3b_1px,transparent_1px)]"
       />
       {/* Radial gradient for the container to give a faded look */}
       <div
