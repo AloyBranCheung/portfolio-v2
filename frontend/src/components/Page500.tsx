@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import Matter, { Runner } from "matter-js";
 
 const WALL_THICKNESS = 10;
+const SVG_TEXT_HEIGHT = 359.1;
 
 export default function Page500() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -12,14 +13,20 @@ export default function Page500() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const { width, height } = containerRef.current.getBoundingClientRect();
+    const { left, width, height } =
+      containerRef.current.getBoundingClientRect();
 
     const Engine = Matter.Engine;
     const Render = Matter.Render; // for debugging
     const Bodies = Matter.Bodies;
     const Composite = Matter.Composite;
+    const Events = Matter.Events;
 
-    const engine = Engine.create();
+    const engine = Engine.create({
+      gravity: {
+        scale: 0.008,
+      },
+    });
     const render = Render.create({
       element: containerRef.current,
       engine: engine,
@@ -33,18 +40,25 @@ export default function Page500() {
 
     // bodies
     const worldObjects = [];
-    const five = Bodies.rectangle(325, 0, 237.3, 359.1, {
-      render: {
-        sprite: {
-          texture: "/assets/5.svg",
-          xScale: 10,
-          yScale: 10,
+    const five = Bodies.rectangle(
+      left + 10,
+      0 - SVG_TEXT_HEIGHT / 2,
+      237.3,
+      SVG_TEXT_HEIGHT,
+      {
+        render: {
+          sprite: {
+            texture: "/assets/5.svg",
+            xScale: 10,
+            yScale: 10,
+          },
         },
-      },
-    });
+        // isSleeping: true,
+      }
+    );
     worldObjects.push(five);
     const createZero = (x: number) =>
-      Bodies.rectangle(x, 0, 237.3, 359.1, {
+      Bodies.rectangle(x, 0 - SVG_TEXT_HEIGHT / 2, 237.3, SVG_TEXT_HEIGHT, {
         render: {
           sprite: {
             texture: "/assets/0.svg",
@@ -52,10 +66,14 @@ export default function Page500() {
             yScale: 10,
           },
         },
+        // isSleeping: true,
       });
 
-    worldObjects.push(createZero(425));
-    worldObjects.push(createZero(525));
+    const zero1 = createZero(width / 2);
+    worldObjects.push(zero1);
+
+    const zero2 = createZero(width - width / 8);
+    worldObjects.push(zero2);
 
     // container
     const leftWall = Bodies.rectangle(
@@ -89,6 +107,14 @@ export default function Page500() {
     );
     worldObjects.push(floor);
 
+    const test = Bodies.rectangle(0, 0, 100, 100, {
+      render: { visible: false },
+    });
+    worldObjects.push(test);
+
+    // Animate Divs
+    Events.on(test, "beforeUpdate", (e) => {});
+
     // Add bodies to world
     Composite.add(engine.world, worldObjects);
 
@@ -101,15 +127,12 @@ export default function Page500() {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className={`${neobrutalist()} h-[calc(100vh-195px)] mt-2 relative`}
-    >
-      {/* <div className="flex items-center justify-center gap-2 absolute">
-        <Five />
-        <Zero />
-        <Zero />
-      </div> */}
+    <div className="relative">
+      <div
+        ref={containerRef}
+        className={`${neobrutalist()} h-[calc(100vh-195px)] mt-2 relative`}
+      />
+      <div className="absolute top-0 left-0">absolute</div>
     </div>
   );
 }
