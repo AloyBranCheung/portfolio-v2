@@ -117,8 +117,13 @@ export default function Page500() {
       zero2,
       oopsMsg,
       homeBtn,
-      createWall(-WALL_THICKNESS + 20, 0, WALL_THICKNESS, wallHeight), // left wall
-      createWall(width + WALL_THICKNESS - 20, 0, WALL_THICKNESS, wallHeight), // right wall
+      createWall(-WALL_THICKNESS + 20, 0 + 200, WALL_THICKNESS, wallHeight), // left wall
+      createWall(
+        width + WALL_THICKNESS - 20,
+        0 + 200,
+        WALL_THICKNESS,
+        wallHeight
+      ), // right wall
       createWall(width / 2, height + 70, 1920, WALL_THICKNESS + 100), // floor
     ]);
 
