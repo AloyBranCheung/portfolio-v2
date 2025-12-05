@@ -68,6 +68,7 @@ export default function Hero({ data }: HeroProps) {
             height={400}
             priority
             loading="eager"
+            fetchPriority="high"
           />
         </div>
       </div>
