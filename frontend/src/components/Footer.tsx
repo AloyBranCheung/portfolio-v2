@@ -25,9 +25,9 @@ export default function Footer() {
       <p className="text-xs">
         Check out my&nbsp;
         <Link className="text-xs underline" href="/500">
-          Error 500&nbsp;
+          Error 500
         </Link>
-        or&nbsp;
+        &nbsp;or&nbsp;
         <Link className="text-xs underline" href="/not-found">
           NotFound 404
         </Link>
