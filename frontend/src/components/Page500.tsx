@@ -188,7 +188,7 @@ export default function Page500() {
       </p>
       <div ref={homeBtnWrapperRef} className="invisible absolute top-0 left-0">
         <Button asChild className="font-bold pointer-events-auto">
-          <Link href="/">Click here to home</Link>
+          <Link href="/">Click here to go home</Link>
         </Button>
       </div>
     </div>
