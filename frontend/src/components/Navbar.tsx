@@ -72,15 +72,16 @@ export default function Navbar() {
           <h2 className="text-sm">Software Developer</h2>
         </Link>
         <div className="flex items-center gap-2">
-          <div className="md:hidden">
+          <div suppressHydrationWarning className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <motion.button
                   className={`${neobrutalist()} p-2 cursor-pointer`}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
+                  aria-label="Open navigation menu"
                 >
-                  <HamburgerIcon aria-label="menu" className="h-5 w-5" />
+                  <HamburgerIcon className="h-5 w-5" />
                 </motion.button>
               </SheetTrigger>
               <SheetContent

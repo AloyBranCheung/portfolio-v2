@@ -36,9 +36,13 @@ export default function RootLayout({
           </ThemeProvider>
           <Footer />
         </div>
-        {process.env.NODE_ENV !== "development" && <Analytics />}
         <DotBackground />
-        {process.env.NODE_ENV !== "development" && <SpeedInsights />}
+        {process.env.NODE_ENV !== "development" && (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );
