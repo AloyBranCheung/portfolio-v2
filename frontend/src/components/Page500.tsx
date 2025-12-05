@@ -81,7 +81,7 @@ export default function Page500() {
 
     const homeBtn = Bodies.rectangle(
       width / 2,
-      -numHeight - 200,
+      -numHeight - 90,
       homeBtnRect.width,
       homeBtnRect.height,
       { render: { visible: false } }
@@ -96,7 +96,7 @@ export default function Page500() {
       homeBtn,
       createWall(-WALL_THICKNESS + 20, 0, WALL_THICKNESS, wallHeight), // left wall
       createWall(width + WALL_THICKNESS - 20, 0, WALL_THICKNESS, wallHeight), // right wall
-      createWall(width / 2, height + 90, width, WALL_THICKNESS + 100), // floor
+      createWall(width / 2, height + 70, width, WALL_THICKNESS + 100), // floor
     ]);
 
     Events.on(engine, "afterUpdate", () => {
@@ -114,7 +114,21 @@ export default function Page500() {
     const runner = Runner.create();
     Runner.run(runner, engine);
 
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2', '#F8B739', '#52B788'];
+    const spawnBall = () => {
+      const ball = Bodies.circle(
+        Math.random() * (width - 100) + 50,
+        -30,
+        Math.random() * 20 + 15,
+        { render: { fillStyle: colors[Math.floor(Math.random() * colors.length)] } }
+      );
+      Composite.add(engine.world, ball);
+    };
+
+    const interval = setInterval(spawnBall, 300);
+
     return () => {
+      clearInterval(interval);
       Render.stop(render);
       Runner.stop(runner);
       Engine.clear(engine);
