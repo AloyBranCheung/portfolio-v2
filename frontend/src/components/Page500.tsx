@@ -70,9 +70,6 @@ export default function Page500() {
     });
 
     if (theme === "dark") render.canvas.style.filter = "invert(1)";
-    if (oopsMsgRef.current) oopsMsgRef.current.style.visibility = "visible";
-    if (homeBtnWrapperRef.current)
-      homeBtnWrapperRef.current.style.visibility = "visible";
 
     const numWidth = 237.3 * scale;
     const numHeight = 359.1 * scale;
@@ -166,9 +163,15 @@ export default function Page500() {
       }
     });
 
-    Render.run(render);
     const runner = Runner.create();
-    Runner.run(runner, engine);
+
+    setTimeout(() => {
+      Render.run(render);
+      Runner.run(runner, engine);
+      if (oopsMsgRef.current) oopsMsgRef.current.style.visibility = "visible";
+      if (homeBtnWrapperRef.current)
+        homeBtnWrapperRef.current.style.visibility = "visible";
+    }, 600);
 
     return () => {
       clearInterval(interval);
