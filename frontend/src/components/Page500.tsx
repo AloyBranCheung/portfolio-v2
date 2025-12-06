@@ -186,7 +186,7 @@ export default function Page500() {
     <div className="relative">
       <div
         ref={containerRef}
-        className={`${neobrutalist()} h-[calc(100vh-195px)] mt-2 relative`}
+        className={`${neobrutalist()} h-[calc(100vh-230px)] mt-2 relative`}
       />
       <p
         ref={oopsMsgRef}
