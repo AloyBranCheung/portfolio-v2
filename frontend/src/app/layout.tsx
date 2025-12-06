@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { DotBackground } from "@/components/DotBackground";
 import { ThemeProvider } from "next-themes";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import PageTransition from "@/components/PageTransition";
 
 const jetBrainsMono = localFont({
   src: "../../public/fonts/JetBrainsMono-Regular.woff2",
@@ -32,7 +33,9 @@ export default function RootLayout({
             <header className="sticky top-2 z-50 w-full">
               <Navbar />
             </header>
-            <main className="w-full px-4">{children}</main>
+            <main className="w-full px-4">
+              <PageTransition>{children}</PageTransition>
+            </main>
           </ThemeProvider>
           <Footer />
         </div>

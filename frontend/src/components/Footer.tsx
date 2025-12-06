@@ -24,7 +24,7 @@ export default function Footer() {
       </div>
       <p className="text-xs">
         Check out my&nbsp;
-        <Link className="text-xs underline" href="/500">
+        <Link className="text-xs underline" href="/error">
           Error 500
         </Link>
         {/* &nbsp;or&nbsp;
