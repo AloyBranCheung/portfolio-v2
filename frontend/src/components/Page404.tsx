@@ -5,7 +5,7 @@ export default function Page404() {
     <div
       className={`${neobrutalist()} flex items-center justify-center min-h-[calc(100vh-195px)]`}
     >
-      404
+      <p className="p-4">404 Not Found. This 404 page is under construction.</p>
     </div>
   );
 }
