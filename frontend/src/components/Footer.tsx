@@ -27,10 +27,10 @@ export default function Footer() {
         <Link className="text-xs underline" href="/error">
           Error 500
         </Link>
-        {/* &nbsp;or&nbsp;
+        &nbsp;or&nbsp;
         <Link className="text-xs underline" href="/not-found">
           NotFound 404
-        </Link> */}
+        </Link>
       </p>
     </footer>
   );

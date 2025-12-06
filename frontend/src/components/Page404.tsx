@@ -1,11 +1,19 @@
-import { neobrutalist } from "@/lib/utils";
+"use client";
+
+import { Canvas } from "@react-three/fiber";
+import { StatsGl, OrbitControls } from "@react-three/drei";
 
 export default function Page404() {
   return (
-    <div
-      className={`${neobrutalist()} flex items-center justify-center min-h-[calc(100vh-195px)]`}
-    >
-      <p className="p-4">404 Not Found. This 404 page is under construction.</p>
-    </div>
+    <Canvas>
+      <StatsGl />
+      <OrbitControls makeDefault />
+      <mesh>
+        <boxGeometry args={[2, 2, 2]} />
+        <meshStandardMaterial />
+      </mesh>
+      <ambientLight intensity={0.1} />
+      <directionalLight color="red" position={[0, 0, 5]} />
+    </Canvas>
   );
 }
