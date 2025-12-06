@@ -72,10 +72,11 @@ export default function Navbar() {
           <h2 className="text-sm">Software Developer</h2>
         </Link>
         <div className="flex items-center gap-2">
-          <div suppressHydrationWarning className="md:hidden">
+          <div className="md:hidden">
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <motion.button
+                  suppressHydrationWarning
                   className={`${neobrutalist()} p-2 cursor-pointer`}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}

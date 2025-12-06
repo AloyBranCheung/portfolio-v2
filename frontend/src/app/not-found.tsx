@@ -1,11 +1,5 @@
-import { neobrutalist } from "@/lib/utils";
+import Page404 from "@/components/Page404";
 
 export default function NotFound() {
-  return (
-    <div
-      className={`${neobrutalist()} flex items-center justify-center min-h-[calc(100vh-195px)]`}
-    >
-      404
-    </div>
-  );
+  return <Page404 />;
 }

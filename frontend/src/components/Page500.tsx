@@ -14,11 +14,31 @@ export default function Page500() {
   const oopsMsgRef = useRef<HTMLDivElement | null>(null);
   const homeBtnWrapperRef = useRef<HTMLDivElement | null>(null);
   const [resize, setResize] = useState(0);
+  const lastSizeRef = useRef({ width: 0, height: 0 });
 
   const { theme } = useTheme();
 
   useEffect(() => {
-    const handleResize = () => setResize((prev) => prev + 1);
+    lastSizeRef.current = {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    };
+
+    const handleResize = () => {
+      const widthDiff = Math.abs(window.innerWidth - lastSizeRef.current.width);
+      const heightDiff = Math.abs(
+        window.innerHeight - lastSizeRef.current.height
+      );
+
+      if (widthDiff > 200 || heightDiff > 200) {
+        lastSizeRef.current = {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        };
+        setResize((prev) => prev + 1);
+      }
+    };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -50,9 +70,6 @@ export default function Page500() {
     });
 
     if (theme === "dark") render.canvas.style.filter = "invert(1)";
-    if (oopsMsgRef.current) oopsMsgRef.current.style.visibility = "visible";
-    if (homeBtnWrapperRef.current)
-      homeBtnWrapperRef.current.style.visibility = "visible";
 
     const numWidth = 237.3 * scale;
     const numHeight = 359.1 * scale;
@@ -97,9 +114,14 @@ export default function Page500() {
       zero2,
       oopsMsg,
       homeBtn,
-      createWall(-WALL_THICKNESS + 20, 0, WALL_THICKNESS, wallHeight), // left wall
-      createWall(width + WALL_THICKNESS - 20, 0, WALL_THICKNESS, wallHeight), // right wall
-      createWall(width / 2, height + 70, width, WALL_THICKNESS + 100), // floor
+      createWall(-WALL_THICKNESS + 20, 0 + 200, WALL_THICKNESS, wallHeight), // left wall
+      createWall(
+        width + WALL_THICKNESS - 20,
+        0 + 200,
+        WALL_THICKNESS,
+        wallHeight
+      ), // right wall
+      createWall(width / 2, height + 70, 1920, WALL_THICKNESS + 100), // floor
     ]);
 
     const colors = [
@@ -141,9 +163,15 @@ export default function Page500() {
       }
     });
 
-    Render.run(render);
     const runner = Runner.create();
-    Runner.run(runner, engine);
+
+    setTimeout(() => {
+      Render.run(render);
+      Runner.run(runner, engine);
+      if (oopsMsgRef.current) oopsMsgRef.current.style.visibility = "visible";
+      if (homeBtnWrapperRef.current)
+        homeBtnWrapperRef.current.style.visibility = "visible";
+    }, 600);
 
     return () => {
       clearInterval(interval);
@@ -168,7 +196,7 @@ export default function Page500() {
       </p>
       <div ref={homeBtnWrapperRef} className="invisible absolute top-0 left-0">
         <Button asChild className="font-bold pointer-events-auto">
-          <Link href="/">Click here to home</Link>
+          <Link href="/">Click here to go home</Link>
         </Button>
       </div>
     </div>

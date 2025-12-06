@@ -22,9 +22,16 @@ export default function Footer() {
           <Linkedin />
         </a>
       </div>
-      <Link className="text-xs" href="/500">
-        Check out my Error 500 page
-      </Link>
+      <p className="text-xs">
+        Check out my&nbsp;
+        <Link className="text-xs underline" href="/error">
+          Error 500
+        </Link>
+        {/* &nbsp;or&nbsp;
+        <Link className="text-xs underline" href="/not-found">
+          NotFound 404
+        </Link> */}
+      </p>
     </footer>
   );
 }
