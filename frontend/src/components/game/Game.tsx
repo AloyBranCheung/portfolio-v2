@@ -23,9 +23,11 @@ const initialBlock: Block = {
   color: getGradientColor(0),
 };
 
+const INITIAL_SPEED = 0.05;
+
 export default function Game() {
   const mainBlockRef = useRef<THREE.Group>(null);
-  const speedRef = useRef(0.05);
+  const speedRef = useRef(INITIAL_SPEED);
   const cameraRef = useRef<THREE.Camera | null>(null);
   const initialCameraY = useRef<number | null>(null);
 
@@ -99,6 +101,7 @@ export default function Game() {
       if (cameraRef.current && initialCameraY.current !== null) {
         cameraRef.current.position.y = initialCameraY.current;
       }
+      speedRef.current = INITIAL_SPEED;
       return;
     }
 
@@ -152,6 +155,11 @@ export default function Game() {
     // change axis and color
     setDirection(direction === "x" ? "z" : "x");
     setCurrColor(currColor + 1);
+
+    // randomly increment speed as it gets harder
+    const sign = speedRef.current > 0 ? 1 : -1;
+    speedRef.current =
+      sign * (Math.abs(speedRef.current) + Math.random() * 0.005);
   };
 
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
