@@ -1,4 +1,8 @@
+"use client";
+
+import { neobrutalist } from "@/lib/utils";
 import { Button } from "../ui/button";
+import { motion, AnimatePresence } from "motion/react";
 
 interface GameUIProps {
   isGameOver: boolean;
@@ -20,12 +24,25 @@ export default function GameUI({ isGameOver, onReset, score }: GameUIProps) {
             Click the blocks or press &#8216;space&#8217; to get started.&nbsp;
           </span>
         </p>
-        <p className="text-lg md:text-2xl font-bold">Score: {score}</p>
-        {isGameOver && (
-          <Button className="pointer-events-auto" onClick={onReset}>
-            Reset Game
-          </Button>
+        {!isGameOver && (
+          <p className="text-lg md:text-2xl font-bold">Score: {score}</p>
         )}
+        <AnimatePresence>
+          {isGameOver && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0 }}
+              className={`${neobrutalist()} p-4 w-80 flex items-center justify-center gap-4 flex-col text-center mt-24`}
+            >
+              <p className="text-lg md:text-2xl font-bold">Game Over</p>
+              <p className="text-lg md:text-2xl font-bold">Score: {score}</p>
+              <Button className="pointer-events-auto" onClick={onReset}>
+                Reset Game
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
