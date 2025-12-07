@@ -193,8 +193,6 @@ export default function Game() {
       return;
     }
 
-    console.log(blocks);
-
     // calculate new size
     const newSize: [number, number, number] = [...lastBlock.size];
     newSize[direction === "x" ? 0 : 2] = overlap;
