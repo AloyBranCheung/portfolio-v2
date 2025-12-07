@@ -3,6 +3,8 @@ import { Canvas } from "@react-three/fiber";
 import { OrthographicCamera } from "@react-three/drei";
 import { StatsGl } from "@react-three/drei";
 import * as THREE from "three";
+import { Physics } from "@react-three/rapier";
+import { Suspense } from "react";
 
 export const Lighting = () => (
   <>
@@ -32,7 +34,9 @@ export default function Scene({ children }: SceneProps) {
         zoom={54}
       />
       <StatsGl className="absolute top-30 left-30" />
-      {children}
+      <Suspense>
+        <Physics>{children}</Physics>
+      </Suspense>
       <Lighting />
     </Canvas>
   );

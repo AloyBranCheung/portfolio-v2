@@ -9,6 +9,13 @@ interface Block {
   position: [number, number, number];
   size: [number, number, number];
   color: string;
+  type?: "fixed";
+}
+
+interface FallingBlock {
+  position: [number, number, number];
+  size: [number, number, number];
+  color: string;
 }
 
 // gradually change colors
@@ -21,6 +28,7 @@ const initialBlock: Block = {
   position: [0, 0, 0],
   size: [4, 0.5, 4],
   color: getGradientColor(0),
+  type: "fixed",
 };
 
 const INITIAL_SPEED = 0.05;
@@ -32,6 +40,7 @@ export default function Game() {
   const initialCameraY = useRef<number | null>(null);
 
   const [blocks, setBlocks] = useState<Block[]>([initialBlock]);
+  const [fallingBlocks, setFallingBlocks] = useState<FallingBlock[]>([]);
   const [direction, setDirection] = useState<"x" | "z">("x");
   const [currColor, setCurrColor] = useState(1);
   const [mainBlockSize, setMainBlockSize] = useState<[number, number, number]>([
@@ -94,6 +103,7 @@ export default function Game() {
     if (overlap <= 0) {
       // game over
       setBlocks([initialBlock]);
+      setFallingBlocks([]);
       setDirection("x");
       setCurrColor(1);
       setMainBlockSize([4, 0.5, 4]);
@@ -115,11 +125,33 @@ export default function Game() {
     newPos[direction === "x" ? 0 : 2] =
       lastBlock.position[direction === "x" ? 0 : 2] + offset / 2;
 
+    // calculate cutoff block
+    const cutoffSize: [number, number, number] = [...lastBlock.size];
+    cutoffSize[direction === "x" ? 0 : 2] = Math.abs(offset);
+    const cutoffPos: [number, number, number] = [...lastBlock.position];
+    cutoffPos[1] += meshChild.geometry.parameters.height;
+    cutoffPos[direction === "x" ? 0 : 2] =
+      lastBlock.position[direction === "x" ? 0 : 2] +
+      offset / 2 +
+      (offset > 0
+        ? overlap / 2 + cutoffSize[direction === "x" ? 0 : 2] / 2
+        : -(overlap / 2 + cutoffSize[direction === "x" ? 0 : 2] / 2));
+
+    setFallingBlocks((prev) => [
+      ...prev,
+      {
+        position: cutoffPos,
+        size: cutoffSize,
+        color: getGradientColor(currColor),
+      },
+    ]);
+
     // add previous location block to array first
     const oldBlock: Block = {
       position: newPos,
       size: newSize,
       color: getGradientColor(currColor),
+      type: "fixed",
     };
     setBlocks((prev) => [...prev, oldBlock]);
 
@@ -161,6 +193,17 @@ export default function Game() {
           position={block.position}
           size={block.size}
           color={block.color}
+          type={block?.type}
+          disablePhysics={false}
+        />
+      ))}
+      {fallingBlocks.map((block, i) => (
+        <CartoonBlock
+          key={`falling-${block.position[0]}-${block.position[1]}-${block.position[2]}-${i}`}
+          position={block.position}
+          size={block.size}
+          color={block.color}
+          disablePhysics={false}
         />
       ))}
       <CartoonBlock

@@ -4,6 +4,7 @@ import { forwardRef } from "react";
 import { shaderMaterial } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
 import * as THREE from "three";
+import { RigidBody, RigidBodyTypeString } from "@react-three/rapier";
 
 /**
  * Reference: https://www.youtube.com/watch?v=V5UllFImvoE
@@ -38,11 +39,22 @@ interface CartoonBlockProps {
   position?: [number, number, number];
   size?: [number, number, number];
   color?: string;
+  type?: RigidBodyTypeString;
+  disablePhysics?: boolean;
 }
 
 const CartoonBlock = forwardRef<THREE.Group, CartoonBlockProps>(
-  ({ position = [0, 0.59, 0], size = [4, 0.5, 4], color = "purple" }, ref) => {
-    return (
+  (
+    {
+      position = [0, 0.59, 0],
+      size = [4, 0.5, 4],
+      color = "purple",
+      type,
+      disablePhysics = true,
+    },
+    ref
+  ) => {
+    const objectGroup = (
       <group ref={ref} position={position}>
         <mesh>
           <boxGeometry args={size} />
@@ -54,6 +66,12 @@ const CartoonBlock = forwardRef<THREE.Group, CartoonBlockProps>(
           <meshToonMaterial color={color} />
         </mesh>
       </group>
+    );
+
+    return disablePhysics ? (
+      objectGroup
+    ) : (
+      <RigidBody type={type}>{objectGroup}</RigidBody>
     );
   }
 );
