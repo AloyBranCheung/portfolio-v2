@@ -34,8 +34,8 @@ services:
 
   frontend:
     build:
-      dockerfile: ./Dockerfile
-      context: ./frontend
+      dockerfile: ./frontend/Dockerfile
+      context: .
     ports:
       - 3000:3000
     env_file:
@@ -50,8 +50,8 @@ services:
 
   frontend-prod:
     build:
-      dockerfile: ./Dockerfile.prod
-      context: ./frontend
+      dockerfile: ./frontend/Dockerfile.prod
+      context: .
       network: host
     ports:
       - 8000:8000
