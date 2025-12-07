@@ -1,7 +1,7 @@
 "use client";
 import CartoonBlock from "./CartoonBlock";
 import { useFrame, ThreeEvent } from "@react-three/fiber";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import * as THREE from "three";
 import { CARTOON_BLOCK_SIZE, CARTOON_BLOCK_POSITION } from "./CartoonBlock";
 import { gsap } from "gsap";
@@ -78,7 +78,7 @@ export default function Game() {
     }
   });
 
-  const runGameLogic = () => {
+  const runGameLogic = useCallback(() => {
     if (!mainBlockRef.current) return;
 
     // get geometry from first mesh child
@@ -260,12 +260,27 @@ export default function Game() {
     const sign = speedRef.current > 0 ? 1 : -1;
     speedRef.current =
       sign * (Math.abs(speedRef.current) + Math.random() * 0.005);
-  };
+  }, [blocks, currColor, direction]);
 
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     runGameLogic();
   };
+
+  useEffect(() => {
+    const spacedownHandler = (e: KeyboardEvent) => {
+      if (e.key === " ") {
+        e.preventDefault();
+        runGameLogic();
+      }
+    };
+
+    window.addEventListener("keydown", spacedownHandler);
+
+    return () => {
+      window.removeEventListener("keydown", spacedownHandler);
+    };
+  }, [runGameLogic]);
 
   return (
     <group onPointerDown={handleClick}>
