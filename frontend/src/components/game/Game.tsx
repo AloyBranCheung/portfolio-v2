@@ -105,29 +105,6 @@ export default function Game() {
       return;
     }
 
-    // move main block up
-    mainBlockRef.current.position.y += meshChild.geometry.parameters.height;
-
-    // update camera
-    if (cameraRef.current && initialCameraY.current !== null) {
-      const yOffset = initialCameraY.current - 0.59; // offset from initial block position
-      cameraRef.current.position.y = mainBlockRef.current.position.y + yOffset;
-    }
-
-    let oldBlock: Block = {
-      position: [
-        mainBlockRef.current.position.x,
-        mainBlockRef.current.position.y - meshChild.geometry.parameters.height,
-        mainBlockRef.current.position.z,
-      ],
-      size: [
-        meshChild.geometry.parameters.width,
-        meshChild.geometry.parameters.height,
-        meshChild.geometry.parameters.depth,
-      ],
-      color: getGradientColor(currColor),
-    };
-
     // calculate new size
     const newSize: [number, number, number] = [...lastBlock.size];
     newSize[direction === "x" ? 0 : 2] = overlap;
@@ -138,19 +115,29 @@ export default function Game() {
     newPos[direction === "x" ? 0 : 2] =
       lastBlock.position[direction === "x" ? 0 : 2] + offset / 2;
 
-    oldBlock = {
+    const oldBlock: Block = {
       position: newPos,
       size: newSize,
       color: getGradientColor(currColor),
     };
 
-    // update mainBlock size
+    // add block to array first
+    setBlocks((prev) => [...prev, oldBlock]);
+
+    // update mainBlock size and position
     setMainBlockSize(newSize);
     const newMainBlockPos: [number, number, number] = [...newPos];
     newMainBlockPos[1] += 0.5;
     setMainBlockPos(newMainBlockPos);
 
-    setBlocks((prev) => [...prev, oldBlock]);
+    // move main block ref up
+    mainBlockRef.current.position.y += meshChild.geometry.parameters.height;
+
+    // update camera
+    if (cameraRef.current && initialCameraY.current !== null) {
+      const yOffset = initialCameraY.current - 0.59;
+      cameraRef.current.position.y = mainBlockRef.current.position.y + yOffset;
+    }
 
     // change axis and color
     setDirection(direction === "x" ? "z" : "x");
