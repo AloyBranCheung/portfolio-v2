@@ -115,13 +115,12 @@ export default function Game() {
     newPos[direction === "x" ? 0 : 2] =
       lastBlock.position[direction === "x" ? 0 : 2] + offset / 2;
 
+    // add previous location block to array first
     const oldBlock: Block = {
       position: newPos,
       size: newSize,
       color: getGradientColor(currColor),
     };
-
-    // add block to array first
     setBlocks((prev) => [...prev, oldBlock]);
 
     // update mainBlock size and position
