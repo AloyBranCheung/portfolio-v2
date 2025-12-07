@@ -17,18 +17,21 @@ const getGradientColor = (index: number) => {
   return `hsl(${hue}, 80%, 60%)`;
 };
 
+const initialBlock: Block = {
+  position: [0, 0, 0],
+  size: [4, 0.5, 4],
+  color: getGradientColor(0),
+};
+
 export default function Game() {
   const mainBlockRef = useRef<THREE.Group>(null);
   const speedRef = useRef(0.05);
   const cameraRef = useRef<THREE.Camera | null>(null);
-  const controlsRef = useRef<{
-    target: THREE.Vector3;
-    update: () => void;
-  } | null>(null);
+  const initialCameraY = useRef<number | null>(null);
 
-  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [blocks, setBlocks] = useState<Block[]>([initialBlock]);
   const [direction, setDirection] = useState<"x" | "z">("x");
-  const [currColor, setCurrColor] = useState(0);
+  const [currColor, setCurrColor] = useState(1);
   const [mainBlockSize, setMainBlockSize] = useState<[number, number, number]>([
     4, 0.5, 4,
   ]);
@@ -36,13 +39,11 @@ export default function Game() {
     0, 0.59, 0,
   ]);
 
-  useFrame(({ camera, controls }) => {
+  useFrame(({ camera }) => {
     cameraRef.current = camera;
-    if (controls && "target" in controls && "update" in controls) {
-      controlsRef.current = controls as {
-        target: THREE.Vector3;
-        update: () => void;
-      };
+    // fix orthographic camera camera offset
+    if (initialCameraY.current === null) {
+      initialCameraY.current = camera.position.y;
     }
 
     if (!mainBlockRef.current) return;
@@ -64,8 +65,7 @@ export default function Game() {
     }
   });
 
-  const handleClick = (e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
+  const runGameLogic = () => {
     if (!mainBlockRef.current) return;
 
     // get geometry from first mesh child
@@ -77,18 +77,40 @@ export default function Game() {
 
     if (!meshChild) return;
 
+    // calculate the overlap
+    const lastBlock = blocks[blocks.length - 1];
+    const offset =
+      direction === "x"
+        ? mainBlockRef.current.position.x - lastBlock.position[0]
+        : mainBlockRef.current.position.z - lastBlock.position[2];
+    const overlap =
+      direction === "x"
+        ? lastBlock.size[0] - Math.abs(offset)
+        : lastBlock.size[2] - Math.abs(offset);
+
+    // game state check
+    if (overlap <= 0) {
+      // game over
+      setBlocks([initialBlock]);
+      setDirection("x");
+      setCurrColor(1);
+      setMainBlockSize([4, 0.5, 4]);
+      setMainBlockPos([0, 0.59, 0]);
+      if (cameraRef.current && initialCameraY.current !== null) {
+        cameraRef.current.position.y = initialCameraY.current;
+      }
+      return;
+    }
+
     // move main block up
     mainBlockRef.current.position.y += meshChild.geometry.parameters.height;
 
-    // update camera and controls
-    if (cameraRef.current && controlsRef.current) {
-      cameraRef.current.position.y = mainBlockRef.current.position.y + 6;
-      controlsRef.current.target.y = mainBlockRef.current.position.y;
-      controlsRef.current.update();
+    // update camera
+    if (cameraRef.current && initialCameraY.current !== null) {
+      const yOffset = initialCameraY.current - 0.59; // offset from initial block position
+      cameraRef.current.position.y = mainBlockRef.current.position.y + yOffset;
     }
 
-    // calculate the overlap
-    const lastBlock = blocks[blocks.length - 1];
     let oldBlock: Block = {
       position: [
         mainBlockRef.current.position.x,
@@ -103,52 +125,38 @@ export default function Game() {
       color: getGradientColor(currColor),
     };
 
-    if (lastBlock) {
-      const offset =
-        direction === "x"
-          ? mainBlockRef.current.position.x - lastBlock.position[0]
-          : mainBlockRef.current.position.z - lastBlock.position[2];
-      const overlap =
-        direction === "x"
-          ? lastBlock.size[0] - Math.abs(offset)
-          : lastBlock.size[2] - Math.abs(offset);
+    // calculate new size
+    const newSize: [number, number, number] = [...lastBlock.size];
+    newSize[direction === "x" ? 0 : 2] = overlap;
 
-      if (overlap <= 0) {
-        setBlocks([]);
-        setDirection("x");
-        setCurrColor(0);
-        setMainBlockSize([4, 0.25, 4]);
-        return;
-      }
+    // calculate new position
+    const newPos: [number, number, number] = [...lastBlock.position];
+    newPos[1] += meshChild.geometry.parameters.height;
+    newPos[direction === "x" ? 0 : 2] =
+      lastBlock.position[direction === "x" ? 0 : 2] + offset / 2;
 
-      // calculate new size
-      const newSize: [number, number, number] = [...lastBlock.size];
-      newSize[direction === "x" ? 0 : 2] = overlap;
+    oldBlock = {
+      position: newPos,
+      size: newSize,
+      color: getGradientColor(currColor),
+    };
 
-      // calculate new position
-      const newPos: [number, number, number] = [...lastBlock.position];
-      newPos[1] += meshChild.geometry.parameters.height;
-      newPos[direction === "x" ? 0 : 2] =
-        lastBlock.position[direction === "x" ? 0 : 2] + offset / 2;
-
-      oldBlock = {
-        position: newPos,
-        size: newSize,
-        color: getGradientColor(currColor),
-      };
-
-      // update mainBlock size
-      setMainBlockSize(newSize);
-      const newMainBlockPos: [number, number, number] = [...newPos];
-      newMainBlockPos[1] += 0.5;
-      setMainBlockPos(newMainBlockPos);
-    }
+    // update mainBlock size
+    setMainBlockSize(newSize);
+    const newMainBlockPos: [number, number, number] = [...newPos];
+    newMainBlockPos[1] += 0.5;
+    setMainBlockPos(newMainBlockPos);
 
     setBlocks((prev) => [...prev, oldBlock]);
 
     // change axis and color
     setDirection(direction === "x" ? "z" : "x");
     setCurrColor(currColor + 1);
+  };
+
+  const handleClick = (e: ThreeEvent<PointerEvent>) => {
+    e.stopPropagation();
+    runGameLogic();
   };
 
   return (
