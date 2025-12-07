@@ -3,9 +3,10 @@ import { Button } from "../ui/button";
 interface GameUIProps {
   isGameOver: boolean;
   onReset: () => void;
+  score: number;
 }
 
-export default function GameUI({ isGameOver, onReset }: GameUIProps) {
+export default function GameUI({ isGameOver, onReset, score }: GameUIProps) {
   return (
     <section className="absolute top-0 left-0 w-full h-full pointer-events-none">
       <div className="flex items-center justify-center flex-col gap-4 p-4 md:mt-12">
@@ -18,8 +19,8 @@ export default function GameUI({ isGameOver, onReset }: GameUIProps) {
           <span className="hidden md:inline">
             Click the blocks or press &#8216;space&#8217; to get started.&nbsp;
           </span>
-          Try your best to beat my highscore! :&#41;
         </p>
+        <p className="text-lg md:text-2xl font-bold">Score: {score}</p>
         {isGameOver && (
           <Button className="pointer-events-auto" onClick={onReset}>
             Reset Game

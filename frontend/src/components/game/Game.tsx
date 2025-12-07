@@ -4,6 +4,7 @@ import { useFrame, ThreeEvent } from "@react-three/fiber";
 import { useState, useRef, useEffect, useCallback } from "react";
 import * as THREE from "three";
 import { CARTOON_BLOCK_SIZE, CARTOON_BLOCK_POSITION } from "./CartoonBlock";
+// cspell:ignore gsap
 import { gsap } from "gsap";
 
 interface Block {
@@ -38,12 +39,14 @@ interface GameProps {
   isGameOver: boolean;
   setIsGameOverTrue: () => void;
   resetRef: { current: (() => void) | null };
+  updateScore: (score: number) => void;
 }
 
 export default function Game({
   isGameOver,
   setIsGameOverTrue,
   resetRef,
+  updateScore,
 }: GameProps) {
   const mainBlockRef = useRef<THREE.Group>(null);
   const speedRef = useRef(INITIAL_SPEED);
@@ -88,7 +91,7 @@ export default function Game({
     }
   });
 
-  const reset = () => {
+  const reset = useCallback(() => {
     // game over - animate all blocks shrinking to last block
     const lastBlockPos = blocks[blocks.length - 1].position;
     const timeline = gsap.timeline({
@@ -175,7 +178,7 @@ export default function Game({
         0
       );
     }
-  };
+  }, [blocks]);
 
   const runGameLogic = useCallback(() => {
     if (!mainBlockRef.current) return;
@@ -244,7 +247,11 @@ export default function Game({
       color: getGradientColor(currColor),
       type: "fixed",
     };
-    setBlocks((prev) => [...prev, oldBlock]);
+    setBlocks((prev) => {
+      const newBlocks = [...prev, oldBlock];
+      updateScore(newBlocks.length - 1);
+      return newBlocks;
+    });
 
     // update mainBlock size and position
     setMainBlockSize(newSize);
@@ -273,7 +280,7 @@ export default function Game({
     const sign = speedRef.current > 0 ? 1 : -1;
     speedRef.current =
       sign * (Math.abs(speedRef.current) + Math.random() * 0.005);
-  }, [blocks, currColor, direction, setIsGameOverTrue]);
+  }, [blocks, currColor, direction, setIsGameOverTrue, updateScore]);
 
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();

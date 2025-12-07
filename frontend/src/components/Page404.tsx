@@ -7,14 +7,20 @@ import { useState, useRef } from "react";
 
 export default function Page404() {
   const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState(0);
   const gameResetRef = useRef<(() => void) | null>(null);
 
   const setIsGameOverTrue = () => {
     setIsGameOver(true);
   };
 
+  const updateScore = (newScore: number) => {
+    setScore(newScore);
+  };
+
   const handleReset = () => {
     setIsGameOver(false);
+    setScore(0);
     gameResetRef.current?.();
   };
 
@@ -25,9 +31,10 @@ export default function Page404() {
           isGameOver={isGameOver}
           setIsGameOverTrue={setIsGameOverTrue}
           resetRef={gameResetRef}
+          updateScore={updateScore}
         />
       </Scene>
-      <GameUI isGameOver={isGameOver} onReset={handleReset} />
+      <GameUI isGameOver={isGameOver} onReset={handleReset} score={score} />
     </div>
   );
 }
