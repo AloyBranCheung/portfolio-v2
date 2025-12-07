@@ -108,6 +108,21 @@ export default function Game() {
       const timeline = gsap.timeline({
         onComplete: () => {
           // reset game state
+          gameBlocksRef.current.clear();
+          if (mainBlockRef.current) {
+            gsap.to(mainBlockRef.current.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+            });
+            gsap.to(mainBlockRef.current.position, {
+              x: 0,
+              y: 0.58,
+              z: 0,
+            });
+            // mainBlockRef.current.position.set(0, 0.59, 0);
+            // mainBlockRef.current.scale.set(1, 1, 1);
+          }
           setBlocks([initialBlock]);
           setFallingBlocks([]);
           setDirection("x");
