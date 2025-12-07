@@ -34,7 +34,17 @@ const initialBlock: Block = {
 
 const INITIAL_SPEED = 0.05;
 
-export default function Game() {
+interface GameProps {
+  isGameOver: boolean;
+  setIsGameOverTrue: () => void;
+  resetRef: { current: (() => void) | null };
+}
+
+export default function Game({
+  isGameOver,
+  setIsGameOverTrue,
+  resetRef,
+}: GameProps) {
   const mainBlockRef = useRef<THREE.Group>(null);
   const speedRef = useRef(INITIAL_SPEED);
   const cameraRef = useRef<THREE.Camera | null>(null);
@@ -53,13 +63,13 @@ export default function Game() {
   ]);
 
   useFrame(({ camera }) => {
+    if (!mainBlockRef.current || isGameOver) return;
+
     cameraRef.current = camera;
     // fix orthographic camera camera offset
     if (initialCameraY.current === null) {
       initialCameraY.current = camera.position.y;
     }
-
-    if (!mainBlockRef.current) return;
 
     // move block in one axis
     const speed = speedRef.current;
@@ -77,6 +87,95 @@ export default function Game() {
       speedRef.current *= -1;
     }
   });
+
+  const reset = () => {
+    // game over - animate all blocks shrinking to last block
+    const lastBlockPos = blocks[blocks.length - 1].position;
+    const timeline = gsap.timeline({
+      onComplete: () => {
+        // reset the position (when animation completed everything is set to 0)
+        if (mainBlockRef.current) {
+          gsap.to(mainBlockRef.current.scale, {
+            x: 1,
+            y: 1,
+            z: 1,
+          });
+          gsap.to(mainBlockRef.current.position, {
+            x: 0,
+            y: 0.58,
+            z: 0,
+          });
+        }
+        const ele = gameBlocksRef.current.get("block-0");
+        if (ele) {
+          gsap.to(ele.scale, {
+            x: 1,
+            y: 1,
+            z: 1,
+          });
+          gsap.to(ele.position, {
+            x: 0,
+            y: 0,
+            z: 0,
+          });
+        }
+
+        // reset game state
+        setBlocks([initialBlock]);
+        setFallingBlocks([]);
+        setDirection("x");
+        setCurrColor(1);
+        setMainBlockSize(CARTOON_BLOCK_SIZE);
+        setMainBlockPos(CARTOON_BLOCK_POSITION);
+        if (cameraRef.current && initialCameraY.current !== null) {
+          cameraRef.current.position.y = initialCameraY.current;
+          gsap.to(cameraRef.current.position, { y: initialCameraY.current });
+        }
+        speedRef.current = INITIAL_SPEED;
+        gameBlocksRef.current.clear();
+      },
+    });
+
+    gameBlocksRef.current.forEach((blockRef) => {
+      timeline.to(
+        blockRef.position,
+        {
+          x: lastBlockPos[0],
+          y: lastBlockPos[1],
+          z: lastBlockPos[2],
+          duration: 0.5,
+          ease: "power2.in",
+        },
+        0
+      );
+
+      timeline.to(
+        blockRef.scale,
+        {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration: 0.5,
+          ease: "power2.in",
+        },
+        0
+      );
+    });
+
+    if (mainBlockRef.current) {
+      timeline.to(
+        mainBlockRef.current.scale,
+        {
+          x: 0,
+          y: 0,
+          z: 0,
+          duration: 0.5,
+          ease: "power2.in",
+        },
+        0
+      );
+    }
+  };
 
   const runGameLogic = useCallback(() => {
     if (!mainBlockRef.current) return;
@@ -103,93 +202,7 @@ export default function Game() {
 
     // game state check
     if (overlap <= 0) {
-      // game over - animate all blocks shrinking to last block
-      const lastBlockPos = blocks[blocks.length - 1].position;
-      const timeline = gsap.timeline({
-        onComplete: () => {
-          // reset the position (when animation completed everything is set to 0)
-          if (mainBlockRef.current) {
-            gsap.to(mainBlockRef.current.scale, {
-              x: 1,
-              y: 1,
-              z: 1,
-            });
-            gsap.to(mainBlockRef.current.position, {
-              x: 0,
-              y: 0.58,
-              z: 0,
-            });
-          }
-          const ele = gameBlocksRef.current.get("block-0");
-          if (ele) {
-            gsap.to(ele.scale, {
-              x: 1,
-              y: 1,
-              z: 1,
-            });
-            gsap.to(ele.position, {
-              x: 0,
-              y: 0,
-              z: 0,
-            });
-          }
-
-          // reset game state
-          setBlocks([initialBlock]);
-          setFallingBlocks([]);
-          setDirection("x");
-          setCurrColor(1);
-          setMainBlockSize(CARTOON_BLOCK_SIZE);
-          setMainBlockPos(CARTOON_BLOCK_POSITION);
-          if (cameraRef.current && initialCameraY.current !== null) {
-            cameraRef.current.position.y = initialCameraY.current;
-            gsap.to(cameraRef.current.position, { y: initialCameraY.current });
-          }
-          speedRef.current = INITIAL_SPEED;
-          gameBlocksRef.current.clear();
-        },
-      });
-
-      gameBlocksRef.current.forEach((blockRef) => {
-        timeline.to(
-          blockRef.position,
-          {
-            x: lastBlockPos[0],
-            y: lastBlockPos[1],
-            z: lastBlockPos[2],
-            duration: 0.5,
-            ease: "power2.in",
-          },
-          0
-        );
-
-        timeline.to(
-          blockRef.scale,
-          {
-            x: 0,
-            y: 0,
-            z: 0,
-            duration: 0.5,
-            ease: "power2.in",
-          },
-          0
-        );
-      });
-
-      if (mainBlockRef.current) {
-        timeline.to(
-          mainBlockRef.current.scale,
-          {
-            x: 0,
-            y: 0,
-            z: 0,
-            duration: 0.5,
-            ease: "power2.in",
-          },
-          0
-        );
-      }
-
+      setIsGameOverTrue();
       return;
     }
 
@@ -260,12 +273,16 @@ export default function Game() {
     const sign = speedRef.current > 0 ? 1 : -1;
     speedRef.current =
       sign * (Math.abs(speedRef.current) + Math.random() * 0.005);
-  }, [blocks, currColor, direction]);
+  }, [blocks, currColor, direction, setIsGameOverTrue]);
 
   const handleClick = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     runGameLogic();
   };
+
+  useEffect(() => {
+    resetRef.current = reset;
+  }, [resetRef, reset]);
 
   useEffect(() => {
     const spacedownHandler = (e: KeyboardEvent) => {

@@ -1,4 +1,11 @@
-export default function GameUI() {
+import { Button } from "../ui/button";
+
+interface GameUIProps {
+  isGameOver: boolean;
+  onReset: () => void;
+}
+
+export default function GameUI({ isGameOver, onReset }: GameUIProps) {
   return (
     <section className="absolute top-0 left-0 w-full h-full pointer-events-none">
       <div className="flex items-center justify-center flex-col gap-4 p-4 md:mt-12">
@@ -13,6 +20,11 @@ export default function GameUI() {
           </span>
           Try your best to beat my highscore! :&#41;
         </p>
+        {isGameOver && (
+          <Button className="pointer-events-auto" onClick={onReset}>
+            Reset Game
+          </Button>
+        )}
       </div>
     </section>
   );
