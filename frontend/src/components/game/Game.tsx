@@ -4,6 +4,7 @@ import { useFrame, ThreeEvent } from "@react-three/fiber";
 import { useState, useRef } from "react";
 import * as THREE from "three";
 import { CARTOON_BLOCK_SIZE, CARTOON_BLOCK_POSITION } from "./CartoonBlock";
+import { gsap } from "gsap";
 
 interface Block {
   position: [number, number, number];
@@ -38,6 +39,7 @@ export default function Game() {
   const speedRef = useRef(INITIAL_SPEED);
   const cameraRef = useRef<THREE.Camera | null>(null);
   const initialCameraY = useRef<number | null>(null);
+  const gameBlocksRef = useRef<Map<string, THREE.Group>>(new Map());
 
   const [blocks, setBlocks] = useState<Block[]>([initialBlock]);
   const [fallingBlocks, setFallingBlocks] = useState<FallingBlock[]>([]);
@@ -101,19 +103,69 @@ export default function Game() {
 
     // game state check
     if (overlap <= 0) {
-      // game over
-      setBlocks([initialBlock]);
-      setFallingBlocks([]);
-      setDirection("x");
-      setCurrColor(1);
-      setMainBlockSize(CARTOON_BLOCK_SIZE);
-      setMainBlockPos(CARTOON_BLOCK_POSITION);
-      if (cameraRef.current && initialCameraY.current !== null) {
-        cameraRef.current.position.y = initialCameraY.current;
+      // game over - animate all blocks shrinking to last block
+      const lastBlockPos = blocks[blocks.length - 1].position;
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          // reset game state
+          setBlocks([initialBlock]);
+          setFallingBlocks([]);
+          setDirection("x");
+          setCurrColor(1);
+          setMainBlockSize(CARTOON_BLOCK_SIZE);
+          setMainBlockPos(CARTOON_BLOCK_POSITION);
+          if (cameraRef.current && initialCameraY.current !== null) {
+            cameraRef.current.position.y = initialCameraY.current;
+            gsap.to(cameraRef.current.position, { y: initialCameraY.current });
+          }
+          speedRef.current = INITIAL_SPEED;
+        },
+      });
+
+      gameBlocksRef.current.forEach((blockRef) => {
+        timeline.to(
+          blockRef.position,
+          {
+            x: lastBlockPos[0],
+            y: lastBlockPos[1],
+            z: lastBlockPos[2],
+            duration: 0.5,
+            ease: "power2.in",
+          },
+          0
+        );
+
+        timeline.to(
+          blockRef.scale,
+          {
+            x: 0,
+            y: 0,
+            z: 0,
+            duration: 0.5,
+            ease: "power2.in",
+          },
+          0
+        );
+      });
+
+      if (mainBlockRef.current) {
+        timeline.to(
+          mainBlockRef.current.scale,
+          {
+            x: 0,
+            y: 0,
+            z: 0,
+            duration: 0.5,
+            ease: "power2.in",
+          },
+          0
+        );
       }
-      speedRef.current = INITIAL_SPEED;
+
       return;
     }
+
+    console.log(blocks);
 
     // calculate new size
     const newSize: [number, number, number] = [...lastBlock.size];
@@ -163,11 +215,15 @@ export default function Game() {
 
     // move main block ref up
     mainBlockRef.current.position.y += meshChild.geometry.parameters.height;
+    mainBlockRef.current.scale.set(1, 1, 1);
 
-    // update camera
+    // update camera with animation
     if (cameraRef.current && initialCameraY.current !== null) {
       const yOffset = initialCameraY.current - 0.59;
-      cameraRef.current.position.y = mainBlockRef.current.position.y + yOffset;
+      gsap.to(cameraRef.current.position, {
+        y: mainBlockRef.current.position.y + yOffset,
+        duration: 0.5,
+      });
     }
 
     // change axis and color
@@ -190,6 +246,9 @@ export default function Game() {
       {blocks.map((block, i) => (
         <CartoonBlock
           key={`${block.position[0]}-${block.position[1]}-${block.position[2]}-${i}`}
+          ref={(el) => {
+            if (el) gameBlocksRef.current.set(`block-${i}`, el);
+          }}
           position={block.position}
           size={block.size}
           color={block.color}
