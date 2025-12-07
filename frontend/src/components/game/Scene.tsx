@@ -1,9 +1,6 @@
 "use client";
 import { Canvas, useThree } from "@react-three/fiber";
-import {
-  // StatsGl,
-  OrbitControls,
-} from "@react-three/drei";
+import { StatsGl, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { useControls } from "leva";
 import { useEffect } from "react";
@@ -48,7 +45,7 @@ export default function Scene({ children }: SceneProps) {
       }}
     >
       <CameraControls />
-      {/* <StatsGl className="absolute top-30 left-30" /> */}
+      <StatsGl className="absolute top-30 left-30" />
       <OrbitControls makeDefault enableDamping={true} />
       {children}
       <Lighting />

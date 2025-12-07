@@ -2,14 +2,14 @@
 
 import Scene from "./game/Scene";
 import { Leva } from "leva";
-import Blocks from "./game/Blocks";
+import POCTowerBlocks from "./game/POCTowerBlocks";
 import * as THREE from "three";
 export default function Page404() {
   return (
     <>
       <Leva hidden />
       <Scene>
-        <Blocks />
+        <POCTowerBlocks />
         <group>
           <mesh receiveShadow>
             <boxGeometry args={[10, 0.25, 10]} />

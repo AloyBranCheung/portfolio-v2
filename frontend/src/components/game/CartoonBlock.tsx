@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { shaderMaterial } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
 import * as THREE from "three";
@@ -33,18 +34,30 @@ declare module "@react-three/fiber" {
   }
 }
 
-export default function CartoonBlock() {
-  return (
-    <group position={[0, 0.59, 0]}>
+interface CartoonBlockProps {
+  position?: [number, number, number];
+  size?: [number, number, number];
+  color?: string;
+}
+
+const CartoonBlock = forwardRef<THREE.Group, CartoonBlockProps>(
+  ({ position = [0, 0.59, 0], size = [4, 0.5, 4], color = "purple" }, ref) => {
+    return (
+      <group ref={ref} position={position}>
       <mesh>
-        <boxGeometry args={[4, 0.5, 4]} />
+        <boxGeometry args={size} />
         <cartoonOutlineMaterial side={THREE.BackSide} />
       </mesh>
 
       <mesh castShadow>
-        <boxGeometry args={[4, 0.5, 4]} />
-        <meshToonMaterial color="purple" />
+        <boxGeometry args={size} />
+        <meshToonMaterial color={color} />
       </mesh>
     </group>
-  );
-}
+    );
+  }
+);
+
+CartoonBlock.displayName = "CartoonBlock";
+
+export default CartoonBlock;
