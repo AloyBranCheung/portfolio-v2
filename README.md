@@ -63,3 +63,7 @@ http://localhost:8080
 - Next.js Frontend - localhost:3000
 - Payload CMS - localhost:3001
 - Postgres - localhost:5432
+
+## Frontend: 3D Development
+
+- Use the Triplex Tool (vscode extension) for UI development help
