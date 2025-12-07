@@ -44,16 +44,16 @@ const CartoonBlock = forwardRef<THREE.Group, CartoonBlockProps>(
   ({ position = [0, 0.59, 0], size = [4, 0.5, 4], color = "purple" }, ref) => {
     return (
       <group ref={ref} position={position}>
-      <mesh>
-        <boxGeometry args={size} />
-        <cartoonOutlineMaterial side={THREE.BackSide} />
-      </mesh>
+        <mesh>
+          <boxGeometry args={size} />
+          <cartoonOutlineMaterial side={THREE.BackSide} />
+        </mesh>
 
-      <mesh castShadow>
-        <boxGeometry args={size} />
-        <meshToonMaterial color={color} />
-      </mesh>
-    </group>
+        <mesh castShadow>
+          <boxGeometry args={size} />
+          <meshToonMaterial color={color} />
+        </mesh>
+      </group>
     );
   }
 );
