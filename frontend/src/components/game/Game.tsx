@@ -107,8 +107,7 @@ export default function Game() {
       const lastBlockPos = blocks[blocks.length - 1].position;
       const timeline = gsap.timeline({
         onComplete: () => {
-          // reset game state
-          gameBlocksRef.current.clear();
+          // reset the position (when animation completed everything is set to 0)
           if (mainBlockRef.current) {
             gsap.to(mainBlockRef.current.scale, {
               x: 1,
@@ -120,9 +119,22 @@ export default function Game() {
               y: 0.58,
               z: 0,
             });
-            // mainBlockRef.current.position.set(0, 0.59, 0);
-            // mainBlockRef.current.scale.set(1, 1, 1);
           }
+          const ele = gameBlocksRef.current.get("block-0");
+          if (ele) {
+            gsap.to(ele.scale, {
+              x: 1,
+              y: 1,
+              z: 1,
+            });
+            gsap.to(ele.position, {
+              x: 0,
+              y: 0,
+              z: 0,
+            });
+          }
+
+          // reset game state
           setBlocks([initialBlock]);
           setFallingBlocks([]);
           setDirection("x");
@@ -134,6 +146,7 @@ export default function Game() {
             gsap.to(cameraRef.current.position, { y: initialCameraY.current });
           }
           speedRef.current = INITIAL_SPEED;
+          gameBlocksRef.current.clear();
         },
       });
 
