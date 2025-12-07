@@ -22,6 +22,13 @@ const CameraControls = () => {
   return null;
 };
 
+export const Lighting = () => (
+  <>
+    <ambientLight />
+    <directionalLight castShadow position={[0, 3.5, 6.01]} intensity={4.46} />
+  </>
+);
+
 interface SceneProps {
   children?: React.ReactNode;
 }
@@ -44,8 +51,7 @@ export default function Scene({ children }: SceneProps) {
       {/* <StatsGl className="absolute top-30 left-30" /> */}
       <OrbitControls makeDefault enableDamping={true} />
       {children}
-      <ambientLight />
-      <directionalLight castShadow position={[0, 3.5, 6.01]} intensity={4.46} />
+      <Lighting />
     </Canvas>
   );
 }

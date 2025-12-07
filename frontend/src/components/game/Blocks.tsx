@@ -1,5 +1,5 @@
 "use client";
-import Block from "./Block";
+import CartoonBlock from "./CartoonBlock";
 export default function Blocks() {
-  return <Block />;
+  return <CartoonBlock />;
 }
