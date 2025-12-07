@@ -9,7 +9,7 @@ import { Suspense } from "react";
 export const Lighting = () => (
   <>
     <ambientLight />
-    <directionalLight castShadow position={[0, 3.5, 6.01]} intensity={4.46} />
+    <directionalLight castShadow position={[0, 3.5, 6.01]} intensity={4.4} />
   </>
 );
 
@@ -33,7 +33,9 @@ export default function Scene({ children }: SceneProps) {
         rotation={[-0.7549722819690879, 0.6363225244631798, 0.5098320868052202]}
         zoom={54}
       />
-      <StatsGl className="absolute top-30 left-30" />
+      {process.env.NODE_ENV === "development" && (
+        <StatsGl className="absolute top-30 left-30" />
+      )}
       <Suspense>
         <Physics>{children}</Physics>
       </Suspense>

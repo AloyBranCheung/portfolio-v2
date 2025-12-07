@@ -1,9 +1,9 @@
 "use client";
 import CartoonBlock from "./CartoonBlock";
 import { useFrame, ThreeEvent } from "@react-three/fiber";
-import { number } from "motion/react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import * as THREE from "three";
+import { CARTOON_BLOCK_SIZE, CARTOON_BLOCK_POSITION } from "./CartoonBlock";
 
 interface Block {
   position: [number, number, number];
@@ -106,8 +106,8 @@ export default function Game() {
       setFallingBlocks([]);
       setDirection("x");
       setCurrColor(1);
-      setMainBlockSize([4, 0.5, 4]);
-      setMainBlockPos([0, 0.59, 0]);
+      setMainBlockSize(CARTOON_BLOCK_SIZE);
+      setMainBlockPos(CARTOON_BLOCK_POSITION);
       if (cameraRef.current && initialCameraY.current !== null) {
         cameraRef.current.position.y = initialCameraY.current;
       }

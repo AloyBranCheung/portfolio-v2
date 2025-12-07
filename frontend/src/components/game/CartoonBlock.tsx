@@ -43,6 +43,9 @@ interface CartoonBlockProps {
   disablePhysics?: boolean;
 }
 
+export const CARTOON_BLOCK_POSITION: [number, number, number] = [0, 0.59, 0];
+export const CARTOON_BLOCK_SIZE: [number, number, number] = [4, 0.5, 4];
+
 const CartoonBlock = forwardRef<THREE.Group, CartoonBlockProps>(
   (
     {
