@@ -23,26 +23,30 @@ import { useTheme } from "next-themes";
 import { cn, neobrutalist } from "@/lib/utils";
 import * as motion from "motion/react-client";
 import { initMixpanel } from "@/lib/mixpanel";
+import { useRouter } from "next/navigation";
 
 const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  // { href: "/#projects", label: "Projects" },
+  { href: "/tower-blocks", label: "Tower Blocks" },
 ];
 
 export default function Navbar() {
+  const pathname = window.location.pathname + window.location.hash;
+
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
+
   const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState(
-    navItems[0].href.split("#")[1]
-  );
+  // pathname
+  const [isActive, setIsActive] = useState(pathname);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            setIsActive(`${window.location.pathname}#${entry.target.id}`);
           }
         });
       },
@@ -67,7 +71,11 @@ export default function Navbar() {
   return (
     <NavigationMenu className={cn(["w-full max-w-none p-4", neobrutalist()])}>
       <div className="flex w-full items-center justify-between">
-        <Link href="/" className="block cursor-pointer">
+        <Link
+          href="/"
+          onClick={() => setIsActive("/#about")}
+          className="block cursor-pointer"
+        >
           <h1 className="text-base">Brandon Cheung</h1>
           <h2 className="text-sm">Software Developer</h2>
         </Link>
@@ -101,7 +109,7 @@ export default function Navbar() {
                       e.preventDefault();
                       setOpen(false);
                       const id = item.href.split("#")[1];
-                      setActiveSection(id);
+                      setIsActive(item.href);
                       setTimeout(() => {
                         const element = document.getElementById(id);
                         if (element) {
@@ -149,10 +157,19 @@ export default function Navbar() {
           <NavigationMenuList className="hidden md:flex">
             {navItems.map((item) => {
               const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                const id = item.href.split("#")[1];
+                const hrefArr = item.href.split("#");
+                const base = hrefArr[0];
+                const id = hrefArr[1];
 
-                setActiveSection(id);
+                if (item.href.includes("#")) {
+                  e.preventDefault();
+                }
+
+                if (base !== window.location.pathname) {
+                  router.push(item.href);
+                }
+
+                setIsActive(item.href);
                 setTimeout(() => {
                   const element = document.getElementById(id);
                   if (element) {
@@ -172,7 +189,7 @@ export default function Navbar() {
                 <NavigationMenuItem key={item.href}>
                   <NavigationMenuLink
                     className={navigationMenuTriggerStyle()}
-                    isActive={activeSection === item.href.split("#")[1]}
+                    isActive={isActive === item.href}
                     asChild
                   >
                     {item.href.includes("#") ? (
