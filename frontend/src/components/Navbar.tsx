@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { HamburgerIcon } from "lucide-react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -30,19 +31,31 @@ export const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
   // { href: "/tower-blocks", label: "Tower Blocks" },
-  // { href: "/projects", label: "Projects" },
+  { href: "/projects", label: "Projects" },
 ];
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
 
   const [open, setOpen] = useState(false);
-  // pathname
   const [isActive, setIsActive] = useAtom(isActiveAtom);
+  const pathname = usePathname();
 
   useEffect(() => {
     initMixpanel(); // Initialize Mixpanel
   }, []);
+
+  useEffect(() => {
+    const matchesNavItem = navItems.some(
+      (item) =>
+        item.href === pathname ||
+        item.href === `${pathname}#about` ||
+        item.href === `${pathname}#experience`
+    );
+    if (!matchesNavItem) {
+      setIsActive(null);
+    }
+  }, [pathname, setIsActive]);
 
   return (
     <NavigationMenu className={cn(["w-full max-w-none p-4", neobrutalist()])}>
