@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import PageTransition from "@/components/PageTransition";
 import NavbarWrapper from "@/components/NavbarWrapper";
+import JotaiProvider from "@/components/JotaiProvider";
 
 const jetBrainsMono = localFont({
   src: "../../public/fonts/JetBrainsMono-Regular.woff2",
@@ -29,14 +30,16 @@ export default function RootLayout({
         className={`${jetBrainsMono.className} antialiased w-full flex justify-center relative`}
       >
         <div className="container max-w-5xl py-4 px-2 flex flex-col w-full gap-2">
-          <ThemeProvider defaultTheme="light">
-            <header className="sticky top-2 z-50 w-full">
-              <NavbarWrapper />
-            </header>
-            <main className="w-full px-4">
-              <PageTransition>{children}</PageTransition>
-            </main>
-          </ThemeProvider>
+          <JotaiProvider>
+            <ThemeProvider defaultTheme="light">
+              <header className="sticky top-2 z-50 w-full">
+                <NavbarWrapper />
+              </header>
+              <main className="w-full px-4">
+                <PageTransition>{children}</PageTransition>
+              </main>
+            </ThemeProvider>
+          </JotaiProvider>
           <Footer />
         </div>
         <DotBackground />
