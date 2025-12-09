@@ -23,7 +23,6 @@ import { useTheme } from "next-themes";
 import { cn, neobrutalist } from "@/lib/utils";
 import * as motion from "motion/react-client";
 import { initMixpanel } from "@/lib/mixpanel";
-import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { isActiveAtom } from "@/jotai-atoms/navbar";
 
@@ -35,7 +34,6 @@ export const navItems = [
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
-  const router = useRouter();
 
   const [open, setOpen] = useState(false);
   // pathname
@@ -116,13 +114,6 @@ export default function Navbar() {
           <NavigationMenuList className="hidden md:flex">
             {navItems.map((item) => {
               const handleClick = () => {
-                const hrefArr = item.href.split("#");
-                const base = hrefArr[0];
-
-                if (base !== window.location.pathname) {
-                  router.push(item.href);
-                }
-
                 setIsActive(item.href);
               };
 
