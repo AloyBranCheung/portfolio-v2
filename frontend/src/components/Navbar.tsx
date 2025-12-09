@@ -26,15 +26,17 @@ import * as motion from "motion/react-client";
 import { initMixpanel } from "@/lib/mixpanel";
 import { useAtom } from "jotai";
 import { isActiveAtom } from "@/jotai-atoms/navbar";
+import { useRouter } from "next/navigation";
 
 export const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  // { href: "/tower-blocks", label: "Tower Blocks" },
+  { href: "/tower-blocks", label: "Tower Blocks" },
   // { href: "/projects", label: "Projects" },
 ];
 
 export default function Navbar() {
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
 
   const [open, setOpen] = useState(false);
@@ -92,9 +94,14 @@ export default function Navbar() {
                 </VisuallyHidden>
                 <NavigationMenuList className="flex flex-col gap-4 mt-8 px-4 py-2">
                   {navItems.map((item) => {
-                    const handleClick = () => {
+                    const handleClick = (
+                      e: React.MouseEvent<HTMLAnchorElement>
+                    ) => {
+                      // force page transition animation between pages
+                      e.preventDefault();
                       setOpen(false);
                       setIsActive(item.href);
+                      router.push(item.href);
                     };
                     if (item.href.includes("#")) {
                       return (
@@ -127,8 +134,11 @@ export default function Navbar() {
 
           <NavigationMenuList className="hidden md:flex">
             {navItems.map((item) => {
-              const handleClick = () => {
+              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                // force page transition animation between pages
+                e.preventDefault();
                 setIsActive(item.href);
+                router.push(item.href);
               };
 
               return (

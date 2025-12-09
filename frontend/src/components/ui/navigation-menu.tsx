@@ -1,9 +1,6 @@
-"use client";
-
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
 import { ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
 
 import * as React from "react";
 
@@ -133,10 +130,7 @@ function NavigationMenuLink({
         <div className="relative">
           {children}
           {mounted && isActive && (
-            <motion.div
-              layoutId="underline"
-              className="absolute bottom-0 left-0 right-0 h-0.5 bg-black dark:bg-white"
-            />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black dark:bg-white" />
           )}
         </div>
       </NavigationMenuPrimitive.Link>
@@ -154,7 +148,7 @@ function NavigationMenuLink({
     >
       {children}
       {mounted && isActive && (
-        <motion.div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" />
       )}
     </NavigationMenuPrimitive.Link>
   );

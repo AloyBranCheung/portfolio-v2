@@ -1,5 +1,3 @@
-"use client";
-
 import dayjs from "@/lib/dayjs";
 import { neobrutalist } from "@/lib/utils";
 import { ExternalLink } from "lucide-react";

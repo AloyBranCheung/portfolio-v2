@@ -6,8 +6,8 @@ import GameUI from '../game/GameUI'
 describe('GameUI', () => {
   it('renders initial instructions', () => {
     render(<GameUI isGameOver={false} onReset={vi.fn()} score={0} />)
-    expect(screen.getByText(/Error 404: Page not found/i)).toBeInTheDocument()
-    expect(screen.getByText(/But, you found my game/i)).toBeInTheDocument()
+    expect(screen.getByText(/Stack the blocks as high as you can/i)).toBeInTheDocument()
+    expect(screen.getByText(/Score: 0/i)).toBeInTheDocument()
   })
 
   it('shows score when game is active', () => {
