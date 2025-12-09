@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { HamburgerIcon } from "lucide-react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -23,51 +24,47 @@ import { useTheme } from "next-themes";
 import { cn, neobrutalist } from "@/lib/utils";
 import * as motion from "motion/react-client";
 import { initMixpanel } from "@/lib/mixpanel";
+import { useAtom } from "jotai";
+import { isActiveAtom } from "@/jotai-atoms/navbar";
 
-const navItems = [
+export const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  // { href: "/#projects", label: "Projects" },
+  // { href: "/tower-blocks", label: "Tower Blocks" },
+  // { href: "/projects", label: "Projects" },
 ];
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
+
   const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState(
-    navItems[0].href.split("#")[1]
-  );
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.8 }
-    );
-
-    navItems.forEach((item) => {
-      if (item.href.includes("#")) {
-        const id = item.href.split("#")[1];
-        const element = document.getElementById(id);
-        if (element) observer.observe(element);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const [isActive, setIsActive] = useAtom(isActiveAtom);
+  const pathname = usePathname();
 
   useEffect(() => {
     initMixpanel(); // Initialize Mixpanel
   }, []);
 
+  useEffect(() => {
+    const matchesNavItem = navItems.some(
+      (item) =>
+        item.href === pathname ||
+        item.href === `${pathname}#about` ||
+        item.href === `${pathname}#experience`
+    );
+    if (!matchesNavItem) {
+      setIsActive(null);
+    }
+  }, [pathname, setIsActive]);
+
   return (
     <NavigationMenu className={cn(["w-full max-w-none p-4", neobrutalist()])}>
       <div className="flex w-full items-center justify-between">
-        <Link href="/" className="block cursor-pointer">
+        <Link
+          href="/"
+          onClick={() => setIsActive("/#about")}
+          className="block cursor-pointer"
+        >
           <h1 className="text-base">Brandon Cheung</h1>
           <h2 className="text-sm">Software Developer</h2>
         </Link>
@@ -95,27 +92,9 @@ export default function Navbar() {
                 </VisuallyHidden>
                 <NavigationMenuList className="flex flex-col gap-4 mt-8 px-4 py-2">
                   {navItems.map((item) => {
-                    const handleClick = (
-                      e: React.MouseEvent<HTMLAnchorElement>
-                    ) => {
-                      e.preventDefault();
+                    const handleClick = () => {
                       setOpen(false);
-                      const id = item.href.split("#")[1];
-                      setActiveSection(id);
-                      setTimeout(() => {
-                        const element = document.getElementById(id);
-                        if (element) {
-                          const offset = 100;
-                          const elementPosition =
-                            element.getBoundingClientRect().top;
-                          const offsetPosition =
-                            elementPosition + window.scrollY - offset;
-                          window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth",
-                          });
-                        }
-                      }, 300);
+                      setIsActive(item.href);
                     };
                     if (item.href.includes("#")) {
                       return (
@@ -148,31 +127,15 @@ export default function Navbar() {
 
           <NavigationMenuList className="hidden md:flex">
             {navItems.map((item) => {
-              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-                e.preventDefault();
-                const id = item.href.split("#")[1];
-
-                setActiveSection(id);
-                setTimeout(() => {
-                  const element = document.getElementById(id);
-                  if (element) {
-                    const offset = 100;
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition =
-                      elementPosition + window.scrollY - offset;
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: "smooth",
-                    });
-                  }
-                }, 300);
+              const handleClick = () => {
+                setIsActive(item.href);
               };
 
               return (
                 <NavigationMenuItem key={item.href}>
                   <NavigationMenuLink
                     className={navigationMenuTriggerStyle()}
-                    isActive={activeSection === item.href.split("#")[1]}
+                    isActive={isActive === item.href}
                     asChild
                   >
                     {item.href.includes("#") ? (

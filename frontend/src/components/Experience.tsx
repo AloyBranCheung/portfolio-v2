@@ -11,7 +11,7 @@ export default function Experience({ data }: ExperienceProps) {
   }
 
   return (
-    <section id="experience" className="flex flex-col gap-4">
+    <section id="experience" className="flex flex-col gap-4 scroll-mt-28">
       {data.map((exp) => (
         <ExperienceCard key={exp.id} exp={exp} />
       ))}
