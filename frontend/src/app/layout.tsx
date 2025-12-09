@@ -7,7 +7,7 @@ import { DotBackground } from "@/components/DotBackground";
 import { ThemeProvider } from "next-themes";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import PageTransition from "@/components/PageTransition";
-import NavbarWrapper from "@/components/NavbarWrapper";
+import Navbar from "@/components/Navbar";
 import JotaiProvider from "@/components/JotaiProvider";
 
 const jetBrainsMono = localFont({
@@ -38,7 +38,7 @@ export default function RootLayout({
           <JotaiProvider>
             <ThemeProvider defaultTheme="light">
               <header className="sticky top-2 z-50 w-full">
-                <NavbarWrapper />
+                <Navbar />
               </header>
               <main className="w-full px-4">
                 <PageTransition>{children}</PageTransition>

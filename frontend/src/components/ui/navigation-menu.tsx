@@ -113,6 +113,12 @@ function NavigationMenuLink({
   isActive?: boolean;
   asChild?: boolean;
 }) {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   if (asChild) {
     return (
       <NavigationMenuPrimitive.Link
@@ -126,7 +132,7 @@ function NavigationMenuLink({
       >
         <div className="relative">
           {children}
-          {isActive && (
+          {mounted && isActive && (
             <motion.div
               layoutId="underline"
               className="absolute bottom-0 left-0 right-0 h-0.5 bg-black dark:bg-white"
@@ -147,7 +153,7 @@ function NavigationMenuLink({
       {...props}
     >
       {children}
-      {isActive && (
+      {mounted && isActive && (
         <motion.div className="absolute bottom-0 left-0 right-0 h-0.5 bg-black" />
       )}
     </NavigationMenuPrimitive.Link>
