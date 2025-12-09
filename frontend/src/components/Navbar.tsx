@@ -24,45 +24,22 @@ import { cn, neobrutalist } from "@/lib/utils";
 import * as motion from "motion/react-client";
 import { initMixpanel } from "@/lib/mixpanel";
 import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { isActiveAtom } from "@/jotai-atoms/navbar";
 
-const navItems = [
+export const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  { href: "/tower-blocks", label: "Tower Blocks" },
+  { href: "/projects", label: "Projects" },
 ];
 
 export default function Navbar() {
-  const pathname = window.location.pathname + window.location.hash;
-
   const { theme, setTheme } = useTheme();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
   // pathname
-  const [isActive, setIsActive] = useState(pathname);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsActive(`${window.location.pathname}#${entry.target.id}`);
-          }
-        });
-      },
-      { threshold: 0.8 }
-    );
-
-    navItems.forEach((item) => {
-      if (item.href.includes("#")) {
-        const id = item.href.split("#")[1];
-        const element = document.getElementById(id);
-        if (element) observer.observe(element);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const [isActive, setIsActive] = useAtom(isActiveAtom);
 
   useEffect(() => {
     initMixpanel(); // Initialize Mixpanel
