@@ -30,7 +30,7 @@ import { isActiveAtom } from "@/jotai-atoms/navbar";
 export const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
-  // { href: "/tower-blocks", label: "Tower Blocks" },
+  { href: "/tower-blocks", label: "Tower Blocks" },
   // { href: "/projects", label: "Projects" },
 ];
 
