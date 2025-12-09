@@ -24,6 +24,11 @@ export default function Template({ children }: TemplateProps) {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsActive(`${window.location.pathname}#${entry.target.id}`);
+            window.history.replaceState(
+              null,
+              "",
+              `${window.location.pathname}#${entry.target.id}`
+            );
           }
         });
       },
