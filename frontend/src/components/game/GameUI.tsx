@@ -8,22 +8,25 @@ interface GameUIProps {
   isGameOver: boolean;
   onReset: () => void;
   score: number;
+  message?: React.ReactNode;
 }
 
-export default function GameUI({ isGameOver, onReset, score }: GameUIProps) {
+export default function GameUI({
+  isGameOver,
+  onReset,
+  score,
+  message,
+}: GameUIProps) {
   return (
     <section className="absolute top-0 left-0 w-full h-full pointer-events-none dark:text-white">
       <div className="flex items-center justify-center flex-col gap-4 p-4 md:mt-12">
-        <h2 className="text-xl md:text-5xl">Error 404: Page not found.</h2>
-        <p className="md:text-xl">
-          But, you found my game.&nbsp;
-          <span className="md:hidden">
-            Tap the blocks to get started.&nbsp;
-          </span>
-          <span className="hidden md:inline">
+        {message ? (
+          message
+        ) : (
+          <p className="md:text-xl">
             Click the blocks or press &#8216;space&#8217; to get started.&nbsp;
-          </span>
-        </p>
+          </p>
+        )}
         {!isGameOver && (
           <p className="text-lg md:text-2xl font-bold">Score: {score}</p>
         )}

@@ -1,40 +1,25 @@
-"use client";
-
-import Scene from "./game/Scene";
-import Game from "./game/Game";
-import GameUI from "./game/GameUI";
-import { useState, useRef } from "react";
+import TowerBlocksGame from "./game";
 
 export default function Page404() {
-  const [isGameOver, setIsGameOver] = useState(false);
-  const [score, setScore] = useState(0);
-  const gameResetRef = useRef<(() => void) | null>(null);
-
-  const setIsGameOverTrue = () => {
-    setIsGameOver(true);
-  };
-
-  const updateScore = (newScore: number) => {
-    setScore(newScore);
-  };
-
-  const handleReset = () => {
-    setIsGameOver(false);
-    setScore(0);
-    gameResetRef.current?.();
-  };
-
   return (
     <div className="h-[calc(100vh-230px)] relative">
-      <Scene>
-        <Game
-          isGameOver={isGameOver}
-          setIsGameOverTrue={setIsGameOverTrue}
-          resetRef={gameResetRef}
-          updateScore={updateScore}
-        />
-      </Scene>
-      <GameUI isGameOver={isGameOver} onReset={handleReset} score={score} />
+      <TowerBlocksGame
+        message={
+          <>
+            <h2 className="text-xl md:text-5xl">Error 404: Page not found.</h2>
+            <p className="md:text-xl">
+              But, you found my game.&nbsp;
+              <span className="md:hidden">
+                Tap the blocks to get started.&nbsp;
+              </span>
+              <span className="hidden md:inline">
+                Click the blocks or press &#8216;space&#8217; to get
+                started.&nbsp;
+              </span>
+            </p>
+          </>
+        }
+      />
     </div>
   );
 }
