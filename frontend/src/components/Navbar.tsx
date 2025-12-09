@@ -80,27 +80,9 @@ export default function Navbar() {
                 </VisuallyHidden>
                 <NavigationMenuList className="flex flex-col gap-4 mt-8 px-4 py-2">
                   {navItems.map((item) => {
-                    const handleClick = (
-                      e: React.MouseEvent<HTMLAnchorElement>
-                    ) => {
-                      e.preventDefault();
+                    const handleClick = () => {
                       setOpen(false);
-                      const id = item.href.split("#")[1];
                       setIsActive(item.href);
-                      setTimeout(() => {
-                        const element = document.getElementById(id);
-                        if (element) {
-                          const offset = 100;
-                          const elementPosition =
-                            element.getBoundingClientRect().top;
-                          const offsetPosition =
-                            elementPosition + window.scrollY - offset;
-                          window.scrollTo({
-                            top: offsetPosition,
-                            behavior: "smooth",
-                          });
-                        }
-                      }, 300);
                     };
                     if (item.href.includes("#")) {
                       return (
@@ -133,33 +115,15 @@ export default function Navbar() {
 
           <NavigationMenuList className="hidden md:flex">
             {navItems.map((item) => {
-              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+              const handleClick = () => {
                 const hrefArr = item.href.split("#");
                 const base = hrefArr[0];
-                const id = hrefArr[1];
-
-                if (item.href.includes("#")) {
-                  e.preventDefault();
-                }
 
                 if (base !== window.location.pathname) {
                   router.push(item.href);
                 }
 
                 setIsActive(item.href);
-                setTimeout(() => {
-                  const element = document.getElementById(id);
-                  if (element) {
-                    const offset = 100;
-                    const elementPosition = element.getBoundingClientRect().top;
-                    const offsetPosition =
-                      elementPosition + window.scrollY - offset;
-                    window.scrollTo({
-                      top: offsetPosition,
-                      behavior: "smooth",
-                    });
-                  }
-                }, 300);
               };
 
               return (

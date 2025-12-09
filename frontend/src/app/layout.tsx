@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="en" className="scroll-smooth">
       <body
         className={`${jetBrainsMono.className} antialiased w-full flex justify-center relative`}
       >

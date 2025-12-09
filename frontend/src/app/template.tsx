@@ -15,6 +15,7 @@ interface TemplateProps {
  * to /, the intersection observer stops working
  */
 export default function Template({ children }: TemplateProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setIsActive] = useAtom(isActiveAtom);
 
   useEffect(() => {
