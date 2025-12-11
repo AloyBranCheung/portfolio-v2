@@ -72,6 +72,7 @@ export interface Config {
     experience: Experience;
     location: Location;
     media: Media;
+    projects: Project;
     technologies: Technology;
     users: User;
     'work-type': WorkType;
@@ -87,6 +88,7 @@ export interface Config {
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
     location: LocationSelect<false> | LocationSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     technologies: TechnologiesSelect<false> | TechnologiesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'work-type': WorkTypeSelect<false> | WorkTypeSelect<true>;
@@ -226,6 +228,18 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  name: string;
+  technologies?: (string | Technology)[] | null;
+  link?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -291,6 +305,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
       } | null)
     | ({
         relationTo: 'technologies';
@@ -409,6 +427,17 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  name?: T;
+  technologies?: T;
+  link?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

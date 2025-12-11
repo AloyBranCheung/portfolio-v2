@@ -27,18 +27,19 @@ export default function PageTransition({
         }}
       >
         <motion.div key={pathname}>
-          {new Array(3).fill(0).map((_, i) => (
+          {new Array(5).fill(0).map((_, i) => (
             <motion.div
               key={`${pathname}-${i}`}
               className={cn(
-                `h-screen w-1/3 z-100 fixed top-0 border-2 ${i === 0 ? "left-0" : i === 1 ? "left-1/3" : "left-2/3"}`,
+                `h-screen z-100 fixed top-0 border-2 w-1/5`,
                 dotBackgroundCn
               )}
+              style={{ left: `${(i / 5) * 100}%` }}
               animate={{ y: "-200vh" }}
               exit={{ y: 0 }}
               transition={{
-                delay: i * 0.1,
-                duration: 0.3,
+                delay: i * 0.05,
+                duration: 0.2,
                 ease: "easeInOut",
               }}
             />

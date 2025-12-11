@@ -16,6 +16,7 @@ import { EmploymentType } from './collections/EmploymentType'
 import { Location } from './collections/Location'
 import { WorkType } from './collections/WorkType'
 import { Technologies } from './collections/Technologies'
+import { Projects } from './collections/Projects'
 
 import { AboutMe } from './globals/AboutMe'
 
@@ -38,6 +39,7 @@ export default buildConfig({
     Location,
     WorkType,
     Technologies,
+    Projects,
   ].sort((a, b) => a.slug.localeCompare(b.slug)),
   globals: [AboutMe].sort((a, b) => a.slug.localeCompare(b.slug)),
   editor: lexicalEditor(),
