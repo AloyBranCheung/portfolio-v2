@@ -22,10 +22,13 @@ export const Projects: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'dateCreated',
-      label: 'Date Created',
+      name: 'yearWorkedOn',
+      label: 'Year Worked On',
       type: 'date',
       required: true,
+      admin: {
+        description: 'The year this project was worked on',
+      },
     },
     {
       name: 'madeAt',
