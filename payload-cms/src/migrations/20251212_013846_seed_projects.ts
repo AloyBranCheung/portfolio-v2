@@ -7,33 +7,39 @@ const projects: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>[] = [
     name: 'Tower Blocks Game',
     technologies: ['Three.js', 'Next.js', 'TypeScript'],
     link: 'https://www.brandoncheung.dev/tower-blocks',
+    // @ts-expect-error - change the column name later in migration
     dateCreated: generateDate('2025-12-11'),
   },
   {
     name: 'brandoncheung.dev v2',
     technologies: ['Next.js', 'Payload CMS', 'TypeScript'],
     link: 'https://www.brandoncheung.dev',
+    // @ts-expect-error - change the column name later in migration
     dateCreated: generateDate('2025-12-11'),
   },
   {
     name: 'Swim Habit Tracker',
     technologies: ['Next.js', 'TypeScript', 'PrismaORM', 'PostgreSQL'],
+    // @ts-expect-error - change the column name later in migration
     dateCreated: generateDate('2024-04-24'),
   },
   {
     name: 'brandoncheung.dev v1',
     technologies: ['Next.js', 'TypeScript', 'Strapi CMS'],
+    // @ts-expect-error - change the column name later in migration
     dateCreated: generateDate('2022-10-17'),
   },
   {
     name: 'University of Toronto Libraries Site',
     technologies: ['Next.js', 'Drupal CMS', 'TypeScript'],
+    // @ts-expect-error - change the column name later in migration
     dateCreated: generateDate('2025-09-02'),
     link: 'https://library.utoronto.ca/',
   },
   {
     name: 'Collections U of T',
     technologies: ['Next.js', 'Python', 'FastAPI', 'Loris IIIF Image Server'],
+    // @ts-expect-error - change the column name later in migration
     dateCreated: generateDate('2025-09-02'),
     link: 'https://collections.library.utoronto.ca/',
   },
