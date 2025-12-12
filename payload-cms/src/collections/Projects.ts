@@ -21,5 +21,17 @@ export const Projects: CollectionConfig = {
       label: 'Project Link',
       type: 'text',
     },
+    {
+      name: 'dateCreated',
+      label: 'Date Created',
+      type: 'date',
+      required: true,
+    },
+    {
+      name: 'madeAt',
+      label: 'Made at',
+      type: 'relationship',
+      relationTo: 'company',
+    },
   ],
 }

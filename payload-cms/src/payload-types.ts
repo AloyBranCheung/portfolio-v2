@@ -235,6 +235,8 @@ export interface Project {
   name: string;
   technologies?: (string | Technology)[] | null;
   link?: string | null;
+  dateCreated: string;
+  madeAt?: (string | null) | Company;
   updatedAt: string;
   createdAt: string;
 }
@@ -436,6 +438,8 @@ export interface ProjectsSelect<T extends boolean = true> {
   name?: T;
   technologies?: T;
   link?: T;
+  dateCreated?: T;
+  madeAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
