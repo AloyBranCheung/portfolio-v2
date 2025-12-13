@@ -13,6 +13,8 @@ import Pill from "@/components/Pill";
 import { Button } from "@/components/ui/button";
 import InlineExternalLink from "@/components/InlineExternalLink";
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function Projects() {
   const projects = await fetchProjects();
 
