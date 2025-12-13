@@ -17,6 +17,13 @@ const jetBrainsMono = localFont({
 export const metadata: Metadata = {
   title: "Brandon Cheung",
   description: "Portfolio website of Brandon Cheung",
+  openGraph: {
+    title: "Brandon Cheung",
+    description: "Portfolio website of Brandon Cheung",
+    url: "https://brandoncheung.dev",
+    siteName: "Brandon Cheung",
+    // images: [{ url: "https://brandoncheung.dev/hero.avif" }],
+  },
 };
 
 export default function RootLayout({
