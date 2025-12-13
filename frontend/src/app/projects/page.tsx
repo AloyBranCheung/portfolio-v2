@@ -18,11 +18,11 @@ export const revalidate = 3600; // Revalidate every hour
 export default async function Projects() {
   const projects = await fetchProjects();
 
-  if (!projects)
+  if (!projects || projects.length === 0)
     return (
       <section className="mt-2 p-2 flex flex-col gap-4">
         <h2 className="font-bold text-4xl dark:text-white">All Projects</h2>
-        <p className="text-foreground dark:text-white">No projects found.</p>
+        <p className="text-foreground dark:text-white">No projects listed.</p>
       </section>
     );
 
