@@ -37,4 +37,7 @@ export const Projects: CollectionConfig = {
       relationTo: 'company',
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
