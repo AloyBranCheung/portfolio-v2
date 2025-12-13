@@ -1,0 +1,122 @@
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import type { Project } from '@/payload-types'
+import { generateDate } from '@/libs/dayjs'
+
+const projects: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>[] = [
+  {
+    name: 'Tower Blocks Game',
+    technologies: ['Three.js', 'Next.js', 'TypeScript'],
+    link: 'https://www.brandoncheung.dev/tower-blocks',
+    // @ts-expect-error - change the column name later in migration
+    dateCreated: generateDate('2025-12-11'),
+  },
+  {
+    name: 'brandoncheung.dev v2',
+    technologies: ['Next.js', 'Payload CMS', 'TypeScript'],
+    link: 'https://www.brandoncheung.dev',
+    // @ts-expect-error - change the column name later in migration
+    dateCreated: generateDate('2025-12-11'),
+  },
+  {
+    name: 'Swim Habit Tracker',
+    technologies: ['Next.js', 'TypeScript', 'PrismaORM', 'PostgreSQL'],
+    // @ts-expect-error - change the column name later in migration
+    dateCreated: generateDate('2024-04-24'),
+  },
+  {
+    name: 'brandoncheung.dev v1',
+    technologies: ['Next.js', 'TypeScript', 'Strapi CMS'],
+    // @ts-expect-error - change the column name later in migration
+    dateCreated: generateDate('2022-10-17'),
+  },
+  {
+    name: 'University of Toronto Libraries Site',
+    technologies: ['Next.js', 'Drupal CMS', 'TypeScript'],
+    // @ts-expect-error - change the column name later in migration
+    dateCreated: generateDate('2025-09-02'),
+    link: 'https://library.utoronto.ca/',
+  },
+  {
+    name: 'Collections U of T',
+    technologies: ['Next.js', 'Python', 'FastAPI', 'IIIF'],
+    // @ts-expect-error - change the column name later in migration
+    dateCreated: generateDate('2025-09-02'),
+    link: 'https://collections.library.utoronto.ca/',
+  },
+]
+
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  await payload.create({
+    collection: 'technologies',
+    data: {
+      name: 'PrismaORM',
+    },
+  })
+  await payload.create({
+    collection: 'technologies',
+    data: {
+      name: 'IIIF',
+    },
+  })
+
+  for (const project of projects) {
+    const techIds = await Promise.all(
+      (project.technologies as string[]).map(async (name) => {
+        const tech = await payload.find({
+          collection: 'technologies',
+          where: { name: { equals: name } },
+        })
+        if (tech.docs.length < 1 || !tech.docs[0]) {
+          throw new Error(`Technology ${name} not found`)
+        }
+        return tech.docs[0].id
+      }),
+    )
+
+    await db.execute(sql`
+      INSERT INTO projects (name, link, date_created, updated_at, created_at)
+      VALUES (${project.name}, ${project.link || null}, ${(project as any).dateCreated}, NOW(), NOW())
+    `)
+
+    const projectResult = await db.execute(sql`
+      SELECT id FROM projects WHERE name = ${project.name}
+    `)
+    const projectId = projectResult.rows[0].id
+
+    for (const techId of techIds) {
+      await db.execute(sql`
+        INSERT INTO projects_rels (parent_id, path, technologies_id)
+        VALUES (${projectId}, 'technologies', ${techId})
+      `)
+    }
+  }
+}
+
+export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+  await payload.delete({
+    collection: 'technologies',
+    where: {
+      name: {
+        equals: 'PrismaORM',
+      },
+    },
+  })
+  await payload.delete({
+    collection: 'technologies',
+    where: {
+      name: {
+        equals: 'Loris IIIF Image Server',
+      },
+    },
+  })
+
+  // Migration code
+  await payload.delete({
+    collection: 'projects',
+    where: {
+      id: {
+        exists: true,
+      },
+    },
+  })
+}

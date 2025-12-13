@@ -21,5 +21,23 @@ export const Projects: CollectionConfig = {
       label: 'Project Link',
       type: 'text',
     },
+    {
+      name: 'yearWorkedOn',
+      label: 'Year Worked On',
+      type: 'date',
+      required: true,
+      admin: {
+        description: 'The year this project was worked on',
+      },
+    },
+    {
+      name: 'madeAt',
+      label: 'Made at',
+      type: 'relationship',
+      relationTo: 'company',
+    },
   ],
+  access: {
+    read: () => true,
+  },
 }

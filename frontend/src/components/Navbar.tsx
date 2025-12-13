@@ -31,8 +31,8 @@ import { useRouter } from "next/navigation";
 export const navItems = [
   { href: "/#about", label: "About" },
   { href: "/#experience", label: "Experience" },
+  { href: "/projects", label: "Projects" },
   { href: "/tower-blocks", label: "Tower Blocks" },
-  // { href: "/projects", label: "Projects" },
 ];
 
 export default function Navbar() {
