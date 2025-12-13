@@ -17,10 +17,14 @@ export default function ContactMe() {
       can :&#41;.
     </p>
   ) : (
-    <form
-      action={formAction}
-      className={cn("flex flex-col gap-2 mt-2 p-2 md:max-w-96", neobrutalist())}
-    >
+    <div className="md:flex md:justify-center">
+      <form
+        action={formAction}
+        className={cn(
+          "flex flex-col gap-2 mt-2 p-2 md:max-w-96 md:w-full",
+          neobrutalist()
+        )}
+      >
       <h2>Contact Me</h2>
       <Input name="from" type="email" required placeholder="Your Email" />
       {state?.errors?.properties?.from?.errors && (
@@ -56,6 +60,7 @@ export default function ContactMe() {
       <Button disabled={pending} type="submit">
         Submit
       </Button>
-    </form>
+      </form>
+    </div>
   );
 }
