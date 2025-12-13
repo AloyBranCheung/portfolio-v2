@@ -1,4 +1,4 @@
-import { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 import type { Project } from '@/payload-types'
 import { generateDate } from '@/libs/dayjs'
 
@@ -73,10 +73,22 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
       }),
     )
 
-    await payload.create({
-      collection: 'projects',
-      data: { ...project, technologies: techIds },
-    })
+    await db.execute(sql`
+      INSERT INTO projects (name, link, date_created, updated_at, created_at)
+      VALUES (${project.name}, ${project.link || null}, ${(project as any).dateCreated}, NOW(), NOW())
+    `)
+
+    const projectResult = await db.execute(sql`
+      SELECT id FROM projects WHERE name = ${project.name}
+    `)
+    const projectId = projectResult.rows[0].id
+
+    for (const techId of techIds) {
+      await db.execute(sql`
+        INSERT INTO projects_rels (parent_id, path, technologies_id)
+        VALUES (${projectId}, 'technologies', ${techId})
+      `)
+    }
   }
 }
 
