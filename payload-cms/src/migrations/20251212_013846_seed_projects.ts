@@ -38,7 +38,7 @@ const projects: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>[] = [
   },
   {
     name: 'Collections U of T',
-    technologies: ['Next.js', 'Python', 'FastAPI', 'Loris IIIF Image Server'],
+    technologies: ['Next.js', 'Python', 'FastAPI', 'IIIF'],
     // @ts-expect-error - change the column name later in migration
     dateCreated: generateDate('2025-09-02'),
     link: 'https://collections.library.utoronto.ca/',
@@ -55,7 +55,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await payload.create({
     collection: 'technologies',
     data: {
-      name: 'Loris IIIF Image Server',
+      name: 'IIIF',
     },
   })
 
