@@ -12,7 +12,11 @@ export default function ContactMe() {
   const [state, formAction, pending] = useActionState(submitForm, undefined);
 
   return state?.message === "success" ? (
-    <p className={cn(neobrutalist(), "p-4 mt-4")}>
+    <p
+      role="status"
+      aria-live="polite"
+      className={cn(neobrutalist(), "p-4 mt-4")}
+    >
       Success! Thanks for reaching out. I&#39;ll get back to you as soon as I
       can :&#41;.
     </p>
