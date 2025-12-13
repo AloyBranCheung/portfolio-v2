@@ -5,9 +5,9 @@ import { generateDate } from '@/libs/dayjs'
 const projects: Omit<Project, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
     name: 'Vantage Carbon Intelligence',
-    technologies: ['Next.js', 'Python', 'TypeScript', 'AWS', 'Terraform'],
-    link: 'https://www.brandoncheung.dev/tower-blocks',
-    yearWorkedOn: generateDate('2022-04-01'),
+    technologies: ['Next.js', 'Python', 'TypeScript', 'AWS', 'Terraform', 'Strapi CMS'],
+    link: 'https://www.clearbluemarkets.com/vantage',
+    yearWorkedOn: generateDate('2022-10-18'),
   },
 ]
 

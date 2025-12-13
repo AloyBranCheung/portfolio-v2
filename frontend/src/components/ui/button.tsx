@@ -1,5 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { neobrutalist } from "@/lib/utils";
 
 import * as React from "react";
 
@@ -10,8 +11,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
+        default: cn(
           "text-black bg-white border-2 border-black shadow-[2px_2px_0px_0px_black] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_black] dark:bg-black dark:border-white dark:text-white dark:shadow-white dark:hover:translate-x-[1px] dark:hover:translate-y-[1px] dark:hover:shadow-[1px_1px_0px_0px_white]",
+          neobrutalist()
+        ),
         noShadow: "text-main-foreground bg-main border-2 border-border",
         neutral:
           "bg-secondary-background text-foreground border-2 border-border shadow-shadow hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none",

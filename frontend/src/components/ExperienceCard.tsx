@@ -4,6 +4,7 @@ import { ExternalLink } from "lucide-react";
 import { Experience as IExperience } from "@/types/experience";
 import * as motion from "motion/react-client";
 import { interactAnimation } from "@/utils/interact-animation";
+import Pill from "@/components/Pill";
 
 interface ExperienceCardProps {
   exp: IExperience;
@@ -32,9 +33,7 @@ export default function ExperienceCard({ exp }: ExperienceCardProps) {
       </div>
       <ul className="flex flex-wrap gap-2 mt-4">
         {exp.technologies.map((tech) => (
-          <li key={tech.id} className={`${neobrutalist()} p-2 text-xs`}>
-            {tech.name}
-          </li>
+          <Pill key={tech.id}>{tech.name}</Pill>
         ))}
       </ul>
     </motion.a>
