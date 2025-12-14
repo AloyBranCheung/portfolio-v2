@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description,
     url: "https://brandoncheung.dev",
     siteName: "Brandon Cheung",
-    // images: [{ url: "https://brandoncheung.dev/hero.avif" }],
+    images: [{ url: "https://www.brandoncheung.dev/api/og" }],
   },
 };
 
