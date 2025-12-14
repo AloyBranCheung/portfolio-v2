@@ -14,15 +14,18 @@ const jetBrainsMono = localFont({
   src: "../../public/fonts/JetBrainsMono-Regular.woff2",
 });
 
+const description =
+  "Brandon Cheung is a software developer specializing in full-stack web development with an interest in building fast, accessible, and inclusive digital experiences for the web.";
+
 export const metadata: Metadata = {
   title: "Brandon Cheung",
-  description: "Portfolio website of Brandon Cheung",
+  description,
   openGraph: {
     title: "Brandon Cheung",
-    description: "Portfolio website of Brandon Cheung",
+    description,
     url: "https://brandoncheung.dev",
     siteName: "Brandon Cheung",
-    // images: [{ url: "https://brandoncheung.dev/hero.avif" }],
+    images: [{ url: "https://www.brandoncheung.dev/api/og" }],
   },
 };
 
