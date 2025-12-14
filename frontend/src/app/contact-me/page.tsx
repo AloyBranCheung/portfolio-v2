@@ -3,13 +3,33 @@
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn, neobrutalist } from "@/lib/utils";
-import { useActionState } from "react";
+import { useActionState, startTransition } from "react";
 import submitForm from "@/actions/contact-me-action";
 import { Button } from "@/components/ui/button";
 import FormErrMsg from "@/components/FormErrMsg";
 import { Label } from "@/components/ui/label";
+import Script from "next/script";
+
 export default function ContactMe() {
   const [state, formAction, pending] = useActionState(submitForm, undefined);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formValues = e.currentTarget;
+    // @ts-expect-error - loaded from script tag
+    await grecaptcha.ready(async () => {
+      // @ts-expect-error - loaded from script tag
+      const token = await grecaptcha.execute(
+        process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY!,
+        { action: "submit" }
+      );
+      const formData = new FormData(formValues);
+      formData.append("recaptchaToken", token);
+      startTransition(() => {
+        formAction(formData);
+      });
+    });
+  };
 
   return state?.message === "success" ? (
     <p
@@ -23,7 +43,7 @@ export default function ContactMe() {
   ) : (
     <div className="md:flex md:justify-center">
       <form
-        action={formAction}
+        onSubmit={handleSubmit}
         className={cn(
           "flex flex-col gap-2 mt-2 p-2 md:max-w-96 md:w-full",
           neobrutalist()
@@ -80,6 +100,10 @@ export default function ContactMe() {
           Submit
         </Button>
       </form>
+      <Script
+        strategy="afterInteractive"
+        src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_GOOGLE_SITE_KEY}`}
+      />
     </div>
   );
 }

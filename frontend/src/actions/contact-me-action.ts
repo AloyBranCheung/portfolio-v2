@@ -2,6 +2,7 @@
 
 import sendEmail from "@/lib/nodemailer";
 import { z } from "zod";
+import axios from "axios";
 
 const schema = z.object({
   from: z.email(),
@@ -10,6 +11,25 @@ const schema = z.object({
 });
 
 const submitForm = async (_prevState: unknown, formData: FormData) => {
+  // recaptcha
+  const recaptchaToken = formData.get("recaptchaToken");
+  const response = await axios.post(
+    "https://www.google.com/recaptcha/api/siteverify",
+    { response: recaptchaToken, secret: process.env.GOOGLE_SECRET_KEY },
+    {
+      headers: {
+        // https://stackoverflow.com/questions/70061153/google-recaptch-invalid-input-response-error
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+
+  if (!response.data.success) {
+    // say nothing since probably bot
+    return;
+  }
+
+  // validate
   const rawData = {
     from: formData.get("from") as string,
     subject: formData.get("subject") as string,
