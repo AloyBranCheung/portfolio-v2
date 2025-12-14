@@ -51,6 +51,15 @@ export default function ContactMe() {
       >
         <h2>Contact Me</h2>
 
+        <Input
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          className="absolute left-[-9999px]"
+          aria-hidden="true"
+        />
+
         <Label htmlFor="from">Email</Label>
         <Input
           id="from"

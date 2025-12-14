@@ -12,6 +12,15 @@ const schema = z.object({
 });
 
 const submitForm = async (_prevState: unknown, formData: FormData) => {
+  // honeypot check
+  const honeypot = formData.get("website");
+  if (honeypot) {
+    Sentry.captureException("Honeypot detected", {
+      extra: { honeypot: honeypot },
+    });
+    return; // bot detected, silently reject
+  }
+
   // recaptcha
   const recaptchaToken = formData.get("recaptchaToken");
   const response = await axios.post(
