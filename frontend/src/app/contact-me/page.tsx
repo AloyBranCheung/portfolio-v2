@@ -50,8 +50,24 @@ export default function ContactMe() {
         )}
       >
         <h2>Contact Me</h2>
-
+        <Label
+          htmlFor="g-recaptcha-response-100000"
+          tabIndex={-1}
+          className="absolute left-[-9999px]"
+          aria-hidden="true"
+        >
+          g-recaptcha-response-100000
+        </Label>
+        <Label
+          htmlFor="website"
+          tabIndex={-1}
+          className="absolute left-[-9999px]"
+          aria-hidden="true"
+        >
+          Website
+        </Label>
         <Input
+          id="website"
           name="website"
           type="text"
           tabIndex={-1}
@@ -59,7 +75,6 @@ export default function ContactMe() {
           className="absolute left-[-9999px]"
           aria-hidden="true"
         />
-
         <Label htmlFor="from">Email</Label>
         <Input
           id="from"
@@ -73,7 +88,6 @@ export default function ContactMe() {
             {state.errors.properties.from.errors.join(". ")}
           </FormErrMsg>
         )}
-
         <Label htmlFor="subject">Subject</Label>
         <Input
           id="subject"
@@ -89,7 +103,6 @@ export default function ContactMe() {
             {state.errors.properties.subject.errors.join(". ")}
           </FormErrMsg>
         )}
-
         <Label htmlFor="text">Message</Label>
         <Textarea
           id="text"
@@ -104,7 +117,6 @@ export default function ContactMe() {
             {state.errors.properties.text.errors.join(". ")}
           </FormErrMsg>
         )}
-
         <Button disabled={pending} type="submit">
           Submit
         </Button>
