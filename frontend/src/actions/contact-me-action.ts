@@ -3,6 +3,7 @@
 import sendEmail from "@/lib/nodemailer";
 import { z } from "zod";
 import axios from "axios";
+import * as Sentry from "@sentry/nextjs";
 
 const schema = z.object({
   from: z.email(),
@@ -25,6 +26,9 @@ const submitForm = async (_prevState: unknown, formData: FormData) => {
   );
 
   if (!response.data.success) {
+    Sentry.captureException("reCAPTCHA verification failed", {
+      extra: { recaptchaResponse: response.data },
+    });
     // say nothing since probably bot
     return;
   }
