@@ -12,7 +12,7 @@ export default function InlineExternalLink({
   className,
 }: InlineExternalLinkProps) {
   const content = (
-    <span>
+    <span className={cn(className)}>
       {label ? label : href} {href && <ExternalLink className="inline" />}
     </span>
   );
