@@ -13,6 +13,7 @@ Sentry.init({
       // https://docs.sentry.io/platforms/javascript/session-replay/privacy/#privacy-configuration
       maskAllText: false,
       blockAllMedia: false,
+      maskAllInputs: false,
     }),
     /**
      * import * as Sentry from "@sentry/nextjs";

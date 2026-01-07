@@ -45,6 +45,7 @@ services:
       - /app/node_modules
     depends_on:
       - payload
+      - postgres
     networks:
       - default
 
