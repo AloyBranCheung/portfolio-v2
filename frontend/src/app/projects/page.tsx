@@ -10,8 +10,8 @@ import { fetchProjects } from "@/utils/fetch-projects";
 import dayjs from "@/lib/dayjs";
 import { Github } from "lucide-react";
 import Pill from "@/components/Pill";
-import { Button } from "@/components/ui/button";
 import InlineExternalLink from "@/components/InlineExternalLink";
+import { Button } from "@/components/ui/button";
 
 export const revalidate = 3600; // Revalidate every hour
 
@@ -30,8 +30,16 @@ export default async function Projects() {
     <section className="mt-2 p-2 flex flex-col gap-4">
       <div className="flex flex-col gap-4 md:flex-row md:justify-between">
         <h2 className="font-bold text-4xl dark:text-white">All Projects</h2>
-        <Button className="font-bold cursor-pointer">
-          See my Github <Github />
+        <Button asChild>
+          <a
+            target="_blank"
+            href="https://github.com/AloyBranCheung"
+            rel="noopener noreferrer"
+            aria-label="Visit my GitHub profile"
+            className="font-bold cursor-pointer"
+          >
+            See my Github <Github />
+          </a>
         </Button>
       </div>
       <Table>
