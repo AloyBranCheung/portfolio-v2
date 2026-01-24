@@ -2,7 +2,6 @@
 import axios from "axios";
 import * as motion from "motion/react-client";
 import type { Certification } from "@/app/api/certification/route";
-import { interactAnimation } from "@/utils/interact-animation";
 import { cn, neobrutalist } from "@/lib/utils";
 import Image from "next/image";
 import dayjs from "@/lib/dayjs";
@@ -23,7 +22,6 @@ export default async function Certifications() {
         {certifications.data.docs.map((cert: Certification) => (
           <motion.div
             key={cert.id}
-            {...interactAnimation}
             className={cn(
               neobrutalist(),
               "p-4 bg-white flex gap-2 items-center",
