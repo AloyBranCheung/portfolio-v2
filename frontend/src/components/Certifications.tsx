@@ -1,5 +1,3 @@
-// since calling next.js api
-import axios from "axios";
 import * as motion from "motion/react-client";
 import type { Certification } from "@/app/api/certification/route";
 import { cn, neobrutalist } from "@/lib/utils";
@@ -7,9 +5,11 @@ import Image from "next/image";
 import dayjs from "@/lib/dayjs";
 
 export default async function Certifications() {
-  const certifications = await axios.get(
+  // hide backend url
+  const certifications = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/certification`,
-  );
+    { next: { revalidate: 3600 } },
+  ).then((res) => res.json());
 
   if (!certifications.data || certifications.data.docs.length === 0) {
     return null;
