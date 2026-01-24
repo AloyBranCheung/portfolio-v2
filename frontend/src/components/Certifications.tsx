@@ -6,10 +6,16 @@ import dayjs from "@/lib/dayjs";
 
 export default async function Certifications() {
   // hide backend url
-  const certifications = await fetch(
+  const response = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/api/certification`,
     { next: { revalidate: 3600 } },
-  ).then((res) => res.json());
+  );
+
+  if (!response.ok) {
+    return null;
+  }
+
+  const certifications = await response.json();
 
   if (!certifications.data || certifications.data.docs.length === 0) {
     return null;
