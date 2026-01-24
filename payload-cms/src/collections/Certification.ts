@@ -43,4 +43,7 @@ export const Certification: CollectionConfig = {
       required: true,
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
