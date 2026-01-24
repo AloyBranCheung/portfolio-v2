@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    certification: Certification;
     company: Company;
     'employment-type': EmploymentType;
     experience: Experience;
@@ -83,6 +84,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    certification: CertificationSelect<false> | CertificationSelect<true>;
     company: CompanySelect<false> | CompanySelect<true>;
     'employment-type': EmploymentTypeSelect<false> | EmploymentTypeSelect<true>;
     experience: ExperienceSelect<false> | ExperienceSelect<true>;
@@ -133,6 +135,41 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certification".
+ */
+export interface Certification {
+  id: string;
+  name: string;
+  issuingOrganization: string;
+  issueDate?: string | null;
+  expirationDate?: string | null;
+  credentialID?: string | null;
+  credentialURL?: string | null;
+  icon: string | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -209,25 +246,6 @@ export interface Technology {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: string;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects".
  */
 export interface Project {
@@ -291,6 +309,10 @@ export interface PayloadKv {
 export interface PayloadLockedDocument {
   id: string;
   document?:
+    | ({
+        relationTo: 'certification';
+        value: string | Certification;
+      } | null)
     | ({
         relationTo: 'company';
         value: string | Company;
@@ -368,6 +390,21 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certification_select".
+ */
+export interface CertificationSelect<T extends boolean = true> {
+  name?: T;
+  issuingOrganization?: T;
+  issueDate?: T;
+  expirationDate?: T;
+  credentialID?: T;
+  credentialURL?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

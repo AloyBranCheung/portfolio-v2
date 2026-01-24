@@ -4,6 +4,7 @@ import * as migration_20251212_012519_add_fields_to_project_collection from './2
 import * as migration_20251212_013846_seed_projects from './20251212_013846_seed_projects';
 import * as migration_20251212_023900 from './20251212_023900';
 import * as migration_20251212_024221 from './20251212_024221';
+import * as migration_20260124_213118 from './20260124_213118';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20251212_024221.up,
     down: migration_20251212_024221.down,
-    name: '20251212_024221'
+    name: '20251212_024221',
+  },
+  {
+    up: migration_20260124_213118.up,
+    down: migration_20260124_213118.down,
+    name: '20260124_213118'
   },
 ];
