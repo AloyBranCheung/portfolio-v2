@@ -9,7 +9,7 @@ import { Suspense } from "react";
 export const Lighting = () => (
   <>
     <ambientLight />
-    <directionalLight castShadow position={[0, 3.5, 6.01]} intensity={4.4} />
+    <directionalLight position={[0, 3.5, 6.01]} intensity={4.4} />
   </>
 );
 
@@ -19,7 +19,6 @@ interface SceneProps {
 export default function Scene({ children }: SceneProps) {
   return (
     <Canvas
-      shadows
       gl={{
         toneMapping: THREE.CineonToneMapping,
         outputColorSpace: THREE.SRGBColorSpace,
