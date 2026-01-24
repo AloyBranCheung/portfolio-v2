@@ -33,7 +33,7 @@ export const navItems = [
   { href: "/#experience", label: "Experience" },
   { href: "/projects", label: "Projects" },
   { href: "/contact-me", label: "Contact" },
-  { href: "/tower-blocks", label: "Tower Blocks" },
+  // { href: "/tower-blocks", label: "Tower Blocks" },
 ];
 
 export default function Navbar() {
@@ -53,7 +53,7 @@ export default function Navbar() {
       (item) =>
         item.href === pathname ||
         item.href === `${pathname}#about` ||
-        item.href === `${pathname}#experience`
+        item.href === `${pathname}#experience`,
     );
     if (!matchesNavItem) {
       setIsActive(null);
@@ -96,7 +96,7 @@ export default function Navbar() {
                 <NavigationMenuList className="flex flex-col gap-4 mt-8 px-4 py-2">
                   {navItems.map((item) => {
                     const handleClick = (
-                      e: React.MouseEvent<HTMLAnchorElement>
+                      e: React.MouseEvent<HTMLAnchorElement>,
                     ) => {
                       // force page transition animation between pages
                       e.preventDefault();
