@@ -24,7 +24,7 @@ export default async function Certifications() {
             key={cert.id}
             className={cn(
               neobrutalist(),
-              "p-4 bg-white flex gap-2 items-center",
+              "p-4 bg-white flex gap-6 items-center",
             )}
           >
             <Image
