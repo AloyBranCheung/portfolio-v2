@@ -1,7 +1,7 @@
 name: Portfolio-V2
 services:
   postgres:
-    image: postgres:15-alpine
+    image: postgres:18-alpine
     environment:
       - POSTGRES_PASSWORD=local
       - POSTGRES_USER=local
@@ -9,12 +9,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./data/db:/var/lib/postgresql
     networks:
       - default
 
   payload:
-    image: node:18-alpine
+    image: node:24-alpine
     ports:
       - 3001:3001
     volumes:

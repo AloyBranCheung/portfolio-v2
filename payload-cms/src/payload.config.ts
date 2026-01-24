@@ -8,6 +8,7 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+// collections
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Experience } from './collections/Experience'
@@ -17,6 +18,7 @@ import { Location } from './collections/Location'
 import { WorkType } from './collections/WorkType'
 import { Technologies } from './collections/Technologies'
 import { Projects } from './collections/Projects'
+import { Certification } from './collections/Certification'
 
 import { AboutMe } from './globals/AboutMe'
 
@@ -40,6 +42,7 @@ export default buildConfig({
     WorkType,
     Technologies,
     Projects,
+    Certification,
   ].sort((a, b) => a.slug.localeCompare(b.slug)),
   globals: [AboutMe].sort((a, b) => a.slug.localeCompare(b.slug)),
   editor: lexicalEditor(),

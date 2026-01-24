@@ -81,3 +81,7 @@ http://localhost:8080
 ## Frontend: 3D Development
 
 - Use the Triplex Tool (vscode extension) for UI development help
+
+## Pre-Deploy
+
+Test the prod build locally with `docker compose up -d frontend-prod --build` and check `localhost:8000`
