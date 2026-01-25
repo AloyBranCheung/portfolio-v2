@@ -15,9 +15,9 @@ export default async function Certifications() {
     return null;
   }
 
-  const certifications = await response.json();
+  const certifications = (await response.json()) as { docs: Certification[] };
 
-  if (!certifications.data || certifications.data.docs.length === 0) {
+  if (!certifications || certifications.docs.length === 0) {
     return null;
   }
 
@@ -25,7 +25,7 @@ export default async function Certifications() {
     <section>
       <h2 className="text-2xl mb-2">Certifications</h2>
       <div className="flex flex-col gap-2">
-        {certifications.data.docs.map((cert: Certification) => (
+        {certifications.docs.map((cert: Certification) => (
           <motion.div
             key={cert.id}
             className={cn(
