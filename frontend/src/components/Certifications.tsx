@@ -25,8 +25,8 @@ export default async function Certifications() {
 
   return (
     <section>
-      <h2 className="text-2xl mb-2">Certifications</h2>
-      <div className="flex flex-col gap-2">
+      <h2 className="text-2xl mb-2 dark:text-white">Certifications</h2>
+      <div className="flex flex-col gap-4">
         {certifications.docs.map((cert: Certification) => {
           const hasCredentialUrl =
             cert?.credentialURL && cert.credentialURL.length > 0;
@@ -48,7 +48,9 @@ export default async function Certifications() {
                 <p>{cert.issuingOrganization}</p>
                 <p>Issued on: {dayjs(cert.issueDate).format("MMM YYYY")}</p>
               </div>
-              {hasCredentialUrl && <ExternalLink className="hidden md:block md:self-start" />}
+              {hasCredentialUrl && (
+                <ExternalLink className="hidden md:block md:self-start" />
+              )}
             </>
           );
 
