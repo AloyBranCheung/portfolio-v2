@@ -9,7 +9,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./data/db:/var/lib/postgresql
+      - postgres-data:/var/lib/postgresql
     networks:
       - default
 
@@ -66,3 +66,6 @@ services:
 networks:
   default:
     name: portfolio-v2-network
+
+volumes:
+  postgres-data:
