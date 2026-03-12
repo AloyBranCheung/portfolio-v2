@@ -35,6 +35,7 @@ export default async function Certifications() {
             <>
               <div className="flex justify-between items-center w-full md:w-auto md:flex-col md:gap-0">
                 <Image
+                  key={cert.icon.id}
                   src={cert.icon.url}
                   alt={cert.icon.alt}
                   width={50}

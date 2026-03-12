@@ -9,11 +9,7 @@ export async function GET(
 
   const res = await fetch(
     `${process.env.BACKEND_URL}/media?${new URLSearchParams({
-      where: JSON.stringify({
-        filename: {
-          like: filename,
-        },
-      }),
+      "where[filename][equals]": filename,
     }).toString()}`,
     { next: { revalidate: 3600 } },
   );
@@ -28,7 +24,12 @@ export async function GET(
     return new NextResponse("Media not found", { status: 404 });
   }
 
+  if (data.docs.length > 1) {
+    return new NextResponse("More than one result found", { status: 500 });
+  }
+
   const file = data.docs[0].url.replace(/^\/api/, "");
+
   const fileUrl = `${process.env.BACKEND_URL}${file}`;
 
   const fileResponse = await fetch(fileUrl);
