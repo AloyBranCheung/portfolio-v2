@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { Where } from "payload";
+import { stringify } from "qs-esm";
 
 export async function GET(
   _request: NextRequest,
@@ -7,10 +9,14 @@ export async function GET(
   const { path } = await params;
   const filename = path[path.length - 1];
 
+  const query: Where = {
+    filename: {
+      equals: filename,
+    },
+  };
+
   const res = await fetch(
-    `${process.env.BACKEND_URL}/media?${new URLSearchParams({
-      "where[filename][equals]": filename,
-    }).toString()}`,
+    `${process.env.BACKEND_URL}/media${stringify({ where: query }, { addQueryPrefix: true })}`,
     { next: { revalidate: 3600 } },
   );
 
