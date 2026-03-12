@@ -51,7 +51,11 @@ pg_dump -d postgresql://user:password@host:port/database > db.sql
 4. Import the database backup
 
 ```bash
+# format 
 psql -d <local db connection string> -f <the downloaded .sql file>
+
+# example
+psql -d postgres://local:local@localhost:5432/local -f ./db.sql 
 ```
 
 5. Run payload migrations (if necessary)

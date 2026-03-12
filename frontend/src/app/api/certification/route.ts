@@ -34,7 +34,7 @@ export async function GET() {
     `${process.env.BACKEND_URL}/certification?${new URLSearchParams({
       sort: "-issueDate",
     }).toString()}`,
-    { next: { revalidate: 3600 } }
+    { next: { revalidate: 3600 } },
   );
 
   if (!res.ok) {
@@ -47,10 +47,10 @@ export async function GET() {
   if (data.docs) {
     data.docs = data.docs.map((cert: Certification) => {
       if (cert.icon?.url) {
-        cert.icon.url = `/api/media${cert.icon.url}`;
+        cert.icon.url = cert.icon.url;
       }
       if (cert.icon?.thumbnailURL) {
-        cert.icon.thumbnailURL = `/api/media${cert.icon.thumbnailURL}`;
+        cert.icon.thumbnailURL = cert.icon.thumbnailURL;
       }
       return cert;
     });
