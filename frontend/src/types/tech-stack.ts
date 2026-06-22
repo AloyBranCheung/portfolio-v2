@@ -1,7 +1,7 @@
 export interface TechIcon {
   id: string;
   alt: string;
-  url: string;
+  url: string | null;
 }
 
 export interface TechCategory {

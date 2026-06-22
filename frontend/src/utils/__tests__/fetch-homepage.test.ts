@@ -113,4 +113,10 @@ describe('fetchTechStack', () => {
     await fetchTechStack()
     expect(Sentry.captureException).toHaveBeenCalledWith(error)
   })
+
+  it('returns null when docs field is missing', async () => {
+    vi.mocked(axios.get).mockResolvedValue({ data: {} })
+    const result = await fetchTechStack()
+    expect(result).toBeNull()
+  })
 })

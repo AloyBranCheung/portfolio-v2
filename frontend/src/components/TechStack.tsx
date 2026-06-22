@@ -39,6 +39,7 @@ export default function TechStack({ data }: TechStackProps) {
             {group.items
               .slice()
               .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+              .filter((item) => item.icon.url)
               .map((item) => (
                 <div
                   key={item.id}
@@ -48,7 +49,7 @@ export default function TechStack({ data }: TechStackProps) {
                   )}
                 >
                   <Image
-                    src={item.icon.url}
+                    src={item.icon.url!}
                     alt={item.icon.alt}
                     width={50}
                     height={50}

@@ -67,4 +67,30 @@ describe('TechStack', () => {
     expect(screen.getByText('Python')).toBeInTheDocument()
     expect(screen.getByText('React')).toBeInTheDocument()
   })
+
+  it('orders items within a category by item.order', () => {
+    const orderedData: TechStackItem[] = [
+      {
+        id: '3',
+        name: 'NumPy',
+        order: 1,
+        icon: { id: 'i3', alt: 'NumPy logo', url: '/api/media/file/numpy.svg' },
+        category: { id: 'c1', name: 'Languages', order: 0 },
+        createdAt: '',
+        updatedAt: '',
+      },
+      {
+        id: '1',
+        name: 'Python',
+        order: 0,
+        icon: { id: 'i1', alt: 'Python logo', url: '/api/media/file/python.svg' },
+        category: { id: 'c1', name: 'Languages', order: 0 },
+        createdAt: '',
+        updatedAt: '',
+      },
+    ]
+    render(<TechStack data={orderedData} />)
+    const items = screen.getAllByRole('img').map((img) => img.getAttribute('alt'))
+    expect(items).toEqual(['Python logo', 'NumPy logo'])
+  })
 })

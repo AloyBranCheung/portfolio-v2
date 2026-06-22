@@ -53,6 +53,6 @@ export const fetchTechStack = async (): Promise<TechStackItem[] | null> => {
   } catch (error) {
     console.error("Error fetching Tech Stack data:", error);
     Sentry.captureException(error);
-    return data;
+    return null;
   }
 };
