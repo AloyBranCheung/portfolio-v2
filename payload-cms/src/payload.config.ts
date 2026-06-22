@@ -19,6 +19,8 @@ import { WorkType } from './collections/WorkType'
 import { Technologies } from './collections/Technologies'
 import { Projects } from './collections/Projects'
 import { Certification } from './collections/Certification'
+import { TechCategory } from './collections/TechCategory'
+import { TechStack } from './collections/TechStack'
 
 import { AboutMe } from './globals/AboutMe'
 
@@ -43,6 +45,8 @@ export default buildConfig({
     Technologies,
     Projects,
     Certification,
+    TechCategory,
+    TechStack,
   ].sort((a, b) => a.slug.localeCompare(b.slug)),
   globals: [AboutMe].sort((a, b) => a.slug.localeCompare(b.slug)),
   editor: lexicalEditor(),

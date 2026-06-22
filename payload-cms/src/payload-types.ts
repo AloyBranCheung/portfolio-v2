@@ -74,6 +74,8 @@ export interface Config {
     location: Location;
     media: Media;
     projects: Project;
+    'tech-category': TechCategory;
+    'tech-stack': TechStack;
     technologies: Technology;
     users: User;
     'work-type': WorkType;
@@ -91,6 +93,8 @@ export interface Config {
     location: LocationSelect<false> | LocationSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    'tech-category': TechCategorySelect<false> | TechCategorySelect<true>;
+    'tech-stack': TechStackSelect<false> | TechStackSelect<true>;
     technologies: TechnologiesSelect<false> | TechnologiesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'work-type': WorkTypeSelect<false> | WorkTypeSelect<true>;
@@ -264,6 +268,30 @@ export interface Project {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-category".
+ */
+export interface TechCategory {
+  id: string;
+  name: string;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-stack".
+ */
+export interface TechStack {
+  id: string;
+  name: string;
+  icon: string | Media;
+  category: string | TechCategory;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -338,6 +366,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'projects';
         value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'tech-category';
+        value: string | TechCategory;
+      } | null)
+    | ({
+        relationTo: 'tech-stack';
+        value: string | TechStack;
       } | null)
     | ({
         relationTo: 'technologies';
@@ -482,6 +518,28 @@ export interface ProjectsSelect<T extends boolean = true> {
   link?: T;
   yearWorkedOn?: T;
   madeAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-category_select".
+ */
+export interface TechCategorySelect<T extends boolean = true> {
+  name?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tech-stack_select".
+ */
+export interface TechStackSelect<T extends boolean = true> {
+  name?: T;
+  icon?: T;
+  category?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
