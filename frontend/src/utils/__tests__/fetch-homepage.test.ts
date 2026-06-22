@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { fetchHero, fetchExperience } from '../fetch-hompage'
+import { fetchHero, fetchExperience, fetchTechStack } from '../fetch-hompage'
 import axios from '@/lib/axios'
 import * as Sentry from '@sentry/browser'
 
@@ -73,6 +73,44 @@ describe('fetchExperience', () => {
     vi.mocked(axios.get).mockRejectedValue(error)
 
     await fetchExperience()
+    expect(Sentry.captureException).toHaveBeenCalledWith(error)
+  })
+})
+
+describe('fetchTechStack', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('returns docs array on success', async () => {
+    const mockDocs = [{ id: '1', name: 'Python' }]
+    vi.mocked(axios.get).mockResolvedValue({ data: { docs: mockDocs } })
+
+    const result = await fetchTechStack()
+    expect(result).toEqual(mockDocs)
+  })
+
+  it('requests with limit 0 sorted by order', async () => {
+    vi.mocked(axios.get).mockResolvedValue({ data: { docs: [] } })
+
+    await fetchTechStack()
+    expect(axios.get).toHaveBeenCalledWith('/tech-stack', {
+      params: { limit: 0, sort: 'order' },
+    })
+  })
+
+  it('returns null on error', async () => {
+    vi.mocked(axios.get).mockRejectedValue(new Error('API error'))
+
+    const result = await fetchTechStack()
+    expect(result).toBeNull()
+  })
+
+  it('captures Sentry exception on error', async () => {
+    const error = new Error('API error')
+    vi.mocked(axios.get).mockRejectedValue(error)
+
+    await fetchTechStack()
     expect(Sentry.captureException).toHaveBeenCalledWith(error)
   })
 })
